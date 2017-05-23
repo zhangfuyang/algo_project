@@ -25,8 +25,8 @@
 		LIST_FIRST(head) = NULL; \
 	} while(0) 
 
-#define LIST_FOREACH(var, head, field)	\
-	for((var) = LIST_FIRST((head)); (var); (var) = LIST_NEXT((var), field)
+#define LIST_FOREACH(var, head, field) 	\
+	for((var) = LIST_FIRST((head)); (var); (var) = LIST_NEXT((var), field))
 
 #define LIST_INSERT_HEAD(head, elm, field)	do{	\
 	if ((LIST_NEXT((elm), field) = LIST_FIRST((head))) != NULL)	\
