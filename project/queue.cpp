@@ -59,9 +59,34 @@ void find_free_cavalier(Order *order, Cavalier *cav)
 {
 	float time = order->time;
 	float distance;
-	LIST_FOREACH(cav, &cav_free_list, cav_link)
+	float origintime = 1000;
+	Cavalier *luckyone;
+	LIST_FOREACH(luckyone, &cav_free_list, cav_link)
 	{
-		DISTANCE(Cavalier, )
+		DISTANCE((*luckyone), restaurant[order->rid], distance);
+
+		if ((distance + luckyone->now) < time) {
+			if ((time - (distance + luckyone->now)) < origintime){
+				origintime = time - (distance + luckyone->now);
+				cav = luckyone;
+			}
+	
+		}
+
+   		 
+	}
+	if (origintime == 1000) {
+		LIST_FOREACH(luckyone, &cav_free_list, cav_link)
+		{
+			DISTANCE((*luckyone), restaurant[order->rid], distance);
+
+			if ((distance + luckyone->now) < origintime) {
+				origintime = distance + luckyone->now;
+				cav = luckyone;
+			}
+		
+		
+		}
 
 	}
 }
