@@ -4,6 +4,17 @@
 #include "function.h"
 #include "globalvar.h"
 
+
+
+
+
+
+
+
+
+
+
+
 float pack_insert(Cavalier *cav, Order *order)
 {
 	int status = cav->status;
@@ -19,3 +30,9 @@ float pack_insert(Cavalier *cav, Order *order)
 
 	}
 }
+
+
+void insertprint(Order *order, Cavalier *cav)
+
+
+
