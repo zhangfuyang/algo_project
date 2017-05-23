@@ -30,6 +30,9 @@
     <ClCompile Include="alloc.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="output.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="function.h">

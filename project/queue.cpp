@@ -5,10 +5,6 @@
 #include "globalvar.h"
 using namespace std;
 
-LIST_HEAD(Cav_list, Cavalier);
-
-LIST_HEAD(Print_list, Print);
-
 static struct Cav_list cav_free_list;
 static struct Cav_list cav_available_list;
 static struct Cav_list cav_full_list;
