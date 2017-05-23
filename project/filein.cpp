@@ -56,18 +56,18 @@ void filein(Restaurant* restaurant, District* district, Order* order, int &resta
 	getline(fp, str);
 	while (i <= restaurant_num && getline(fp, str))
 	{
-		restaurant[i].x = 0;
-		restaurant[i].y = 0;
+		restaurant[i].location.x = 0;
+		restaurant[i].location.y = 0;
 		j = 0;
 		while (j < str.length() && str[j] != ' ')
 		{
-			restaurant[i].x = restaurant[i].x * 10 + str[j] - '0';
+			restaurant[i].location.x = restaurant[i].location.x * 10 + str[j] - '0';
 			j++;
 		}
 		j++;
 		while (j < str.length() && str[j] != ' ')
 		{
-			restaurant[i].y = restaurant[i].y * 10 + str[j] - '0';
+			restaurant[i].location.y = restaurant[i].location.y * 10 + str[j] - '0';
 			j++;
 		}
 		i++;
@@ -76,18 +76,18 @@ void filein(Restaurant* restaurant, District* district, Order* order, int &resta
 	j = 0;
 	while (i <= district_num && getline(fp, str))
 	{
-		district[i].x = 0;
-		district[i].y = 0;
+		district[i].location.x = 0;
+		district[i].location.y = 0;
 		j = 0;
 		while (j < str.length() && str[j] != ' ')
 		{
-			district[i].x = district[i].x * 10 + str[j] - '0';
+			district[i].location.x = district[i].location.x * 10 + str[j] - '0';
 			j++;
 		}
 		j++;
 		while (j < str.length() && str[j] != ' ')
 		{
-			district[i].y = district[i].y * 10 + str[j] - '0';
+			district[i].location.y = district[i].location.y * 10 + str[j] - '0';
 			j++;
 		}
 		i++;
