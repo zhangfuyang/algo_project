@@ -72,8 +72,6 @@ void find_free_cavalier(Order *order, Cavalier *cav)
 			}
 	
 		}
-
-   		 
 	}
 	if (origintime == 1000) {
 		LIST_FOREACH(luckyone, &cav_free_list, cav_link)

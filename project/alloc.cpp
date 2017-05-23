@@ -15,7 +15,8 @@ float pack_insert(Cavalier *cav, Order *order)
 	else if (status == FREE)
 	{
 		cav->status = AVAILABLE;
-		cav->pack_num++;
+		cav->pack_num ++;
 
 	}
 }
+
