@@ -4,17 +4,6 @@
 #include "function.h"
 #include "globalvar.h"
 
-
-
-
-
-
-
-
-
-
-
-
 float pack_insert(Cavalier *cav, Order *order)
 {
 	int status = cav->status;
@@ -26,13 +15,12 @@ float pack_insert(Cavalier *cav, Order *order)
 	else if (status == FREE)
 	{
 		cav->status = AVAILABLE;
-		cav->pack_num++;
+		cav->pack_num ++;
 
 	}
 }
 
 
 void insertprint(Order *order, Cavalier *cav)
-
 
 
