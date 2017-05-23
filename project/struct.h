@@ -45,7 +45,7 @@ struct Print {                   //Ã¿¸öÆïÊÖµÄ´òÓ¡ĞÅÏ¢
 	float leavetime;
 	int pack_num;
 	int *packid = new int[C + 1];
-	Print *link;
+	LIST_ENTRY(Print) print_link;
 };
 
 struct Cavalier {            //ÆïÊÖ¾ßÌåĞÅÏ¢£ºµ±Ç°Î»ÖÃµÄ×ø±êĞÅÏ¢¡¢µ±Ç°µÄÊ±¿Ì¡¢µ±Ç°µÄ×´Ì¬£¨Èı¸öÁĞ±íÖĞ´¦ÓÚÄÄ¸öÁĞ±í£©¡¢ÉíÉÏµÄ¶©µ¥ĞÅÏ¢¡¢Á´½Ó½á¹¹Ìå
@@ -56,7 +56,7 @@ struct Cavalier {            //ÆïÊÖ¾ßÌåĞÅÏ¢£ºµ±Ç°Î»ÖÃµÄ×ø±êĞÅÏ¢¡¢µ±Ç°µÄÊ±¿Ì¡¢µ±Ç
 	//¶ÔÓÚFREEÆïÊ¿£ºnow = end
 	int pack_num;
 	Pack *pack = new Pack[C + 1];
-	Print *print = NULL;
+	Print_list print_list;
 	LIST_ENTRY(Cavalier) cav_link;
 };
 

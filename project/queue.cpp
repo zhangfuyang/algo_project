@@ -6,7 +6,8 @@
 using namespace std;
 
 LIST_HEAD(Cav_list, Cavalier);
-LIST_HEAD(Cav_print_list, )
+
+LIST_HEAD(Print_list, Print);
 
 static struct Cav_list cav_free_list;
 static struct Cav_list cav_available_list;
@@ -14,8 +15,12 @@ static struct Cav_list cav_full_list;
 
 extern Cavalier cavalier[];
 extern int cavalier_num;
-
-void queue_init()
+void print_list_init()
+{
+	for (int i = 1; i <= cavalier_num; i++)
+		LIST_INIT(&cavalier[i].print_list);
+}
+void cav_queue_init()
 {
 
 	LIST_INIT(&cav_free_list);
@@ -55,11 +60,11 @@ void queue_update(int time)
 	}
 }
 
-void find_free_cavalier(Order *order, Cavalier *cav)
+void find_free_cavalier(Order *order, Cavalier *cav)               //当Free列表不为空时，给Free列表中的骑士分配订单
 {
 	float time = order->time;
 	float distance;
-	float origintime = 1000;
+	float origintime = 10000;
 	Cavalier *luckyone;
 	LIST_FOREACH(luckyone, &cav_free_list, cav_link)
 	{
@@ -73,7 +78,7 @@ void find_free_cavalier(Order *order, Cavalier *cav)
 	
 		}
 	}
-	if (origintime == 1000) {
+	if (origintime == 10000) {
 		LIST_FOREACH(luckyone, &cav_free_list, cav_link)
 		{
 			DISTANCE((*luckyone), restaurant[order->rid], distance);
