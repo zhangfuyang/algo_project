@@ -6,6 +6,7 @@
 using namespace std;
 
 LIST_HEAD(Cav_list, Cavalier);
+LIST_HEAD(Cav_print_list, )
 
 static struct Cav_list cav_free_list;
 static struct Cav_list cav_available_list;
