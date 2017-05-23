@@ -55,11 +55,11 @@ void queue_update(int time)
 	}
 }
 
-void find_free_cavalier(Order *order, Cavalier *cav)
+void find_free_cavalier(Order *order, Cavalier *cav)               //当Free列表不为空时，给Free列表中的骑士分配订单
 {
 	float time = order->time;
 	float distance;
-	float origintime = 1000;
+	float origintime = 10000;
 	Cavalier *luckyone;
 	LIST_FOREACH(luckyone, &cav_free_list, cav_link)
 	{
@@ -75,7 +75,7 @@ void find_free_cavalier(Order *order, Cavalier *cav)
 
    		 
 	}
-	if (origintime == 1000) {
+	if (origintime == 10000) {
 		LIST_FOREACH(luckyone, &cav_free_list, cav_link)
 		{
 			DISTANCE((*luckyone), restaurant[order->rid], distance);
