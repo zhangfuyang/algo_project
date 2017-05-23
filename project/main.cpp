@@ -7,9 +7,6 @@ using namespace std;
 
 int main()
 {
-	int restaurant_num, district_num, cavalier_num;
-	int C, N;
-
 	filein2(restaurant_num, district_num, cavalier_num, C, N, "sample.txt");
 
 	restaurant = new Restaurant[restaurant_num+1];
