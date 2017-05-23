@@ -48,12 +48,6 @@ struct Print {                   //每个骑手的打印信息
 	LIST_ENTRY(Print) print_link;
 };
 
-struct Packs {
-	Pack *packs = new Pack[C];
-};
-
-
-
 struct Cavalier {            //骑手具体信息：当前位置的坐标信息、当前的时刻、当前的状态（三个列表中处于哪个列表）、身上的订单信息、链接结构体
 	Location location;
 	float now;				//骑士当前时间
