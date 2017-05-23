@@ -8,5 +8,4 @@ District packid2district(Cavalier *cav, int packid);
 Restaurant packid2restaurant(Cavalier *cav, int packid);
 District did2district(int did);
 Restaurant rid2restaurant(int rid);
-void cav_print_list_init();
 #endif

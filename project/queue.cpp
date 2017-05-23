@@ -7,7 +7,7 @@ using namespace std;
 
 LIST_HEAD(Cav_list, Cavalier);
 
-LIST_HEAD(Cav_print_list, Print);
+LIST_HEAD(Print_list, Print);
 
 static struct Cav_list cav_free_list;
 static struct Cav_list cav_available_list;
@@ -15,16 +15,12 @@ static struct Cav_list cav_full_list;
 
 extern Cavalier cavalier[];
 extern int cavalier_num;
-void cav_print_list_init()
+void print_list_init()
 {
-	Cav_print_list *cav_print_list;
-	cav_print_list = new Cav_print_list[cavalier_num + 1];
 	for (int i = 1; i <= cavalier_num; i++)
-	{
-		cav_print_list[i].lh_first = NULL;
-	}
+		LIST_INIT(&cavalier[i].print_list);
 }
-void queue_init()
+void cav_queue_init()
 {
 
 	LIST_INIT(&cav_free_list);

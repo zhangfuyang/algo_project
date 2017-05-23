@@ -56,7 +56,7 @@ struct Cavalier {            //ÆïÊÖ¾ßÌåĞÅÏ¢£ºµ±Ç°Î»ÖÃµÄ×ø±êĞÅÏ¢¡¢µ±Ç°µÄÊ±¿Ì¡¢µ±Ç
 	//¶ÔÓÚFREEÆïÊ¿£ºnow = end
 	int pack_num;
 	Pack *pack = new Pack[C + 1];
-	Print *print = NULL;
+	Print_list print_list;
 	LIST_ENTRY(Cavalier) cav_link;
 };
 
