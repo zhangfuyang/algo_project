@@ -9,6 +9,7 @@
 		dist = sqrt((type1.location.x - type2.location.x)*(type1.location.x - type2.location.x) + (type1.location.y - type2.location.y)*(type1.location.y - type2.location.y)); \
 	} while(0) 
 
+
 extern int C;
 
 struct Location {            //坐标结构体
@@ -23,20 +24,20 @@ typedef Place Restaurant;
 typedef Place District;
 
 struct Order {               //订单具体信息：下单时间、餐厅id、小区id
-	int time;
+	float time;
 	int rid;
 	int did;
 };
 
 struct Pack {                      //一个骑手的订单信息：取得时间、完成时间
 	Order *order = NULL;
-	int fetchtime;
-	int completetime;
+	float fetchtime;
+	float completetime;
 };
 
 #define FREE 0
 #define AVAILABLE 1
-#define FULL 3
+#define FULL 2
 
 struct Print {                   //每个骑手的打印信息
 	Location location;
@@ -53,9 +54,10 @@ struct Print {                   //每个骑手的打印信息
 
 struct Cavalier {            //骑手具体信息：当前位置的坐标信息、当前的时刻、当前的状态（三个列表中处于哪个列表）、身上的订单信息、链接结构体
 	Location location;
-	float now;				//current time
-	float end;				//finish time
-	int status;				//free or full or available
+	float now;				//骑士当前时间
+	float end;				//骑士完成所有任务的时间
+	int status;				//FREE or FULL or AVAILABLE
+							//对于FREE骑士：now = end
 	int pack_num;
 	Pack *pack = new Pack[C + 1];
 	Print *print = NULL;

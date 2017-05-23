@@ -23,25 +23,45 @@ void queue_init()
 
 	for (int i = cavalier_num; i >= 0; i--)
 	{
+		cavalier[i].status = FREE;
+		cavalier[i].pack_num = 0;
+		cavalier[i].now = -1000; //初始时间为足够大的负数
+		cavalier[i].end = cavalier[i].now;
+		cavalier[i].location.x = 0;
+		cavalier[i].location.y = 0;
 		LIST_INSERT_HEAD(&cav_free_list, &cavalier[i], cav_link);
 	}
 }
 
 void queue_update(int time)
 {
-	struct Cavalier *cav;
+	Cavalier *cav;
 
 	LIST_FOREACH(cav, &cav_full_list, cav_link)
 	{
 		if (cav->end < time)
 		{
+			cav->location = place2xy(packid2district(cav, cav->pack_num));//某一个餐馆,有待修改
 			cav->now = cav->end;
 
-			cav->location = place2xy(restaurant[0]);//某一个餐馆,有待修改
 			cav->status = FREE;
-			cav->pack_num = 0;
 			cav->pack_num = 0;
 			LIST_INSERT_HEAD(&cav_free_list, cav, cav_link);
 		}
+		else
+		{
+			//部分更新
+		}
+	}
+}
+
+void find_free_cavalier(Order *order, Cavalier *cav)
+{
+	float time = order->time;
+	float distance;
+	LIST_FOREACH(cav, &cav_free_list, cav_link)
+	{
+		DISTANCE(Cavalier, )
+
 	}
 }
