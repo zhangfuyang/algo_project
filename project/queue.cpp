@@ -1,6 +1,8 @@
 #include <string>
 #include "struct.h"
 #include "queue.h"
+#include "function.h"
+#include "globalvar.h"
 using namespace std;
 
 LIST_HEAD(Cav_list, Cavalier);
@@ -34,14 +36,11 @@ void queue_update(int time)
 		if (cav->end < time)
 		{
 			cav->now = cav->end;
-			cav->location = ;
+			cav->location = place2xy(restaurant[0]);//某一个餐馆,有待修改
 			cav->status = FREE;
-			for (int i = 1; i < cav->pack_num; i++)
-			{
-				cav->pack = NULL;
-			}
 			cav->pack_num = 0;
-			LIST_INSERT_HEAD(&cav_free_list, cav, cav_link)
+			cav->pack_num = 0;
+			LIST_INSERT_HEAD(&cav_free_list, cav, cav_link);
 		}
 	}
 }

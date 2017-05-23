@@ -149,9 +149,11 @@
     <ClCompile Include="filein.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="queue.cpp" />
+    <ClCompile Include="tools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="function.h" />
+    <ClInclude Include="globalvar.h" />
     <ClInclude Include="queue.h" />
     <ClInclude Include="struct.h" />
   </ItemGroup>
