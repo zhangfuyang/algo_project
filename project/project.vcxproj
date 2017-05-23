@@ -149,6 +149,7 @@
     <ClCompile Include="alloc.cpp" />
     <ClCompile Include="filein.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="output.cpp" />
     <ClCompile Include="queue.cpp" />
     <ClCompile Include="tools.cpp" />
   </ItemGroup>

@@ -1,4 +1,3 @@
-#pragma once
 #ifndef _STRUCT_H_
 #include <math.h>
 #include "queue.h"
@@ -9,7 +8,9 @@
 		dist = sqrt((type1.location.x - type2.location.x)*(type1.location.x - type2.location.x) + (type1.location.y - type2.location.y)*(type1.location.y - type2.location.y)); \
 	} while(0) 
 
+LIST_HEAD(Cav_list, Cavalier);
 
+LIST_HEAD(Print_list, Print);
 extern int C;
 
 struct Location {            //×ø±ê½á¹¹Ìå
@@ -54,8 +55,6 @@ struct Cavalier {            //ÆïÊÖ¾ßÌåĞÅÏ¢£ºµ±Ç°Î»ÖÃµÄ×ø±êĞÅÏ¢¡¢µ±Ç°µÄÊ±¿Ì¡¢µ±Ç
 	float end;				//ÆïÊ¿Íê³ÉËùÓĞÈÎÎñµÄÊ±¼ä
 	int status;				//FREE or FULL or AVAILABLE
 	//¶ÔÓÚFREEÆïÊ¿£ºnow = end
-	int pack_num;
-	Pack *pack = new Pack[C + 1];
 	Print_list print_list;
 	LIST_ENTRY(Cavalier) cav_link;
 };
