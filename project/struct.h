@@ -48,22 +48,15 @@ struct Print {                   //每个骑手的打印信息
 	Print *link;
 };
 
-
-
-
-
 struct Cavalier {            //骑手具体信息：当前位置的坐标信息、当前的时刻、当前的状态（三个列表中处于哪个列表）、身上的订单信息、链接结构体
 	Location location;
 	float now;				//骑士当前时间
 	float end;				//骑士完成所有任务的时间
 	int status;				//FREE or FULL or AVAILABLE
-							//对于FREE骑士：now = end
+	//对于FREE骑士：now = end
 	int pack_num;
 	Pack *pack = new Pack[C + 1];
 	Print *print = NULL;
-
-
-
 	LIST_ENTRY(Cavalier) cav_link;
 };
 
