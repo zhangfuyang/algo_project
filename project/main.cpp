@@ -11,11 +11,15 @@ int main()
 	int C, N;
 
 	filein2(restaurant_num, district_num, cavalier_num, C, N, "sample.txt");
+
 	restaurant = new Restaurant[restaurant_num+1];
 	district = new District[district_num+1];
 	order = new Order[N+1];
+
 	filein(restaurant, district, order, restaurant_num, district_num, cavalier_num, C, N, "sample.txt");
+	
 	cout << restaurant_num<<" "<<district_num<<" "<<cavalier_num<<" "<<C << " " << N << endl;
+	
 	for (int i = 1; i <= restaurant_num; i++)
 	{
 		cout << restaurant[i].location.x << " " << restaurant[i].location.y << endl;
