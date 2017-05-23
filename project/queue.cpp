@@ -6,6 +6,7 @@
 using namespace std;
 
 LIST_HEAD(Cav_list, Cavalier);
+LIST_HEAD(Cav_print_list, )
 
 static struct Cav_list cav_free_list;
 static struct Cav_list cav_available_list;
@@ -43,7 +44,6 @@ void queue_update(int time)
 		{
 			cav->location = place2xy(packid2district(cav, cav->pack_num));//某一个餐馆,有待修改
 			cav->now = cav->end;
-
 			cav->status = FREE;
 			cav->pack_num = 0;
 			LIST_INSERT_HEAD(&cav_free_list, cav, cav_link);
