@@ -28,7 +28,7 @@ struct Order {               //订单具体信息：下单时间、餐厅id、小区id
 	int did;
 };
 
-struct Pack {
+struct Pack {                      //一个骑手的订单信息：取得时间、完成时间
 	Order *order = NULL;
 	int fetchtime;
 	int completetime;
@@ -38,13 +38,29 @@ struct Pack {
 #define AVAILABLE 1
 #define FULL 3
 
+struct Print {                   //每个骑手的打印信息
+	Location location;
+	float arrivetime;
+	float leavetime;
+	int pack_num;
+	int *packid = new int[C + 1];
+	Print *link;
+};
+
+
+
+
+
 struct Cavalier {            //骑手具体信息：当前位置的坐标信息、当前的时刻、当前的状态（三个列表中处于哪个列表）、身上的订单信息、链接结构体
 	Location location;
-	int now;				//current time
-	int end;				//finish time
+	float now;				//current time
+	float end;				//finish time
 	int status;				//free or full or available
 	int pack_num;
 	Pack *pack = new Pack[C + 1];
+	Print *print = NULL;
+
+
 
 	LIST_ENTRY(Cavalier) cav_link;
 };

@@ -36,6 +36,7 @@ void queue_update(int time)
 		if (cav->end < time)
 		{
 			cav->now = cav->end;
+
 			cav->location = place2xy(restaurant[0]);//某一个餐馆,有待修改
 			cav->status = FREE;
 			cav->pack_num = 0;
