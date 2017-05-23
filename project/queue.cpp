@@ -31,6 +31,17 @@ void queue_update(int time)
 
 	LIST_FOREACH(cav, &cav_full_list, cav_link)
 	{
-		;
-}
+		if (cav->end < time)
+		{
+			cav->now = cav->end;
+			cav->location = ;
+			cav->status = FREE;
+			for (int i = 1; i < cav->pack_num; i++)
+			{
+				cav->pack = NULL;
+			}
+			cav->pack_num = 0;
+			LIST_INSERT_HEAD(&cav_free_list, cav, cav_link)
+		}
+	}
 }
