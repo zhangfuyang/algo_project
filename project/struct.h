@@ -44,7 +44,8 @@ struct Place {				//餐厅或小区位置结构体
 typedef Place Restaurant;
 typedef Place District;
 
-struct Order {               //订单具体信息：下单时间、餐厅id、小区id
+struct Order {               //订单具体信息：下单时间、餐厅id、小区id、订单花费时间、订单id
+	int orderid;
 	float time;
 	float costtime;
 	int rid;
