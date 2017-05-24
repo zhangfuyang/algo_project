@@ -27,10 +27,10 @@ Restaurant rid2restaurant(int rid)
 	return restaurant[rid];
 }
 
-void List_copy_station(Station_list *head, Station_list *head1)//½«ÒÔhead¿ªÍ·µÄÁ´±í¸´ÖÆ¸øÒÔhead1¿ªÍ·µÄÁ´±í
+void station_list_copy(Station_list *from, Station_list *to)//½«ÒÔhead¿ªÍ·µÄÁ´±í¸´ÖÆ¸øÒÔhead1¿ªÍ·µÄÁ´±í
 {     
 	Station *var1, *var2=NULL, *last=NULL;
-	LIST_FOREACH(var1, head, station_link)
+	LIST_FOREACH(var1, from, station_link)
 	{
 		var2->arrivetime = var1->arrivetime;
 		var2->leavetime = var1->leavetime;
@@ -38,7 +38,7 @@ void List_copy_station(Station_list *head, Station_list *head1)//½«ÒÔhead¿ªÍ·µÄÁ
 		var2->oid = var1->oid;
 		var2->station_link = var1->station_link;
 		var2->type = var1->type;
-		LIST_INSERT_TAIL(head1, var2, last, station_link);
+		LIST_INSERT_TAIL(to, var2, last, station_link);
 
 	}
 }
