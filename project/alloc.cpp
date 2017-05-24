@@ -1,22 +1,47 @@
 #include <string>
-#include "struct.h"
-#include "queue.h"
-#include "function.h"
-#include "globalvar.h"
+#include"queue.h"
+#include"struct.h"
+#include"globalvar.h"
+#include"function.h"
 
-void alloc(Order *order)
+int alloc(Order order)
 {
-	Cavalier *cav, *free_cav, *available_cav, *full_cav;
-	float free_costtime, available_costtime, full_costtime;
-	
-	free_costtime = find_free_cavalier(order, free_cav);
+	int i,cavid = 0;
+	float temptime, costtime = -1;
 
-	available_costtime = find_available_cavalier(order, available_cav);
-
-	full_costtime = find_full_cavalier(order, full_cav);
-
-	if (free_costtime > 0 & available_costtime > 0 & full_costtime > 0)
+	for (i = 1; i <= cavalier_num; i++)
 	{
-		MIN(free_time, 
+		switch (cavalier[i].status)
+		{
+		case INIT:
+			temptime = cal_init_costtime(cavalier[i], order);
+			break;
+		case FREE:
+			temptime = cal_free_costtime(cavalier[i], order);
+			break;
+		case AVAILABLE:
+			temptime = cal_available_costtime(cavalier[i], order);
+			break;
+		case FULL:
+			temptime = cal_full_costtime(cavalier[i], order);
+			break;
+		default:
+			printf("invalid cavalier! id : %d",i);
+			break;
+		}
+		if (costtime == -1)
+		{
+			costtime = temptime;
+			cavid = i;
+		}
+		else
+		{
+			if (temptime < costtime)
+			{
+				costtime = temptime;
+				cavid = i;
+			}
+		}
 	}
+	return cavid;
 }

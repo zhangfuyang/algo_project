@@ -1,42 +1,43 @@
 #include <string>
-#include "struct.h"
-#include "queue.h"
-#include "function.h"
-#include "globalvar.h"
+#include"queue.h"
+#include"struct.h"
+#include"globalvar.h"
+#include"function.h"
 using namespace std;
 
 //static struct Cav_list cav_free_list;
 //static struct Cav_list cav_available_list;
 //static struct Cav_list cav_full_list;
+//static struct Cav_list cav_list;
 
-static struct Cav_list cav_list;
-
-void queue_init()
+void cav_init()
 {
 	//LIST_INIT(&cav_free_list);
 	//LIST_INIT(&cav_available_list);
 	//LIST_INIT(&cav_full_list);
 
-	LIST_INIT(&cav_list);
-
-	for (int i = cavalier_num; i >= 0; i--)
+	for (int i = 1; i <= cavalier_num; i++)
 	{
 		cavalier[i].status = INIT;
 		cavalier[i].pack_num = 0;
 		LIST_INIT(&cavalier[i].station_list);
-		LIST_INSERT_HEAD(&cav_free_list, &cavalier[i], cav_link);
 	}
 }
 
-void queue_update(int time, Cav_list cav_list)
+void cav_update(int time)
 {
-	Cavalier *cav;
-	LIST_FOREACH(cav, &cav_list, cav_link)
+	int i;
+	for(i=1; i<=cavalier_num; i++)
 	{
 		Station *station, *temp = NULL, *last;
 		int pack_release_num = 0;
+		//≤ª±ÿ∏¸–¬◊¥Ã¨Œ™FREEªÚINITµƒ∆Ô ÷
+		if (cavalier[i].status == FREE | cavalier[i].status == INIT)
+		{
+			continue;
+		}
 		//—∞’“∆Ô ÷‘⁄∏√ ±øÃµΩ¥ÔµƒDISTRICT
-		LIST_FOREACH(station, &cav->station_list, station_link)
+		LIST_FOREACH(station, &cavalier[i].station_list, station_link)
 		{
 			if (station->arrivetime <= time)
 			{
@@ -58,8 +59,8 @@ void queue_update(int time, Cav_list cav_list)
 		//Ω´’“µƒDISTRICT÷Æ«∞µƒ¬∑æ∂“∆≥˝£¨≤¢≤Â»Îprint
 		if (temp != NULL)
 		{
-			LIST_LAST(last, &print[cav->id], station_link);
-			LIST_FOREACH(station, &cav->station_list, station_link)
+			LIST_LAST(last, &print[i], station_link);
+			LIST_FOREACH(station, &cavalier[i].station_list, station_link)
 			{
 				if (station = temp)
 				{
@@ -75,18 +76,16 @@ void queue_update(int time, Cav_list cav_list)
 		//∏¸–¬∏√∆Ô ÷◊¥Ã¨
 		if (pack_release_num != 0)
 		{
-			cav->pack_num -= pack_release_num;
-			if (cav->pack_num == 0)
+			cavalier[i].pack_num -= pack_release_num;
+			if (cavalier[i].pack_num == 0)
 			{
-				cav->bottlenecktime = 0;
-				cav->status = FREE;
-				LIST_CHANGE(cav, &cav_free_list, cav_link);
+				cavalier[i].bottlenecktime = 0;
+				cavalier[i].status = FREE;
 			}
 			else
 			{
-				cav->bottlenecktime = cal_bottlenecktime(cav->station_list);
-				cav->status = AVAILABLE;
-				LIST_CHANGE(cav, &cav_free_list, cav_link);
+				cavalier[i].bottlenecktime = cal_bottlenecktime(cavalier[i].station_list);
+				cavalier[i].status = AVAILABLE;
 			}
 		}
 	}
@@ -187,7 +186,7 @@ float Insert_order(Order *order, Station_list *head) {           //∑µªÿ≤Â»Î∫Ûµƒ◊
 	}
 	newstation->location.x = x1;
 	newstation->location.y = y1;
-	newstation->oid = order->orderid;
+	newstation->oid = order->oid;
 	newstation->type = RESTAURANT;
 
 	LIST_INSERT_AFTER(choose, newstation, station_link);       //≤Â»Î
@@ -237,7 +236,7 @@ float Insert_order(Order *order, Station_list *head) {           //∑µªÿ≤Â»Î∫Ûµƒ◊
 	
 	newstation->location.x = x2;
 	newstation->location.y = y2;
-	newstation->oid = order->orderid;
+	newstation->oid = order->oid;
 	newstation->type = DISTRICT;
 
 	LIST_INSERT_AFTER(choose, newstation, station_link);     //≤Â»Î–°«¯

@@ -13,19 +13,23 @@
 #define DISTRICT 1
 //ËÙ¶È
 #define SPEED 1
+
 //¼ÆËãÁ½µã¼ä¾àÀë
 #define DISTANCE(type1, type2, dist) do {			\
 		dist = sqrt((type1.location.x - type2.location.x)*(type1.location.x - type2.location.x) \
 	+ (type1.location.y - type2.location.y)*(type1.location.y - type2.location.y)); \
 	} while(0)
-//¾àÀëµ½Ê±¼ä
+
+//¼ÆËã¾àÀëµ½Ê±¼ä
 #define TIME(dist, time) do{		\
 		time = dist/SPEED;			\
 }while(0)
+
 //¼ÆËã×î´óÖµ
 #define MAX(a, b, max) do {		\
 		max=(a>b)?a:b;			\
 }while(0)
+
 //¼ÆËã×îĞ¡Öµ
 #define MIN(a, b, min) do {		\
 		min=(a<b)?a:b;			\
@@ -45,7 +49,7 @@ typedef Place Restaurant;
 typedef Place District;
 
 struct Order {               //¶©µ¥¾ßÌåĞÅÏ¢£ºÏÂµ¥Ê±¼ä¡¢²ÍÌüid¡¢Ğ¡Çøid¡¢¶©µ¥»¨·ÑÊ±¼ä¡¢¶©µ¥id
-	int orderid;
+	int oid;
 	float time;
 	float costtime;
 	int rid;
@@ -81,9 +85,9 @@ struct Cavalier {            //ÆïÊÖ¾ßÌåĞÅÏ¢£ºµ±Ç°Î»ÖÃµÄ×ø±êĞÅÏ¢¡¢µ±Ç°µÄÊ±¿Ì¡¢µ±Ç
 	int pack_num;
 	float bottlenecktime;	//ÆïÊÖµ±Ç°¶©µ¥ÖĞ×î´óµÈ´ıÊ±¼ä
 	Station_list station_list;
-	LIST_ENTRY(Cavalier) cav_link;
+//	LIST_ENTRY(Cavalier) cav_link;
 };
 
-LIST_HEAD(Cav_list, Cavalier);
+//LIST_HEAD(Cav_list, Cavalier);
 
 #endif /*_STRUCT_H_*/
