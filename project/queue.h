@@ -42,7 +42,7 @@
 
 #define LIST_SIZE(var, head, field, k) do{		\
 		k = 0;							\
-		LIST_FOREACH((var, head, field))		\
+		LIST_FOREACH(var, head, field)		\
 			k++;			\
 	} while (0)
 
