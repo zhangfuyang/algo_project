@@ -27,6 +27,9 @@
 #define LIST_FOREACH(var, head, field) 	\
 	for((var) = LIST_FIRST((head)); (var); (var) = LIST_NEXT((var), field))
 
+#define LIST_FOREACH2(var, head, field) 	\
+	for((var) = LIST_NEXT(LIST_FIRST((head)),field); (var); (var) = LIST_NEXT((var), field))
+
 #define LIST_INSERT_HEAD(head, elm, field)	do{	\
 	if ((LIST_NEXT((elm), field) = LIST_FIRST((head))) != NULL)	\
 		LIST_FIRST((head))->field.le_prev = &LIST_NEXT((elm), field);\
@@ -67,9 +70,16 @@
 			k++;			\
 	} while (0)
 
+#define LIST_INSERT_TAIL(head, elm, elm1, field) do{		\
+	LIST_LAST(elm1, head, field);		\
+	LIST_INSERT_AFTER(elm1, elm, field);		\
+	}while(0)
+
 #define LIST_CHANGE(elm, head, field) do{	\
 		LIST_REMOVE((elm), field)\
 		LIST_INSERT_HEAD((head), (elm), field)\
 } while(0)
+
+
 
 #endif /*_QUEUE_H_*/

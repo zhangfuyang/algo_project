@@ -24,7 +24,7 @@ void queue_init()
 	}
 }
 
-void queue_update(int time)
+void queue_update(int time， Cav_list cav_list)
 {
 	Cavalier *cav;
 	LIST_FOREACH(cav, &cav_full_list, cav_link)
@@ -68,11 +68,33 @@ void queue_update(int time)
 				}
 			}
 		}
-		cav->pack_num -= pack_release_num;
+		if (pack_release_num != 0)
+		{
+			cav->pack_num -= pack_release_num;
+			cav->status = AVAILABLE;
+			cav->bottlenecktime = cal_bottlenecktime(cav->station_list);
+			//更改骑手链表
+		}
+		
 	}
 }
 
-void find_free_cavalier(Order *order, Cavalier *cav)               //当Free列表不为空时，给Free列表中的骑士分配订单
+float cal_bottlenecktime(Station_list station_list)	//计算一个stationlist中的瓶颈值
+{
+	float bottlenecktime = 0, temp = 0;
+	Station *station;
+	LIST_FOREACH2(station, &station_list, station_link)
+	{
+		if (station->type == DISTRICT)
+		{
+			temp = station->arrivetime - order[station->oid].time;
+			MAX(bottlenecktime, temp, bottlenecktime);
+		}
+	}
+	return bottlenecktime;
+}
+
+void find_free_cavalier(Order *order, Cavalier *cav)  //当Free列表不为空时，给Free列表中的骑士分配订单
 {
 	float time = order->time;
 	float distance;
