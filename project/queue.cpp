@@ -24,7 +24,7 @@ void queue_init()
 	}
 }
 
-void queue_update(int time£¬ Cav_list cav_list)
+void queue_update(int time, Cav_list cav_list)
 {
 	Cavalier *cav;
 	LIST_FOREACH(cav, &cav_full_list, cav_link)
