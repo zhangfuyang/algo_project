@@ -18,9 +18,6 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="queue.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="tools.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -31,6 +28,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="input.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cav.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="order.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

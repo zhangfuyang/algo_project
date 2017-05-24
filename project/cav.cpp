@@ -1,42 +1,43 @@
 #include <string>
-#include "struct.h"
-#include "queue.h"
-#include "function.h"
-#include "globalvar.h"
+#include"queue.h"
+#include"struct.h"
+#include"globalvar.h"
+#include"function.h"
 using namespace std;
 
 //static struct Cav_list cav_free_list;
 //static struct Cav_list cav_available_list;
 //static struct Cav_list cav_full_list;
+//static struct Cav_list cav_list;
 
-static struct Cav_list cav_list;
-
-void queue_init()
+void cav_init()
 {
 	//LIST_INIT(&cav_free_list);
 	//LIST_INIT(&cav_available_list);
 	//LIST_INIT(&cav_full_list);
 
-	LIST_INIT(&cav_list);
-
-	for (int i = cavalier_num; i >= 0; i--)
+	for (int i = 1; i <= cavalier_num; i++)
 	{
 		cavalier[i].status = INIT;
 		cavalier[i].pack_num = 0;
 		LIST_INIT(&cavalier[i].station_list);
-		LIST_INSERT_HEAD(&cav_free_list, &cavalier[i], cav_link);
 	}
 }
 
-void queue_update(int time, Cav_list cav_list)
+void cav_update(int time)
 {
-	Cavalier *cav;
-	LIST_FOREACH(cav, &cav_list, cav_link)
+	int i;
+	for(i=1; i<=cavalier_num; i++)
 	{
 		Station *station, *temp = NULL, *last;
 		int pack_release_num = 0;
+		//不必更新状态为FREE或INIT的骑手
+		if (cavalier[i].status == FREE | cavalier[i].status == INIT)
+		{
+			continue;
+		}
 		//寻找骑手在该时刻到达的DISTRICT
-		LIST_FOREACH(station, &cav->station_list, station_link)
+		LIST_FOREACH(station, &cavalier[i].station_list, station_link)
 		{
 			if (station->arrivetime <= time)
 			{
@@ -58,8 +59,8 @@ void queue_update(int time, Cav_list cav_list)
 		//将找的DISTRICT之前的路径移除，并插入print
 		if (temp != NULL)
 		{
-			LIST_LAST(last, &print[cav->id], station_link);
-			LIST_FOREACH(station, &cav->station_list, station_link)
+			LIST_LAST(last, &print[i], station_link);
+			LIST_FOREACH(station, &cavalier[i].station_list, station_link)
 			{
 				if (station = temp)
 				{
@@ -75,75 +76,20 @@ void queue_update(int time, Cav_list cav_list)
 		//更新该骑手状态
 		if (pack_release_num != 0)
 		{
-			cav->pack_num -= pack_release_num;
-			if (cav->pack_num == 0)
+			cavalier[i].pack_num -= pack_release_num;
+			if (cavalier[i].pack_num == 0)
 			{
-				cav->bottlenecktime = 0;
-				cav->status = FREE;
-				LIST_CHANGE(cav, &cav_free_list, cav_link);
+				cavalier[i].bottlenecktime = 0;
+				cavalier[i].status = FREE;
 			}
 			else
 			{
-				cav->bottlenecktime = cal_bottlenecktime(cav->station_list);
-				cav->status = AVAILABLE;
-				LIST_CHANGE(cav, &cav_free_list, cav_link);
+				cavalier[i].bottlenecktime = cal_bottlenecktime(cavalier[i].station_list);
+				cavalier[i].status = AVAILABLE;
 			}
 		}
 	}
 }
-
-float find_free_cavalier(Order *order, Cavalier *cav)  //当Free列表不为空时，给Free列表中的骑士分配订单
-{
-	float time = order->time;
-	float distance;
-	float origintime = 10000;
-	float time_dst; //distance的距离
-	Cavalier *luckyone;
-	Station  *first;
-	LIST_FOREACH(luckyone, &cav_free_list, cav_link)
-	{
-		first = LIST_FIRST(&luckyone->station_list);
-		DISTANCE((*first), restaurant[order->rid], distance);
-		TIME(distance, time_dst);
-		if (first == NULL)
-		{
-			DISTANCE(did2district(order->did), rid2restaurant(order->rid), distance);
-			TIME(distance, time);
-			return time;
-		}
-		if (time_dst + first->arrivetime < time) {  //arrivetime和leavetime相同
-			if (time - (time_dst + first->arrivetime) < origintime){
-				origintime = time - (time_dst + first->arrivetime);
-				cav = luckyone;
-			}
-		}
-	}
-	if (cav != NULL)
-	{
-		DISTANCE(did2district(order->did), rid2restaurant(order->rid), distance);
-		TIME(distance, time);
-		return origintime + time;
-	}
-	if (origintime == 10000) 
-	{
-		LIST_FOREACH(luckyone, &cav_free_list, cav_link)
-		{
-			first = LIST_FIRST(&luckyone->station_list);
-			DISTANCE((*first), restaurant[order->rid], distance);
-			TIME(distance, time_dst);
-			if (time_dst + first->arrivetime < origintime) {
-				origintime = time_dst +first->arrivetime;
-				cav = luckyone;
-			}
-		}
-	}
-	if (cav == NULL)
-		return -1;
-	DISTANCE(did2district(order->did), rid2restaurant(order->rid), distance);
-	TIME(distance, time);
-	return time;
-}
-
 
 float Insert_order(Order *order, Station_list *head) {      //尝试将某个订单插入骑士的Station列表返回插入后的最大时间
 	Station *var = NULL;
@@ -189,7 +135,7 @@ float Insert_order(Order *order, Station_list *head) {      //尝试将某个订单插入
 	}
 	newstation->location.x = x1;
 	newstation->location.y = y1;
-	newstation->oid = order->orderid;
+	newstation->oid = order->oid;
 	newstation->type = RESTAURANT;
 
 	LIST_INSERT_AFTER(choose, newstation, station_link);       //插入
@@ -241,7 +187,7 @@ float Insert_order(Order *order, Station_list *head) {      //尝试将某个订单插入
 	
 	newstation->location.x = x2;
 	newstation->location.y = y2;
-	newstation->oid = order->orderid;
+	newstation->oid = order->oid;
 	newstation->type = DISTRICT;
 
 	LIST_INSERT_AFTER(choose, newstation, station_link);     //插入小区

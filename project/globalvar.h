@@ -7,7 +7,7 @@ extern Cavalier *cavalier;
 extern Station_list *print;
 extern int restaurant_num, district_num, cavalier_num;
 extern int C, N;
-extern Cav_list cav_free_list;
-extern Cav_list cav_available_list;
-extern Cav_list cav_full_list;
+//extern Cav_list cav_free_list;
+//extern Cav_list cav_available_list;
+//extern Cav_list cav_full_list;
 #endif
