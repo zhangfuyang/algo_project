@@ -13,4 +13,7 @@ void queue_update(int time, Cav_list cav_list);
 float cal_bottlenecktime(Station_list station_list);
 void station_list_copy(Station_list *from, Station_list *to);
 void output();
+void queue_init();
+void queue_update(int time, Cav_list cav_list);
+void alloc(int oid);
 #endif
