@@ -11,12 +11,17 @@
 //位置属性
 #define RESTAURANT 0
 #define DISTRICT 1
-
-//计算两点间距离的宏函数
+//速度
+#define SPEED 1
+//计算两点间距离
 #define DISTANCE(type1, type2, dist) do {			\
 		dist = sqrt((type1.location.x - type2.location.x)*(type1.location.x - type2.location.x) \
 	+ (type1.location.y - type2.location.y)*(type1.location.y - type2.location.y)); \
-	} while(0) 
+	} while(0)
+//距离到时间
+#define TIME(dist, time) do{		\
+		time = dist/SPEED;			\
+}while(0)
 //计算最大值
 #define MAX(a, b, max) do {		\
 		max=(a>b)?a:b;			\
