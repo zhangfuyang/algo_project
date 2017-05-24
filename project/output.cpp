@@ -10,11 +10,11 @@ void output(Cavalier cavalier[])
 {
 	int i,j,num;
 	Print *temp;
-
+	cout << C;
 	for (i = 1; i <= cavalier_num; i++)
 	{
 		cout << "**********************************************" << endl;
-		LIST_SIZE(temp, &cavalier[i].print_list, print_link, num);
+		LIST_SIZE(temp, (&(cavalier[i].print_list)), print_link, num);
 		cout << i << " " << num << endl;
 		temp = LIST_FIRST(&cavalier[i].print_list);
 		while (temp != NULL)
