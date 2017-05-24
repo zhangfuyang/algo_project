@@ -100,6 +100,7 @@ void input_array(Restaurant* restaurant, District* district, Order* order, int &
 		order[i].time = 0;
 		order[i].rid = 0;
 		order[i].did = 0;
+		order[i].oid = i;
 		while (j < str.length() && str[j] != ' ')
 		{
 			order[i].time = order[i].time * 10 + str[j] - '0';

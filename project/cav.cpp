@@ -91,59 +91,6 @@ void cav_update(int time)
 	}
 }
 
-float find_free_cavalier(Order *order, Cavalier *cav)  //当Free列表不为空时，给Free列表中的骑士分配订单
-{
-	float time = order->time;
-	float distance;
-	float origintime = 10000;
-	float time_dst; //distance的距离
-	Cavalier *luckyone;
-	Station  *first;
-	LIST_FOREACH(luckyone, &cav_free_list, cav_link)
-	{
-		first = LIST_FIRST(&luckyone->station_list);
-		DISTANCE((*first), restaurant[order->rid], distance);
-		TIME(distance, time_dst);
-		if (first == NULL)
-		{
-			DISTANCE(did2district(order->did), rid2restaurant(order->rid), distance);
-			TIME(distance, time);
-			return time;
-		}
-		if (time_dst + first->arrivetime < time) {  //arrivetime和leavetime相同
-			if (time - (time_dst + first->arrivetime) < origintime){
-				origintime = time - (time_dst + first->arrivetime);
-				cav = luckyone;
-			}
-		}
-	}
-	if (cav != NULL)
-	{
-		DISTANCE(did2district(order->did), rid2restaurant(order->rid), distance);
-		TIME(distance, time);
-		return origintime + time;
-	}
-	if (origintime == 10000) 
-	{
-		LIST_FOREACH(luckyone, &cav_free_list, cav_link)
-		{
-			first = LIST_FIRST(&luckyone->station_list);
-			DISTANCE((*first), restaurant[order->rid], distance);
-			TIME(distance, time_dst);
-			if (time_dst + first->arrivetime < origintime) {
-				origintime = time_dst +first->arrivetime;
-				cav = luckyone;
-			}
-		}
-	}
-	if (cav == NULL)
-		return -1;
-	DISTANCE(did2district(order->did), rid2restaurant(order->rid), distance);
-	TIME(distance, time);
-	return time;
-}
-
-
 float Insert_order(Order *order, Station_list *head) {           //返回插入后的最大时间
 	Station *var = NULL;
 	Station *choose = NULL;
