@@ -88,8 +88,6 @@ void queue_update(int time, Cav_list cav_list)
 	}
 }
 
-
-
 void find_free_cavalier(Order *order, Cavalier *cav)  //当Free列表不为空时，给Free列表中的骑士分配订单
 {
 	float time = order->time;
