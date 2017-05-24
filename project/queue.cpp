@@ -5,15 +5,19 @@
 #include "globalvar.h"
 using namespace std;
 
-static struct Cav_list cav_free_list;
-static struct Cav_list cav_available_list;
-static struct Cav_list cav_full_list;
+//static struct Cav_list cav_free_list;
+//static struct Cav_list cav_available_list;
+//static struct Cav_list cav_full_list;
+
+static struct Cav_list cav_list;
 
 void queue_init()
 {
-	LIST_INIT(&cav_free_list);
-	LIST_INIT(&cav_available_list);
-	LIST_INIT(&cav_full_list);
+	//LIST_INIT(&cav_free_list);
+	//LIST_INIT(&cav_available_list);
+	//LIST_INIT(&cav_full_list);
+
+	LIST_INIT(&cav_list);
 
 	for (int i = cavalier_num; i >= 0; i--)
 	{
@@ -124,6 +128,8 @@ float find_free_cavalier(Order *order, Cavalier *cav)  //当Free列表不为空时，给F
 	}
 	
 }
+
+
 
 
 float Insert_order(Order *order, Station_list head) {           //返回插入后的最大时间

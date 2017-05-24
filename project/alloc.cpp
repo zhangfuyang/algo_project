@@ -6,16 +6,17 @@
 
 void alloc(Order *order)
 {
-	queue_update(order->time, cav_available_list);
+	Cavalier *cav, *free_cav, *available_cav, *full_cav;
+	float free_costtime, available_costtime, full_costtime;
 	
-	queue_update(order->time, cav_full_list);
+	free_costtime = find_free_cavalier(order, free_cav);
 
-	Cavalier *cav;
-	float free_bottlenecktime, available_bottlenecktime;
-	
-	free_bottlenecktime = find_free_cavalier(order, cav);
+	available_costtime = find_available_cavalier(order, available_cav);
 
-	available_bottlenecktime = find_available_cavalier(order, cav);
+	full_costtime = find_full_cavalier(order, full_cav);
 
-
+	if (free_costtime > 0 & available_costtime > 0 & full_costtime > 0)
+	{
+		MIN(free_time, 
+	}
 }
