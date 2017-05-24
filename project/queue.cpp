@@ -10,27 +10,19 @@ static struct Cav_list cav_available_list;
 static struct Cav_list cav_full_list;
 
 extern Cavalier cavalier[];
-extern int cavalier_num;
-void print_list_init()
-{
-	for (int i = 1; i <= cavalier_num; i++)
-		LIST_INIT(&cavalier[i].print_list);
-}
-void cav_queue_init()
-{
 
+
+void queue_init()
+{
 	LIST_INIT(&cav_free_list);
 	LIST_INIT(&cav_available_list);
 	LIST_INIT(&cav_full_list);
 
 	for (int i = cavalier_num; i >= 0; i--)
 	{
-		cavalier[i].status = FREE;
+		cavalier[i].status = INIT;
 		cavalier[i].pack_num = 0;
-		cavalier[i].now = -1000; //初始时间为足够大的负数
-		cavalier[i].end = cavalier[i].now;
-		cavalier[i].location.x = 0;
-		cavalier[i].location.y = 0;
+		LIST_INIT(&cavalier[i].station_list);
 		LIST_INSERT_HEAD(&cav_free_list, &cavalier[i], cav_link);
 	}
 }
@@ -41,18 +33,12 @@ void queue_update(int time)
 
 	LIST_FOREACH(cav, &cav_full_list, cav_link)
 	{
-		if (cav->end < time)
+		Station *station, *temp;
+		LIST_FOREACH(station, &cav->station_list, station_link)
 		{
-			cav->location = place2xy(packid2district(cav, cav->pack_num));//某一个餐馆,有待修改
-			cav->now = cav->end;
-			cav->status = FREE;
-			cav->pack_num = 0;
-			LIST_INSERT_HEAD(&cav_free_list, cav, cav_link);
+			if(station->arrivetime<)
 		}
-		else
-		{
-			//部分更新
-		}
+		
 	}
 }
 

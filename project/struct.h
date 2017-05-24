@@ -1,6 +1,7 @@
 #ifndef _STRUCT_H_
 #include <math.h>
 #include "queue.h"
+#include "globalvar.h"
 #define _STRUCT_H_
 
 //计算两点间距离的宏函数
@@ -8,19 +9,22 @@
 		dist = sqrt((type1.location.x - type2.location.x)*(type1.location.x - type2.location.x) + (type1.location.y - type2.location.y)*(type1.location.y - type2.location.y)); \
 	} while(0) 
 
-LIST_HEAD(Cav_list, Cavalier);
+//骑手状态
+#define INIT 0
+#define FREE 1
+#define AVAILABLE 2
+#define FULL 3
 
-LIST_HEAD(Print_list, Print);
-extern int C;
 
 struct Location {            //坐标结构体
 	int x;
 	int y;
 };
 
-struct Place {          //餐厅或小区位置结构体
+struct Place {				//餐厅或小区位置结构体
 	Location location;
 };
+
 typedef Place Restaurant;
 typedef Place District;
 
@@ -30,33 +34,37 @@ struct Order {               //订单具体信息：下单时间、餐厅id、小区id
 	int did;
 };
 
-struct Pack {                      //一个骑手的订单信息：取得时间、完成时间
-	Order *order = NULL;
-	float fetchtime;
-	float completetime;
-};
+//struct Pack {                      //一个骑手的订单信息：取得时间、完成时间
+//	Order *order = NULL;
+//	float fetchtime;
+//	float completetime;
+//};
 
-#define FREE 0
-#define AVAILABLE 1
-#define FULL 2
-
-struct Print {                   //每个骑手的打印信息
+struct Station {                   //每个骑手路径的关键点信息
 	Location location;
+	int type;					// District or Restaurant
+	int oid;					//Order id
 	float arrivetime;
 	float leavetime;
-	int pack_num;
-	int *packid = new int[C + 1];
-	LIST_ENTRY(Print) print_link;
+	//int pack_num;
+	//int *packid = new int[C + 1];
+	LIST_ENTRY(Station) station_link;
 };
 
+LIST_HEAD(Station_list,Station);
+
 struct Cavalier {            //骑手具体信息：当前位置的坐标信息、当前的时刻、当前的状态（三个列表中处于哪个列表）、身上的订单信息、链接结构体
-	Location location;
-	float now;				//骑士当前时间
-	float end;				//骑士完成所有任务的时间
+	//Location location;
+	//float now;				//骑士当前时间
+	//float end;				//骑士完成所有任务的时间
+	////对于FREE骑士：now = end
 	int status;				//FREE or FULL or AVAILABLE
-	//对于FREE骑士：now = end
-	Print_list print_list;
+	int pack_num;
+	float bottlenecktime;	//骑手当前订单中最大等待时间
+	Station_list station_list;
 	LIST_ENTRY(Cavalier) cav_link;
 };
+
+LIST_HEAD(Cav_list, Cavalier);
 
 #endif /*_STRUCT_H_*/

@@ -4,8 +4,8 @@ void filein2(int &restaurant_num, int &district_num, int &cavalier_num, int &C, 
 void filein(Restaurant* restaurant, District* district, Order* order, int &restaurant_num, int &district_num, int &cavalier_num, int &C, int &N, const char * fp);
 Location place2xy(Place);
 Location  place2xy(Place place);
-District packid2district(Cavalier *cav, int packid);
-Restaurant packid2restaurant(Cavalier *cav, int packid);
+//District packid2district(Cavalier *cav, int packid);
+//Restaurant packid2restaurant(Cavalier *cav, int packid);
 District did2district(int did);
 Restaurant rid2restaurant(int rid);
 #endif

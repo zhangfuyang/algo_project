@@ -1,9 +1,14 @@
 #include<iostream>
 #include"struct.h"
 #include"function.h"
-#include"globalvar.h"
 #include"queue.h"
 using namespace std;
+
+int restaurant_num, district_num, cavalier_num;
+int C, N;
+Restaurant *restaurant;
+District *district;
+Order *order;
 
 int main()
 {
