@@ -2,6 +2,7 @@
 #include"struct.h"
 #include"function.h"
 #include"queue.h"
+#include"globalvar.h"
 using namespace std;
 
 int restaurant_num, district_num, cavalier_num;
@@ -39,9 +40,14 @@ int main()
 	//	cout << order[i].time << " " << order[i].rid << " " << order[i].did << endl;
 	//}
 	queue_init();
+
 	for (int i = 1; i <= N; i++)
 	{
-		alloc(i);
+		queue_update(order->time, cav_available_list);
+
+		queue_update(order->time, cav_full_list);
+		
+		alloc(&order[i]);
 	}
 	//cout << place2xy(restaurant[2]).x << " " << place2xy(restaurant[2]).y << endl;
 	output();
