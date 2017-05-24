@@ -27,11 +27,9 @@ Restaurant rid2restaurant(int rid)
 	return restaurant[rid];
 }
 
-void List_copy_station(Station_list *head, Station_list *head1) {     //将以head开头的链表复制给以head1开头的链表
-
-	Station *var1;
-	Station *var2;
-	Station *var3;
+void List_copy_station(Station_list *head, Station_list *head1)//将以head开头的链表复制给以head1开头的链表
+{     
+	Station *var1, *var2=NULL, *last=NULL;
 	LIST_FOREACH(var1, head, station_link)
 	{
 		var2->arrivetime = var1->arrivetime;
@@ -40,10 +38,22 @@ void List_copy_station(Station_list *head, Station_list *head1) {     //将以head
 		var2->oid = var1->oid;
 		var2->station_link = var1->station_link;
 		var2->type = var1->type;
-		LIST_INSERT_TAIL(head1, var2, var3, station_link);
+		LIST_INSERT_TAIL(head1, var2, last, station_link);
 
 	}
+}
 
-
-
+float cal_bottlenecktime(Station_list station_list)	//计算一个stationlist中的瓶颈值
+{
+	float bottlenecktime = 0, temp = 0;
+	Station *station;
+	LIST_FOREACH2(station, &station_list, station_link)
+	{
+		if (station->type == DISTRICT)
+		{
+			temp = station->arrivetime - order[station->oid].time;
+			MAX(bottlenecktime, temp, bottlenecktime);
+		}
+	}
+	return bottlenecktime;
 }

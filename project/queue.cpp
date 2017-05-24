@@ -27,7 +27,7 @@ void queue_init()
 void queue_update(int time, Cav_list cav_list)
 {
 	Cavalier *cav;
-	LIST_FOREACH(cav, &cav_full_list, cav_link)
+	LIST_FOREACH(cav, &cav_list, cav_link)
 	{
 		Station *station, *temp = NULL, *last;
 		int pack_release_num = 0;
@@ -68,30 +68,24 @@ void queue_update(int time, Cav_list cav_list)
 				}
 			}
 		}
+		//更新该骑手状态
 		if (pack_release_num != 0)
 		{
 			cav->pack_num -= pack_release_num;
-			cav->status = AVAILABLE;
-			cav->bottlenecktime = cal_bottlenecktime(cav->station_list);
-			//更改骑手链表
-		}
-		
-	}
-}
-
-float cal_bottlenecktime(Station_list station_list)	//计算一个stationlist中的瓶颈值
-{
-	float bottlenecktime = 0, temp = 0;
-	Station *station;
-	LIST_FOREACH2(station, &station_list, station_link)
-	{
-		if (station->type == DISTRICT)
-		{
-			temp = station->arrivetime - order[station->oid].time;
-			MAX(bottlenecktime, temp, bottlenecktime);
+			if (cav->pack_num == 0)
+			{
+				cav->bottlenecktime = 0;
+				cav->status = FREE;
+				LIST_CHANGE(cav, &cav_free_list, cav_link);
+			}
+			else
+			{
+				cav->bottlenecktime = cal_bottlenecktime(cav->station_list);
+				cav->status = AVAILABLE;
+				LIST_CHANGE(cav, &cav_free_list, cav_link);
+			}
 		}
 	}
-	return bottlenecktime;
 }
 
 void find_free_cavalier(Order *order, Cavalier *cav)  //当Free列表不为空时，给Free列表中的骑士分配订单
