@@ -9,9 +9,6 @@ static struct Cav_list cav_free_list;
 static struct Cav_list cav_available_list;
 static struct Cav_list cav_full_list;
 
-extern Cavalier cavalier[];
-
-
 void queue_init()
 {
 	LIST_INIT(&cav_free_list);
@@ -33,12 +30,28 @@ void queue_update(int time)
 
 	LIST_FOREACH(cav, &cav_full_list, cav_link)
 	{
-		Station *station, *temp;
+		Station *station, *temp = NULL;
+		//寻找骑手在该时刻到达的DISTRICT
 		LIST_FOREACH(station, &cav->station_list, station_link)
 		{
-			if(station->arrivetime<)
+			if (station->arrivetime <= time)
+			{
+				if (station->type = DISTRICT)
+				{
+					temp = station;
+				}
+				else if (station->type = RESTAURANT)
+				{
+					continue;
+				}
+			}
+			else
+			{
+				break;
+			}
 		}
-		
+		//将找的DISTRICT之前的路径移除，并插入
+		if
 	}
 }
 

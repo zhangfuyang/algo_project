@@ -9,6 +9,8 @@ int C, N;
 Restaurant *restaurant;
 District *district;
 Order *order;
+Cavalier *cavalier;
+Station_list *print;
 
 int main()
 {
@@ -17,6 +19,8 @@ int main()
 	restaurant = new Restaurant[restaurant_num+1];
 	district = new District[district_num+1];
 	order = new Order[N+1];
+	cavalier = new  Cavalier[cavalier_num];
+	print = new Station_list[N];
 
 	filein(restaurant, district, order, restaurant_num, district_num, cavalier_num, C, N, "sample.txt");
 	

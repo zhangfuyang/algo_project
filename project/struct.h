@@ -14,7 +14,9 @@
 #define FREE 1
 #define AVAILABLE 2
 #define FULL 3
-
+//位置属性
+#define RESTAURANT 0
+#define DISTRICT 1
 
 struct Location {            //坐标结构体
 	int x;
