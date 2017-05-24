@@ -8,4 +8,7 @@ Location  place2xy(Place place);
 //Restaurant packid2restaurant(Cavalier *cav, int packid);
 District did2district(int did);
 Restaurant rid2restaurant(int rid);
+
+void List_copy_station(Station_list *head, Station_list *head1)
+
 #endif
