@@ -21,6 +21,6 @@ float pack_insert(Cavalier *cav, Order *order)
 }
 
 
-void insertprint(Order *order, Cavalier *cav)
+void insertstation(Order *order, Cavalier *cav)
 
 

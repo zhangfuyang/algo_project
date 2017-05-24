@@ -9,14 +9,14 @@ using namespace std;
 void output(Cavalier cavalier[])
 {
 	int i,j,num;
-	Print *temp;
+	Station *temp;
 
 	for (i = 1; i <= cavalier_num; i++)
 	{
 		cout << "**********************************************" << endl;
-		LIST_SIZE(temp, &cavalier[i].print_list, print_link, num);
+		LIST_SIZE(temp, &cavalier[i].station_list, station_link, num);
 		cout << i << " " << num << endl;
-		temp = LIST_FIRST(&cavalier[i].print_list);
+		temp = LIST_FIRST(&cavalier[i].station_list);
 		while (temp != NULL)
 		{
 			cout << temp->location.x << " " << temp->location.y << " "
@@ -26,7 +26,7 @@ void output(Cavalier cavalier[])
 				cout << temp->packid[j] << " ";
 			}
 			cout << endl;
-			temp = LIST_NEXT(temp, print_link);
+			temp = LIST_NEXT(temp, station_link);
 		}
 	}
 }

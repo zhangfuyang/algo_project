@@ -1,6 +1,5 @@
 #pragma once
 #ifndef _QUEUE_H_
-#include "struct.h"
 #define _QUEUE_H_
 
 #define LIST_HEAD(name, type)		\

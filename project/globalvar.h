@@ -1,8 +1,7 @@
 #ifndef _GLOBALVAR_H_
-Restaurant *restaurant;
-District *district;
-Order *order;
-int restaurant_num, district_num, cavalier_num;
-int C, N;
-
+extern Restaurant *restaurant;
+extern District *district;
+extern Order *order;
+extern int restaurant_num, district_num, cavalier_num;
+extern int C, N;
 #endif
