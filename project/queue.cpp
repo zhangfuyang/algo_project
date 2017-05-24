@@ -80,11 +80,11 @@ void find_free_cavalier(Order *order, Cavalier *cav)               //µ±FreeÁÐ±í²
 	Cavalier *luckyone;
 	LIST_FOREACH(luckyone, &cav_free_list, cav_link)
 	{
-		DISTANCE((*luckyone), restaurant[order->rid], distance);
-
-		if ((distance + luckyone->now) < time) {
-			if ((time - (distance + luckyone->now)) < origintime){
-				origintime = time - (distance + luckyone->now);
+		DISTANCE((*LIST_FIRST(&luckyone->station_list)), restaurant[order->rid], distance);
+		
+		if (distance + LIST_FIRST(&luckyone->station_list)->arrivetime < time) {  //arrivetimeºÍleavetimeÏàÍ¬
+			if (time - (distance + LIST_FIRST(&luckyone->station_list)->arrivetime) < origintime){
+				origintime = time - (distance + LIST_FIRST(&luckyone->station_list)->arrivetime);
 				cav = luckyone;
 			}
 	
@@ -93,14 +93,12 @@ void find_free_cavalier(Order *order, Cavalier *cav)               //µ±FreeÁÐ±í²
 	if (origintime == 10000) {
 		LIST_FOREACH(luckyone, &cav_free_list, cav_link)
 		{
-			DISTANCE((*luckyone), restaurant[order->rid], distance);
-
-			if ((distance + luckyone->now) < origintime) {
-				origintime = distance + luckyone->now;
+			DISTANCE((*LIST_FIRST(&luckyone->station_list)), restaurant[order->rid], distance);
+			
+			if (distance + LIST_FIRST(&luckyone->station_list)->arrivetime < origintime) {
+				origintime = distance + LIST_FIRST(&luckyone->station_list)->arrivetime;
 				cav = luckyone;
 			}
-		
-		
 		}
 
 	}

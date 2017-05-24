@@ -22,5 +22,4 @@ float pack_insert(Cavalier *cav, Order *order)
 
 
 void insertstation(Order *order, Cavalier *cav)
-
-
+{}

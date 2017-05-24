@@ -10,5 +10,5 @@ District did2district(int did);
 Restaurant rid2restaurant(int rid);
 
 void List_copy_station(Station_list *head, Station_list *head1)
-
+void output();
 #endif

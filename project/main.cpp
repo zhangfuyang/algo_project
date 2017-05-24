@@ -39,5 +39,6 @@ int main()
 		cout << order[i].time << " " << order[i].rid << " " << order[i].did << endl;
 	}
 	//cout << place2xy(restaurant[2]).x << " " << place2xy(restaurant[2]).y << endl;
+	output();
 	system("pause");
 }

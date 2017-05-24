@@ -1,12 +1,12 @@
 #ifndef _STRUCT_H_
 #include <math.h>
 #include "queue.h"
-#include "globalvar.h"
 #define _STRUCT_H_
 
 //计算两点间距离的宏函数
 #define DISTANCE(type1, type2, dist) do {			\
-		dist = sqrt((type1.location.x - type2.location.x)*(type1.location.x - type2.location.x) + (type1.location.y - type2.location.y)*(type1.location.y - type2.location.y)); \
+		dist = sqrt((type1.location.x - type2.location.x)*(type1.location.x - type2.location.x) \
+	+ (type1.location.y - type2.location.y)*(type1.location.y - type2.location.y)); \
 	} while(0) 
 
 //骑手状态
