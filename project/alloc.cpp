@@ -4,22 +4,8 @@
 #include "function.h"
 #include "globalvar.h"
 
-float pack_insert(Cavalier *cav, Order *order)
+void alloc(int oid)
 {
-	int status = cav->status;
-	if (status == FULL)
-	{
-		printf("pack_insert failed: cavalier is FULL!");
-		exit(0);
-	}
-	else if (status == FREE)
-	{
-		cav->status = AVAILABLE;
-		cav->pack_num ++;
-
-	}
+	queue_update(order[oid].time, cav_full_list);
+	queue_update(order[oid].time, cav_available_list);
 }
-
-
-void insertstation(Order *order, Cavalier *cav)
-{}

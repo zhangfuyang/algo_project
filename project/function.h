@@ -11,4 +11,7 @@ Restaurant rid2restaurant(int rid);
 float cal_bottlenecktime(Station_list station_list);
 void List_copy_station(Station_list *head, Station_list *head1);
 void output();
+void queue_init();
+void queue_update(int time, Cav_list cav_list);
+void alloc(int oid);
 #endif

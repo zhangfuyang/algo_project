@@ -24,21 +24,26 @@ int main()
 
 	filein(restaurant, district, order, restaurant_num, district_num, cavalier_num, C, N, "sample.txt");
 	
-	cout << restaurant_num<<" "<<district_num<<" "<<cavalier_num<<" "<<C << " " << N << endl;
-	
-	for (int i = 1; i <= restaurant_num; i++)
-	{
-		cout << restaurant[i].location.x << " " << restaurant[i].location.y << endl;
-	}
-	for (int i = 1; i <= district_num; i++)
-	{
-		cout << district[i].location.x << " " << district[i].location.y << endl;
-	}
+	//cout << restaurant_num<<" "<<district_num<<" "<<cavalier_num<<" "<<C << " " << N << endl;
+	//
+	//for (int i = 1; i <= restaurant_num; i++)
+	//{
+	//	cout << restaurant[i].location.x << " " << restaurant[i].location.y << endl;
+	//}
+	//for (int i = 1; i <= district_num; i++)
+	//{
+	//	cout << district[i].location.x << " " << district[i].location.y << endl;
+	//}
+	//for (int i = 1; i <= N; i++)
+	//{
+	//	cout << order[i].time << " " << order[i].rid << " " << order[i].did << endl;
+	//}
+	queue_init();
 	for (int i = 1; i <= N; i++)
 	{
-		cout << order[i].time << " " << order[i].rid << " " << order[i].did << endl;
+		alloc(i);
 	}
 	//cout << place2xy(restaurant[2]).x << " " << place2xy(restaurant[2]).y << endl;
-	output();
+	//output();
 	system("pause");
 }
