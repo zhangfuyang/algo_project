@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void output(Station_list *print)
+void output()
 {
 	int i,num; //i是骑士的循环变量 num是骑士[i]有多少个关键路径
 	int *order_id;
@@ -16,12 +16,17 @@ void output(Station_list *print)
 	order_id = new int[C];
 	for (i = 1; i <= cavalier_num; i++)
 	{
+		for (int l = 0; l < C; l++)
+		{
+			order_id[l] = 0;
+		}
 		size = 0; //size归0
 		cout << "**********************************************" << endl;
 		LIST_SIZE(temp, &cavalier[i].station_list, station_link, num);
 		cout << i << " " << num << endl;
 		temp = LIST_FIRST(&cavalier[i].station_list);
 		size++;
+		order_id[size] = temp->oid;
 		while (temp != NULL)
 		{
 			cout << temp->location.x << " " << temp->location.y << " "
@@ -32,6 +37,7 @@ void output(Station_list *print)
 				if (temp->type = RESTAURANT)
 				{
 					size++;
+					order_id[size] = judge->oid;
 				}
 				if (temp->type = DISTRICT)
 				{
@@ -39,8 +45,11 @@ void output(Station_list *print)
 				}
 				judge = LIST_NEXT(judge, station_link);
 			}
-			cout << size << " ";
-			
+			cout << size;
+			for (int l = 0; l < size; l++)
+			{
+				cout << " " << order_id[l];
+			}
 			cout << endl;
 			temp = judge;
 		}

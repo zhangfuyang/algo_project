@@ -1,4 +1,5 @@
 #ifndef _GLOBALVAR_H_
+#include "struct.h"
 extern Restaurant *restaurant;
 extern District *district;
 extern Order *order;

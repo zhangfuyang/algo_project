@@ -8,4 +8,5 @@ Location  place2xy(Place place);
 //Restaurant packid2restaurant(Cavalier *cav, int packid);
 District did2district(int did);
 Restaurant rid2restaurant(int rid);
+void output();
 #endif
