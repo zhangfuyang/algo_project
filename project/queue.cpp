@@ -92,59 +92,6 @@ void queue_update(int time, Cav_list cav_list)
 	}
 }
 
-float find_free_cavalier(Order *order, Cavalier *cav)  //µ±Free¡–±Ì≤ªŒ™ø’ ±£¨∏¯Free¡–±Ì÷–µƒ∆Ô ø∑÷≈‰∂©µ•
-{
-	float time = order->time;
-	float distance;
-	float origintime = 10000;
-	float time_dst; //distanceµƒæ‡¿Î
-	Cavalier *luckyone;
-	Station  *first;
-	LIST_FOREACH(luckyone, &cav_free_list, cav_link)
-	{
-		first = LIST_FIRST(&luckyone->station_list);
-		DISTANCE((*first), restaurant[order->rid], distance);
-		TIME(distance, time_dst);
-		if (first == NULL)
-		{
-			DISTANCE(did2district(order->did), rid2restaurant(order->rid), distance);
-			TIME(distance, time);
-			return time;
-		}
-		if (time_dst + first->arrivetime < time) {  //arrivetime∫Õleavetimeœ‡Õ¨
-			if (time - (time_dst + first->arrivetime) < origintime){
-				origintime = time - (time_dst + first->arrivetime);
-				cav = luckyone;
-			}
-		}
-	}
-	if (cav != NULL)
-	{
-		DISTANCE(did2district(order->did), rid2restaurant(order->rid), distance);
-		TIME(distance, time);
-		return origintime + time;
-	}
-	if (origintime == 10000) 
-	{
-		LIST_FOREACH(luckyone, &cav_free_list, cav_link)
-		{
-			first = LIST_FIRST(&luckyone->station_list);
-			DISTANCE((*first), restaurant[order->rid], distance);
-			TIME(distance, time_dst);
-			if (time_dst + first->arrivetime < origintime) {
-				origintime = time_dst +first->arrivetime;
-				cav = luckyone;
-			}
-		}
-	}
-	if (cav == NULL)
-		return -1;
-	DISTANCE(did2district(order->did), rid2restaurant(order->rid), distance);
-	TIME(distance, time);
-	return time;
-}
-
-
 float Insert_order(Order *order, Station_list *head) {           //∑µªÿ≤Â»Î∫Ûµƒ◊Ó¥Û ±º‰
 	Station *var = NULL;
 	Station *choose = NULL;
@@ -187,7 +134,7 @@ float Insert_order(Order *order, Station_list *head) {           //∑µªÿ≤Â»Î∫Ûµƒ◊
 	}
 	newstation->location.x = x1;
 	newstation->location.y = y1;
-	newstation->oid = order->orderid;
+	newstation->oid = order->oid;
 	newstation->type = RESTAURANT;
 
 	LIST_INSERT_AFTER(choose, newstation, station_link);       //≤Â»Î
@@ -237,7 +184,7 @@ float Insert_order(Order *order, Station_list *head) {           //∑µªÿ≤Â»Î∫Ûµƒ◊
 	
 	newstation->location.x = x2;
 	newstation->location.y = y2;
-	newstation->oid = order->orderid;
+	newstation->oid = order->oid;
 	newstation->type = DISTRICT;
 
 	LIST_INSERT_AFTER(choose, newstation, station_link);     //≤Â»Î–°«¯

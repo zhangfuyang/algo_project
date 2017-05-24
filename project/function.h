@@ -21,4 +21,7 @@ float find_free_cavalier(Order *order, Cavalier *cav);
 float find_available_cavalier(Order *order, Cavalier *cav);
 float find_full_cavalier(Order *order, Cavalier *cav);
 void alloc(Order *order);
+float find_free_costtime(Cavalier cav, Order order);
+float find_init_costtime(Cavalier cav, Order order);
+float find_full_costtime(Cavalier cav, Order order);
 #endif
