@@ -34,10 +34,31 @@
 	(elm)->field.le_prev = &LIST_FIRST((head));	\
 	} while (0)
 
+#define	LIST_INSERT_AFTER(listelm, elm, field) do {			\
+	if ((LIST_NEXT((elm), field) = LIST_NEXT((listelm), field)) != NULL)\
+		LIST_NEXT((listelm), field)->field.le_prev =		\
+		    &LIST_NEXT((elm), field);				\
+	LIST_NEXT((listelm), field) = (elm);				\
+	(elm)->field.le_prev = &LIST_NEXT((listelm), field);		\
+} while (0)
+
+#define	LIST_INSERT_BEFORE(listelm, elm, field) do {			\
+	(elm)->field.le_prev = (listelm)->field.le_prev;		\
+	LIST_NEXT((elm), field) = (listelm);				\
+	*(listelm)->field.le_prev = (elm);				\
+	(listelm)->field.le_prev = &LIST_NEXT((elm), field);		\
+} while (0)
+
 #define LIST_REMOVE(elm, field) do{			\
-	if ((LIST_NEXT((elm), field)  != NULL)	\
+	if (LIST_NEXT((elm), field)  != NULL)	\
 		LIST_NEXT((elm),field)->field.le_prev = (elm)->field.le_prev;\
 	*(elm)->field.le_prev = LIST_NEXT((elm),field);	\
+	} while (0)
+
+#define LIST_LAST(elm, head, field)	do {			\
+		LIST_FOREACH(elm, head, field)		\
+			if(LIST_NEXT((elm), field) == NULL)	\
+				break;\
 	} while (0)
 
 #define LIST_SIZE(var, head, field, k) do{		\
@@ -45,6 +66,7 @@
 		LIST_FOREACH(var, head, field)		\
 			k++;			\
 	} while (0)
+
 
 
 #endif /*_QUEUE_H_*/

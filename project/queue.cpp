@@ -27,10 +27,10 @@ void queue_init()
 void queue_update(int time)
 {
 	Cavalier *cav;
-
 	LIST_FOREACH(cav, &cav_full_list, cav_link)
 	{
-		Station *station, *temp = NULL;
+		Station *station, *temp = NULL, *last;
+		int pack_release_num = 0;
 		//寻找骑手在该时刻到达的DISTRICT
 		LIST_FOREACH(station, &cav->station_list, station_link)
 		{
@@ -39,6 +39,7 @@ void queue_update(int time)
 				if (station->type = DISTRICT)
 				{
 					temp = station;
+					pack_release_num++;
 				}
 				else if (station->type = RESTAURANT)
 				{
@@ -50,8 +51,24 @@ void queue_update(int time)
 				break;
 			}
 		}
-		//将找的DISTRICT之前的路径移除，并插入
-		if
+		//将找的DISTRICT之前的路径移除，并插入print
+		if (temp != NULL)
+		{
+			LIST_LAST(last, &print[cav->id], station_link);
+			LIST_FOREACH(station, &cav->station_list, station_link)
+			{
+				if (station = temp)
+				{
+					break;
+				}
+				else
+				{
+					LIST_INSERT_AFTER(last, station, station_link);
+					LIST_REMOVE(station, station_link);
+				}
+			}
+		}
+		cav->pack_num -= pack_release_num;
 	}
 }
 

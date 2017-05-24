@@ -60,6 +60,7 @@ struct Cavalier {            //ÆïÊÖ¾ßÌåĞÅÏ¢£ºµ±Ç°Î»ÖÃµÄ×ø±êĞÅÏ¢¡¢µ±Ç°µÄÊ±¿Ì¡¢µ±Ç
 	//float now;				//ÆïÊ¿µ±Ç°Ê±¼ä
 	//float end;				//ÆïÊ¿Íê³ÉËùÓĞÈÎÎñµÄÊ±¼ä
 	////¶ÔÓÚFREEÆïÊ¿£ºnow = end
+	int id;					//ÆïÊÖid
 	int status;				//FREE or FULL or AVAILABLE
 	int pack_num;
 	float bottlenecktime;	//ÆïÊÖµ±Ç°¶©µ¥ÖĞ×î´óµÈ´ıÊ±¼ä
