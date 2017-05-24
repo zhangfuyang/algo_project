@@ -3,17 +3,6 @@
 #include "queue.h"
 #define _STRUCT_H_
 
-//计算两点间距离的宏函数
-#define DISTANCE(type1, type2, dist) do {			\
-		dist = sqrt((type1.location.x - type2.location.x)*(type1.location.x - type2.location.x) \
-	+ (type1.location.y - type2.location.y)*(type1.location.y - type2.location.y)); \
-	} while(0) 
-#define MAX(a, b, max) do {		\
-		max=(a>b)?a:b;			\
-}while(0)
-#define MIN(a, b, min) do {		\
-		min=(a<b)?a:b;			\
-}while(0)
 //骑手状态
 #define INIT 0
 #define FREE 1
@@ -22,6 +11,21 @@
 //位置属性
 #define RESTAURANT 0
 #define DISTRICT 1
+
+//计算两点间距离的宏函数
+#define DISTANCE(type1, type2, dist) do {			\
+		dist = sqrt((type1.location.x - type2.location.x)*(type1.location.x - type2.location.x) \
+	+ (type1.location.y - type2.location.y)*(type1.location.y - type2.location.y)); \
+	} while(0) 
+//计算最大值
+#define MAX(a, b, max) do {		\
+		max=(a>b)?a:b;			\
+}while(0)
+//计算最小值
+#define MIN(a, b, min) do {		\
+		min=(a<b)?a:b;			\
+}while(0)
+
 
 struct Location {            //坐标结构体
 	int x;
