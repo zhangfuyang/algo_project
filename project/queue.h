@@ -76,8 +76,8 @@
 	}while(0)
 
 #define LIST_CHANGE(elm, head, field) do{	\
-		LIST_REMOVE((elm), field)\
-		LIST_INSERT_HEAD((head), (elm), field)\
+		LIST_REMOVE((elm), field);\
+		LIST_INSERT_HEAD((head), (elm), field);\
 } while(0)
 
 
