@@ -8,7 +8,12 @@
 #define DISTANCE(type1, type2, dist) do {			\
 		dist = sqrt((type1.location.x - type2.location.x)*(type1.location.x - type2.location.x) + (type1.location.y - type2.location.y)*(type1.location.y - type2.location.y)); \
 	} while(0) 
-
+#define MAX(a, b, max) do {		\
+		max=(a>b)?a:b;			\
+}while(0)
+#define MIN(a, b, min) do {		\
+		min=(a<b)?a:b;			\
+}while(0)
 //ÆïÊÖ×´Ì¬
 #define INIT 0
 #define FREE 1

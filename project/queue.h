@@ -27,6 +27,9 @@
 #define LIST_FOREACH(var, head, field) 	\
 	for((var) = LIST_FIRST((head)); (var); (var) = LIST_NEXT((var), field))
 
+#define LIST_FOREACH2(var, head, field) 	\
+	for((var) = LIST_NEXT(LIST_FIRST((head)),field); (var); (var) = LIST_NEXT((var), field))
+
 #define LIST_INSERT_HEAD(head, elm, field)	do{	\
 	if ((LIST_NEXT((elm), field) = LIST_FIRST((head))) != NULL)	\
 		LIST_FIRST((head))->field.le_prev = &LIST_NEXT((elm), field);\
