@@ -125,3 +125,19 @@ void find_free_cavalier(Order *order, Cavalier *cav)  //当Free列表不为空时，给Fr
 
 	}
 }
+
+
+float Insert_order(Order *order, Station_list head) {           //返回插入后的最大时间
+	Station *var = NULL;
+	int x1 = restaurant[order->rid].location.x;
+	int y1 = restaurant[order->rid].location.y;
+	int x2 = restaurant[order->did].location.x;
+	int y2 = restaurant[order->did].location.y;
+
+
+
+
+}
+
+
+
