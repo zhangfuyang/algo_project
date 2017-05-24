@@ -17,6 +17,20 @@ void alloc(Order *order)
 
 	if (free_costtime > 0 & available_costtime > 0 & full_costtime > 0)
 	{
-		MIN(free_time, 
+	
 	}
 }
+
+
+
+float cav_bottletime(Cavalier cav, Order order) {     //返回将order给该骑士后的瓶颈时间
+	float T;
+	Station_list *head_copy = NULL;
+
+	station_list_copy(&(cav.station_list), head_copy);
+	T = Insert_order(&order, head_copy);
+	free_list(head_copy);
+	
+	return T;
+}
+

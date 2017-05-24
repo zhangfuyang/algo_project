@@ -14,6 +14,8 @@ Restaurant rid2restaurant(int rid);
 //特殊功能函数
 float cal_bottlenecktime(Station_list station_list);
 void station_list_copy(Station_list *from, Station_list *to);
+float Insert_order(Order *order, Station_list *head);
+void free_list(Station_list *head);
 //核心函数
 void queue_init();
 void queue_update(int time, Cav_list cav_list);

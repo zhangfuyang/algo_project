@@ -145,7 +145,7 @@ float find_free_cavalier(Order *order, Cavalier *cav)  //µ±FreeÁÐ±í²»Îª¿ÕÊ±£¬¸øF
 }
 
 
-float Insert_order(Order *order, Station_list *head) {           //·µ»Ø²åÈëºóµÄ×î´óÊ±¼ä
+float Insert_order(Order *order, Station_list *head) {      //³¢ÊÔ½«Ä³¸ö¶©µ¥²åÈëÆïÊ¿µÄStationÁÐ±í·µ»Ø²åÈëºóµÄ×î´óÊ±¼ä
 	Station *var = NULL;
 	Station *choose = NULL;
 	Station *newstation = NULL;
@@ -174,7 +174,9 @@ float Insert_order(Order *order, Station_list *head) {           //·µ»Ø²åÈëºóµÄ×
 		}
 	}
 
-	newstation = new Station[1];           
+	newstation = new Station[1];
+	newstation->station_link.le_next = NULL;
+	newstation->station_link.le_prev = NULL;
 
 	DISTANCE((*choose), restaurant[order->rid], dist1);
 
@@ -228,6 +230,8 @@ float Insert_order(Order *order, Station_list *head) {           //·µ»Ø²åÈëºóµÄ×
 	}
 
 	newstation = new Station[1];
+	newstation->station_link.le_next = NULL;
+	newstation->station_link.le_prev = NULL;
 
 	DISTANCE((*choose), district[order->did], dist1);
 

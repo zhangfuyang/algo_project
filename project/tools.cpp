@@ -23,6 +23,8 @@ void station_list_copy(Station_list *from, Station_list *to)//将以head开头的链表
 	LIST_FOREACH(var1, from, station_link)
 	{
 		var2 = new Station[1];
+		var2->station_link.le_next = NULL;
+		var2->station_link.le_prev = NULL;
 		var2->arrivetime = var1->arrivetime;
 		var2->leavetime = var1->leavetime;
 		var2->location = var1->location;
@@ -33,7 +35,7 @@ void station_list_copy(Station_list *from, Station_list *to)//将以head开头的链表
 	}
 }
 
-float cal_bottlenecktime(Stati1on_list station_list)	//计算一个stationlist中的瓶颈值
+float cal_bottlenecktime(Station_list station_list)	//计算一个stationlist中的瓶颈值
 {
 	float bottlenecktime = 0, temp = 0;
 	Station *station;
@@ -46,4 +48,23 @@ float cal_bottlenecktime(Stati1on_list station_list)	//计算一个stationlist中的瓶
 		}
 	}
 	return bottlenecktime;
+}
+
+
+void free_list(Station_list *head) {                  //free掉复制好的链表以释放空间
+	Station *fp = NULL;
+	Station *bp = NULL;
+
+	fp = LIST_FIRST(head);
+	
+	while (fp != NULL) {
+		bp = LIST_NEXT(fp, station_link);
+		free(fp);
+		fp = bp;
+	}
+
+	free(fp);
+	free(bp);
+	free(head);
+
 }
