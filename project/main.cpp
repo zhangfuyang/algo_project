@@ -39,11 +39,14 @@ int main()
 	//	cout << order[i].time << " " << order[i].rid << " " << order[i].did << endl;
 	//}
 	queue_init();
+
 	for (int i = 1; i <= N; i++)
 	{
-		alloc(i);
+		alloc(order[i]);
 	}
+
 	//cout << place2xy(restaurant[2]).x << " " << place2xy(restaurant[2]).y << endl;
-	//output();
+	output();
+
 	system("pause");
 }
