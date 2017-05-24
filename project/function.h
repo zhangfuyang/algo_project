@@ -1,7 +1,7 @@
 #ifndef _FUNCTION_H_
 #include<string>
-void filein2(int &restaurant_num, int &district_num, int &cavalier_num, int &C, int &N, const char * fp);
-void filein(Restaurant* restaurant, District* district, Order* order, int &restaurant_num, int &district_num, int &cavalier_num, int &C, int &N, const char * fp);
+void input_size(int &restaurant_num, int &district_num, int &cavalier_num, int &C, int &N, const char * fp);
+void input_array(Restaurant* restaurant, District* district, Order* order, int &restaurant_num, int &district_num, int &cavalier_num, int &C, int &N, const char * fp);
 Location place2xy(Place);
 Location  place2xy(Place place);
 //District packid2district(Cavalier *cav, int packid);
@@ -16,4 +16,6 @@ void output();
 void queue_init();
 void queue_update(int time, Cav_list cav_list);
 void alloc(int oid);
+void find_free_cavalier(Order *order, Cavalier *cav);
+float Insert_order(Order *order, Station_list head);
 #endif

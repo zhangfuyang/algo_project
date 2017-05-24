@@ -3,7 +3,7 @@
 #include <string>
 #include "struct.h"
 using namespace std;
-void filein2(int &restaurant_num, int &district_num, int &cavalier_num, int &c, int &N, const char * file)
+void input_size(int &restaurant_num, int &district_num, int &cavalier_num, int &c, int &N, const char * file)
 {
 	ifstream fp(file);
 	string str;
@@ -46,7 +46,7 @@ void filein2(int &restaurant_num, int &district_num, int &cavalier_num, int &c, 
 	}
 	fp.close();
 }
-void filein(Restaurant* restaurant, District* district, Order* order, int &restaurant_num, int &district_num, int &cavalier_num, int &c, int &N, const char * file)
+void input_array(Restaurant* restaurant, District* district, Order* order, int &restaurant_num, int &district_num, int &cavalier_num, int &c, int &N, const char * file)
 {
 	ifstream fp(file);
 	string str;
