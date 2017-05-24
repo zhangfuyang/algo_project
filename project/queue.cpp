@@ -88,7 +88,7 @@ void queue_update(int time, Cav_list cav_list)
 	}
 }
 
-void find_free_cavalier(Order *order, Cavalier *cav)  //当Free列表不为空时，给Free列表中的骑士分配订单
+float find_free_cavalier(Order *order, Cavalier *cav)  //当Free列表不为空时，给Free列表中的骑士分配订单
 {
 	float time = order->time;
 	float distance;
@@ -110,14 +110,19 @@ void find_free_cavalier(Order *order, Cavalier *cav)  //当Free列表不为空时，给Fr
 		LIST_FOREACH(luckyone, &cav_free_list, cav_link)
 		{
 			DISTANCE((*LIST_FIRST(&luckyone->station_list)), restaurant[order->rid], distance);
-			
+
 			if (distance + LIST_FIRST(&luckyone->station_list)->arrivetime < origintime) {
 				origintime = distance + LIST_FIRST(&luckyone->station_list)->arrivetime;
 				cav = luckyone;
 			}
 		}
-
 	}
+	
+	if (cav == NULL)
+	{
+		return -1;
+	}
+	
 }
 
 
@@ -130,7 +135,7 @@ float Insert_order(Order *order, Station_list head) {           //返回插入后的最
 
 
 
-
+	return 0;
 }
 
 
