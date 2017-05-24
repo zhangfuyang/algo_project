@@ -14,7 +14,7 @@ void station_list_copy(Station_list *from, Station_list *to);
 
 void queue_init();
 void queue_update(int time, Cav_list cav_list);
-void find_free_cavalier(Order *order, Cavalier *cav);
+float find_free_cavalier(Order *order, Cavalier *cav);
 
 void alloc(int oid);
 
