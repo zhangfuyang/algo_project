@@ -70,7 +70,9 @@ float cal_full_costtime(Cavalier cav, Order order)
 }
 float cal_available_costtime(Cavalier cav, Order order) {     //返回将order给该骑士后的瓶颈时间
 	float T;
-	Station_list *head_copy = NULL;
+	Station_list *head_copy= new Station_list[1];
+
+	LIST_INIT(head_copy);
 
 	station_list_copy(&(cav.station_list), head_copy);
 	T = Insert_order(&order, head_copy);

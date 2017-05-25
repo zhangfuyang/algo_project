@@ -30,7 +30,13 @@ void station_list_copy(Station_list *from, Station_list *to)//将以head开头的链表
 		var2->location = var1->location;
 		var2->oid = var1->oid;
 		var2->type = var1->type;
-		LIST_INSERT_TAIL(to, var2, last, station_link);
+		LIST_LAST(last, to, station_link);
+		if (last == NULL) {
+			LIST_INSERT_HEAD(to, var2, station_link);
+		}
+		else {
+			LIST_INSERT_AFTER(last, var2, station_link);
+		}
 
 	}
 }

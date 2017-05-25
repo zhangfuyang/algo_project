@@ -48,12 +48,12 @@ void cav_update(int time)
 		{
 			if (station->arrivetime <= time)
 			{
-				if (station->type = DISTRICT)
+				if (station->type == DISTRICT)
 				{
 					temp = station;
 					pack_release_num++;
 				}
-				else if (station->type = RESTAURANT)
+				else if (station->type == RESTAURANT)
 				{
 					continue;
 				}
