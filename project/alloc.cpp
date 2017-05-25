@@ -77,7 +77,7 @@ float cal_available_costtime(Cavalier cav, Order order) {     //·µ»Ø½«order¸ø¸ÃÆ
 	station_list_copy(&(cav.station_list), head_copy);
 	T = Insert_order(&order, head_copy);
 	free_list(head_copy);
-
+	delete(head_copy);
 	return T;
 }
 

@@ -265,9 +265,9 @@ float Insert_order(Order *order, Station_list *head) {      //尝试将某个订单插入
 		
 		T2 = cal_bottlenecktime(*head);
 		if (T2 <= T1) {
-			free(oldlast);
-			free(newlast);
-			free(newnewstation);
+			delete(oldlast);
+			delete(newlast);
+			delete(newnewstation);
 			return T2;
 		}
 		else {
@@ -275,20 +275,16 @@ float Insert_order(Order *order, Station_list *head) {      //尝试将某个订单插入
 			copy_station(newlast, last);
 			copy_station(newnewstation, newstation);
 			LIST_INSERT_BEFORE(last, newstation, station_link);
-			free(oldlast);
-			free(newlast);
-			free(newnewstation);
+			delete(oldlast);
+			delete(newlast);
+			delete(newnewstation);
 			return T1;
 		}
-	
-	
-	
-	
 	}
 	else {
-		free(oldlast);
-		free(newlast);
-		free(newnewstation);
+		delete(oldlast);
+		delete(newlast);
+		delete(newnewstation);
 		return T1;
 	}
 
