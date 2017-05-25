@@ -14,7 +14,7 @@ void output()
 	Station *temp;
 	Station *judge; //判断temp后面的station还是不是相同的
 	int size; //骑士背包里还有多少order
-	
+	order_id = new int[C];
 	for (i = 1; i <= cavalier_num; i++)
 	{
 		for (int l = 0; l < C; l++)
