@@ -28,33 +28,31 @@ void output()
 		if (num == 0)
 			continue;
 		temp = LIST_FIRST(&cavalier[i].station_list);
-		size++;
 		order_id[size] = temp->oid;
-		while (temp != NULL)
+		size++;
+		while (1)
 		{
 			cout << temp->location.x << " " << temp->location.y << " "
 				<< temp->arrivetime << " " << temp->leavetime<<" ";
-			judge = LIST_NEXT(temp, station_link);
-			while (judge != NULL && judge->type == temp->type)
-			{
-				if (temp->type = RESTAURANT)
-				{
-					size++;
-					order_id[size] = judge->oid;
-				}
-				if (temp->type = DISTRICT)
-				{
-					size--;
-				}
-				judge = LIST_NEXT(judge, station_link);
-			}
 			cout << size;
 			for (int l = 0; l < size; l++)
 			{
 				cout << " " << order_id[l];
 			}
+			temp = LIST_NEXT(temp, station_link);
+			if (temp == NULL)
+			{
+				break;
+			}
+			if (temp->type == RESTAURANT)
+			{
+				order_id[size++] = temp->oid;
+			}
+			if (temp->type == DISTRICT)
+			{
+				size--;
+			}
 			cout << endl;
-			temp = judge;
 		}
 	}
 	for (i = 1; i <= cavalier_num; i++)
@@ -62,5 +60,5 @@ void output()
 		if (cal_bottlenecktime(cavalier[i].station_list) > max_time)
 			max_time = cal_bottlenecktime(cavalier[i].station_list);
 	}
-	cout << max_time;
+	cout << endl<<max_time;
 }
