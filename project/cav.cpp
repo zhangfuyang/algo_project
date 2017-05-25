@@ -104,16 +104,8 @@ void cav_update(int time)
 		if (pack_release_num != 0)
 		{
 			cavalier[i].pack_num -= pack_release_num;
-			if (cavalier[i].pack_num == 0)
-			{
-				cavalier[i].bottlenecktime = 0;
-				cavalier[i].status = FREE;
-			}
-			else if(cavalier[i].pack_num >= C)
-			{
-				cavalier[i].bottlenecktime = cal_bottlenecktime(cavalier[i].station_list);
-				cavalier[i].status = AVAILABLE;
-			}
+			cav_setstatus(&cavalier[i]);
+			cavalier[i].bottlenecktime = cal_bottlenecktime(cavalier[i].station_list);
 		}
 	}
 }
