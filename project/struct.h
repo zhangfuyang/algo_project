@@ -51,7 +51,6 @@ typedef Place District;
 struct Order {               //订单具体信息：下单时间、餐厅id、小区id、订单花费时间、订单id
 	int oid;
 	float time;
-	float costtime;
 	int rid;
 	int did;
 };
