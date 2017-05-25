@@ -35,7 +35,7 @@ float cal_init_costtime(Cavalier cav, Order order)
 
 	DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
 	TIME(distance, time);
-	printf("init;我是init骑手\n");
+	//printf("init;我是init骑手\n");
 	return time;
 }
 float cal_full_costtime(Cavalier cav, Order order)
@@ -118,6 +118,10 @@ int alloc(Order order)
 				costtime = temptime;
 				cavid = i;
 			}
+		}
+		if (cavalier[i].status == INIT)
+		{
+			break;
 		}
 	}
 	return cavid;

@@ -15,7 +15,7 @@ Station_list *print;
 
 int main()
 {
-	input_size(restaurant_num, district_num, cavalier_num, C, N, "small.txt");
+	input_size(restaurant_num, district_num, cavalier_num, C, N, "sample.txt");
 
 	restaurant = new Restaurant[restaurant_num+1];
 	district = new District[district_num+1];
@@ -23,7 +23,7 @@ int main()
 	cavalier = new  Cavalier[cavalier_num+1];
 	print = new Station_list[N+1];
 
-	input_array(restaurant, district, order, restaurant_num, district_num, cavalier_num, C, N, "small.txt");
+	input_array(restaurant, district, order, restaurant_num, district_num, cavalier_num, C, N, "sample.txt");
 	
 	cout << restaurant_num<<" "<<district_num<<" "<<cavalier_num<<" "<<C << " " << N << endl;
 	//
