@@ -31,6 +31,26 @@ void print_init()
 		LIST_INIT(&print[i]);
 	}
 }
+void cav_setstatus(Cavalier *cav)
+{
+	if (cav->pack_num < 0)
+	{
+		printf("pack_num error! cavalier id : %d", cav->id);
+	}
+	else if(cav->pack_num == 0)
+	{
+		cav->status = FREE;
+	}
+	else if (cav->pack_num >= C)
+	{
+		cav->status = FULL;
+	}
+	else
+	{
+		cav->status = AVAILABLE;
+	}
+}
+
 void cav_update(int time)
 {
 	int i;
@@ -66,12 +86,7 @@ void cav_update(int time)
 		//将找的DISTRICT之前的路径移除，并插入print
 		if (temp != NULL)
 		{
-			LIST_FOREACH(last, &print[i], station_link)
-			{
-				if (last->station_link.le_next == NULL)
-					break;
-			}
-			//LIST_LAST(last, &print[i], station_link);
+			LIST_LAST(last, &print[i], station_link);
 			LIST_FOREACH(station, &cavalier[i].station_list, station_link)
 			{
 				if (station == temp)
@@ -94,7 +109,7 @@ void cav_update(int time)
 				cavalier[i].bottlenecktime = 0;
 				cavalier[i].status = FREE;
 			}
-			else
+			else if(cavalier[i].pack_num >= C)
 			{
 				cavalier[i].bottlenecktime = cal_bottlenecktime(cavalier[i].station_list);
 				cavalier[i].status = AVAILABLE;
