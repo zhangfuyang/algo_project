@@ -10,10 +10,11 @@ void output()
 {
 	int i,num; //i是骑士的循环变量 num是骑士[i]有多少个关键路径
 	int *order_id;
+	int max_time = 0;
 	Station *temp;
 	Station *judge; //判断temp后面的station还是不是相同的
 	int size; //骑士背包里还有多少order
-	order_id = new int[C];
+	
 	for (i = 1; i <= cavalier_num; i++)
 	{
 		for (int l = 0; l < C; l++)
@@ -56,4 +57,10 @@ void output()
 			temp = judge;
 		}
 	}
+	for (i = 1; i <= cavalier_num; i++)
+	{
+		if (cal_bottlenecktime(cavalier[i].station_list) > max_time)
+			max_time = cal_bottlenecktime(cavalier[i].station_list);
+	}
+	cout << max_time;
 }

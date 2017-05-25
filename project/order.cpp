@@ -10,7 +10,6 @@ void order_init_insert(int cavid, Order order)
 	float distance;
 	float time;
 	temp = new Station[1];
-	cavalier[cavid].status = AVAILABLE;
 	LIST_INSERT_HEAD(&cavalier[cavid].station_list, temp, station_link);
 	temp->arrivetime = order.time;
 	temp->leavetime = order.time;
@@ -29,6 +28,7 @@ void order_init_insert(int cavid, Order order)
 	temp_dst->leavetime = temp->leavetime + time;
 	cavalier[cavid].pack_num++;
 	cavalier[cavid].bottlenecktime = cal_bottlenecktime(cavalier[cavid].station_list);
+	cav_setstatus(&cavalier[cavid]);
 }
 void order_full_insert(int cavid, Order order)
 {
@@ -36,7 +36,6 @@ void order_full_insert(int cavid, Order order)
 	float distance;
 	float time;
 	temp2 = new Station[1];
-	cavalier[cavid].status = FULL;
 	LIST_INSERT_TAIL(&cavalier[cavid].station_list, temp2, temp1, station_link);
 	temp2->location = (rid2restaurant(order.rid)).location;
 	temp2->type = RESTAURANT;
@@ -64,6 +63,7 @@ void order_full_insert(int cavid, Order order)
 	temp_dst->leavetime = temp2->leavetime + time;
 	cavalier[cavid].pack_num++;
 	cavalier[cavid].bottlenecktime = cal_bottlenecktime(cavalier[cavid].station_list);
+	cav_setstatus(&cavalier[cavid]);
 }
 void order_free_insert(int cavid, Order order)
 {
@@ -71,7 +71,6 @@ void order_free_insert(int cavid, Order order)
 	float distance;
 	float time;
 	temp2 = new Station[1];
-	cavalier[cavid].status = AVAILABLE;
 	temp1 = LIST_FIRST(&cavalier[cavid].station_list);
 	LIST_INSERT_TAIL(&cavalier[cavid].station_list, temp2, temp1, station_link);
 	temp2->location = (rid2restaurant(order.rid)).location;
@@ -100,6 +99,7 @@ void order_free_insert(int cavid, Order order)
 	temp_dst->leavetime = temp2->leavetime + time;
 	cavalier[cavid].pack_num++;
 	cavalier[cavid].bottlenecktime = cal_bottlenecktime(cavalier[cavid].station_list);
+	cav_setstatus(&cavalier[cavid]);
 }
 void order_available_insert(int cavid, Order order)
 {
@@ -107,7 +107,7 @@ void order_available_insert(int cavid, Order order)
 	time = Insert_order(&order, &(cavalier[cavid].station_list));
 	cavalier[cavid].pack_num++;
 	cavalier[cavid].bottlenecktime = cal_bottlenecktime(cavalier[cavid].station_list);
-	cavalier[cavid].status = AVAILABLE;
+	cav_setstatus(&cavalier[cavid]);
 }
 void order_insert(int cavid, Order order)
 {
