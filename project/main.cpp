@@ -67,7 +67,11 @@ int main()
 	//cout << place2xy(restaurant[2]).x << " " << place2xy(restaurant[2]).y << endl;
 	
 	output();
-
+	delete(restaurant);
+	delete(district);
+	delete(order);
+	delete(cavalier);
+	delete(print);
 	system("pause");
 }
 
