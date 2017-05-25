@@ -4,7 +4,7 @@
 #include"globalvar.h"
 #include"function.h"
 
-float find_free_costtime(Cavalier cav, Order order)  //当Free列表不为空时，给Free列表中的骑士分配订单
+float cal_free_costtime(Cavalier cav, Order order)  //当Free列表不为空时，给Free列表中的骑士分配订单
 {
 	float time = order.time;
 	float distance;
@@ -28,7 +28,7 @@ float find_free_costtime(Cavalier cav, Order order)  //当Free列表不为空时，给Fre
 		return time;
 	}
 }
-float find_init_costtime(Cavalier cav, Order order)
+float cal_init_costtime(Cavalier cav, Order order)
 {
 	float time;
 	float distance;
@@ -38,7 +38,19 @@ float find_init_costtime(Cavalier cav, Order order)
 	printf("init;我是init骑手\n");
 	return time;
 }
-float find_full_costtime(Cavalier cav, Order order)
+
+float cal_available_costtime(Cavalier cav, Order order) {     //返回将order给该骑士后的瓶颈时间
+	float T;
+	Station_list *head_copy = NULL;
+
+	station_list_copy(&(cav.station_list), head_copy);
+	T = Insert_order(&order, head_copy);
+	free_list(head_copy);
+
+	return T;
+}
+
+float cal_full_costtime(Cavalier cav, Order order)
 {
 	float time = order.time;
 	float time_dst;
@@ -113,13 +125,3 @@ int alloc(Order order)
 
 
 
-float cav_bottletime(Cavalier cav, Order order) {     //返回将order给该骑士后的瓶颈时间
-	float T;
-	Station_list *head_copy = NULL;
-
-	station_list_copy(&(cav.station_list), head_copy);
-	T = Insert_order(&order, head_copy);
-	free_list(head_copy);
-	
-	return T;
-}
