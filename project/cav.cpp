@@ -95,7 +95,14 @@ void cav_update(float time)
 				}
 				else
 				{
-					LIST_INSERT_AFTER(last, station, station_link);
+					if (last != NULL)
+					{
+						LIST_INSERT_AFTER(last, station, station_link);
+					}
+					else
+					{
+						LIST_INSERT_HEAD(&cavalier[i].station_list, station, station_link);
+					}
 					LIST_REMOVE(station, station_link);
 				}
 			}
@@ -114,6 +121,10 @@ float Insert_order(Order *order, Station_list *head) {      //尝试将某个订单插入
 	Station *var = NULL;
 	Station *choose = NULL;
 	Station *newstation = NULL;
+	Station *last = NULL;
+	Station *oldlast = new Station[1];
+	Station *newlast = new Station[1];
+	Station *newnewstation = new Station[1];
 	int x1 = restaurant[order->rid].location.x;         //订单的餐厅坐标            
 	int y1 = restaurant[order->rid].location.y;
 	int x2 = district[order->did].location.x;		    //订单的小区坐标
@@ -124,6 +135,8 @@ float Insert_order(Order *order, Station_list *head) {      //尝试将某个订单插入
 	float mindis = 10000;              //取最短距离变量
 	float delaytime;                   //插入后修改后面的station所用的延迟时间
 	float T;                           //返回的插入后的瓶颈时间
+	float T1;
+	float T2;                          //用于比较如果小区插在倒数第二个位置，是插在倒数第二个位置好，还是插在尾部好
 
 
 	LIST_FOREACH(var, head, station_link)             //取得餐厅插入位置         
@@ -211,14 +224,20 @@ float Insert_order(Order *order, Station_list *head) {      //尝试将某个订单插入
 
 	LIST_INSERT_AFTER(choose, newstation, station_link);     //插入小区
 
+	copy_station(newstation, newnewstation);
+
 	var = LIST_NEXT(newstation, station_link);
 
 	DISTANCE((*var), district[order->did], dist2);
 
 	delaytime = newstation->leavetime + dist2 - var->arrivetime;
 
+	LIST_LAST(last, head, station_link);
 
-	LIST_FOREACH_FROM(var, head, station_link)             //更新插入小区之后的
+	copy_station(last, oldlast);
+	
+
+	LIST_FOREACH_FROM(var, head, station_link)             //更新插入小区之后的各项信息
 	{
 		var->arrivetime = var->arrivetime + delaytime;
 		if (var->leavetime >= var->arrivetime) {
@@ -230,8 +249,50 @@ float Insert_order(Order *order, Station_list *head) {      //尝试将某个订单插入
 		}
 	}
 
-	T = cal_bottlenecktime(*head);
-	return T;
+	copy_station(last, newlast);
+
+	T1 = cal_bottlenecktime(*head);
+
+	if ((LIST_NEXT(LIST_NEXT(newstation, station_link), station_link)) == NULL) {
+		copy_station(oldlast, last);
+		LIST_REMOVE(newstation, station_link);
+		DISTANCE(district[order->did], (*last), dist1);
+
+		newstation->arrivetime = last->leavetime + dist1;
+		newstation->leavetime = newstation->arrivetime;
+
+		LIST_INSERT_AFTER(last, newstation, station_link);
+		
+		T2 = cal_bottlenecktime(*head);
+		if (T2 <= T1) {
+			free(oldlast);
+			free(newlast);
+			free(newnewstation);
+			return T2;
+		}
+		else {
+			LIST_REMOVE(newstation, station_link);
+			copy_station(newlast, last);
+			copy_station(newnewstation, newstation);
+			LIST_INSERT_BEFORE(last, newstation, station_link);
+			free(oldlast);
+			free(newlast);
+			free(newnewstation);
+			return T1;
+		}
+	
+	
+	
+	
+	}
+	else {
+		free(oldlast);
+		free(newlast);
+		free(newnewstation);
+		return T1;
+	}
+
+
 }
 
 

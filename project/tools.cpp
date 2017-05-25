@@ -74,3 +74,12 @@ void free_list(Station_list *head) {                  //free掉复制好的链表以释放
 	free(head);
 
 }
+
+void copy_station(Station *listfrom, Station *listto) {
+	listto->arrivetime = listfrom->arrivetime;
+	listto->leavetime = listfrom->leavetime;
+	listto->location = listfrom->location;
+	listto->oid = listfrom->oid;
+	listto->station_link = listfrom->station_link;
+	listto->type = listfrom->type;
+}

@@ -16,6 +16,7 @@ Restaurant rid2restaurant(int rid);
 //特殊功能函数
 float cal_bottlenecktime(Station_list station_list);
 void station_list_copy(Station_list *from, Station_list *to);
+void copy_station(Station *listfrom, Station *listto);
 float Insert_order(Order *order, Station_list *head);
 void free_list(Station_list *head);
 
