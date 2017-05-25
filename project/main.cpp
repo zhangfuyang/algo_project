@@ -39,6 +39,7 @@ int main()
 	//{
 	//	cout << order[i].time << " " << order[i].rid << " " << order[i].did << endl;
 	//}
+	print_init();
 	cav_init();
 
 	for (int i = 1; i <= N; i++)

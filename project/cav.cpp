@@ -24,7 +24,13 @@ void cav_init()
 		LIST_INIT(&cavalier[i].station_list);
 	}
 }
-
+void print_init()
+{
+	for (int i = 1; i <= cavalier_num; i++)
+	{
+		LIST_INIT(&print[i]);
+	}
+}
 void cav_update(int time)
 {
 	int i;

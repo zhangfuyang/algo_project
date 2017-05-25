@@ -23,7 +23,7 @@ void free_list(Station_list *head);
 //cav
 void cav_init();
 void cav_update(int time);
-
+void print_init();
 //alloc
 int alloc(Order order);
 float cal_init_costtime(Cavalier cavalier, Order order);
