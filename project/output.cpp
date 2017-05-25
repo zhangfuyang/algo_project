@@ -24,6 +24,8 @@ void output()
 		cout << "**********************************************" << endl;
 		LIST_SIZE(temp, &cavalier[i].station_list, station_link, num);
 		cout << i << " " << num << endl;
+		if (num == 0)
+			continue;
 		temp = LIST_FIRST(&cavalier[i].station_list);
 		size++;
 		order_id[size] = temp->oid;
