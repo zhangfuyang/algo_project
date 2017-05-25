@@ -101,7 +101,7 @@ void cav_update(float time)
 					}
 					else
 					{
-						LIST_INSERT_HEAD(&cavalier[i].station_list, station, station_link);
+						LIST_INSERT_HEAD(&print[i], station, station_link);
 					}
 					LIST_REMOVE(station, station_link);
 				}
