@@ -32,7 +32,7 @@ void output()
 			cout << temp->location.x << " " << temp->location.y << " "
 				<< temp->arrivetime << " " << temp->leavetime<<" ";
 			judge = LIST_NEXT(temp, station_link);
-			while (judge->type == temp->type)
+			while (judge != NULL && judge->type == temp->type)
 			{
 				if (temp->type = RESTAURANT)
 				{
