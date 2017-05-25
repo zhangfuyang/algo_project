@@ -72,27 +72,4 @@ int main()
 
 
 
-int *nearestrestaurant(Restaurant *restaurant, District *district) {
-	int *nearest = NULL;
-	int i, j;
-	float smldist = 10000;
-	float dist;
-	int choose;
-	nearest = new int[district_num + 1];
-	for (i = 1; i <= district_num; i++) {
-		for (j = 1; j <= restaurant_num; j++) {
-			DISTANCE(restaurant[j], district[i], dist);
-			if (dist < smldist) {
-				smldist = dist;
-				choose = j;
-			}
-		
-		}
-		nearest[i] = choose;
-		smldist = 10000;
-	}
-
-	return nearest;
-
-}
 
