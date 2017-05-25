@@ -103,7 +103,11 @@ void order_free_insert(int cavid, Order order)
 }
 void order_available_insert(int cavid, Order order)
 {
-
+	float time;
+	time = Insert_order(&order, &(cavalier[cavid].station_list));
+	cavalier[cavid].pack_num++;
+	cavalier[cavid].bottlenecktime = cal_bottlenecktime(cavalier[cavid].station_list);
+	cavalier[cavid].status = AVAILABLE;
 }
 void order_insert(int cavid, Order order)
 {
