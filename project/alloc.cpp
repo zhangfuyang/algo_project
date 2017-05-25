@@ -38,18 +38,6 @@ float cal_init_costtime(Cavalier cav, Order order)
 	printf("init;我是init骑手\n");
 	return time;
 }
-
-float cal_available_costtime(Cavalier cav, Order order) {     //返回将order给该骑士后的瓶颈时间
-	float T;
-	Station_list *head_copy = NULL;
-
-	station_list_copy(&(cav.station_list), head_copy);
-	T = Insert_order(&order, head_copy);
-	free_list(head_copy);
-
-	return T;
-}
-
 float cal_full_costtime(Cavalier cav, Order order)
 {
 	float time = order.time;
@@ -79,6 +67,16 @@ float cal_full_costtime(Cavalier cav, Order order)
 		TIME(distance, time);
 		return time;
 	}
+}
+float cal_available_costtime(Cavalier cav, Order order) {     //返回将order给该骑士后的瓶颈时间
+	float T;
+	Station_list *head_copy = NULL;
+
+	station_list_copy(&(cav.station_list), head_copy);
+	T = Insert_order(&order, head_copy);
+	free_list(head_copy);
+
+	return T;
 }
 
 int alloc(Order order)
