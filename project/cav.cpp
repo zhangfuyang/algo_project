@@ -95,7 +95,14 @@ void cav_update(float time)
 				}
 				else
 				{
-					LIST_INSERT_AFTER(last, station, station_link);
+					if (last != NULL)
+					{
+						LIST_INSERT_AFTER(last, station, station_link);
+					}
+					else
+					{
+						LIST_INSERT_HEAD(&cavalier[i].station_list, station, station_link);
+					}
 					LIST_REMOVE(station, station_link);
 				}
 			}
