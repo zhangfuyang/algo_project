@@ -60,10 +60,15 @@ void cav_update(int time)
 		//将找的DISTRICT之前的路径移除，并插入print
 		if (temp != NULL)
 		{
-			LIST_LAST(last, &print[i], station_link);
+			LIST_FOREACH(last, &print[i], station_link)
+			{
+				if (last->station_link.le_next == NULL)
+					break;
+			}
+			//LIST_LAST(last, &print[i], station_link);
 			LIST_FOREACH(station, &cavalier[i].station_list, station_link)
 			{
-				if (station = temp)
+				if (station == temp)
 				{
 					break;
 				}
