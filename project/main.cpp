@@ -44,7 +44,18 @@ int main()
 	for (int i = 1; i <= N; i++)
 	{
 		int cavid;
-
+		/*for (j = 1; i <= cavalier_num; i++)
+		{
+			cout << i << endl;
+			if (cavalier[i].status == AVAILABLE)
+				cout << "AVAILABE" << "  ";
+			if (cavalier[i].status == FULL)
+				cout << "FULL" << "  ";
+			if (cavalier[i].status == FREE)
+				cout << "FREE" << "  ";
+			if (cavalier[i].status == INIT)
+				cout << "INIT" << "  ";
+		}*/
 		cav_update(order[i].time);
 		
 		cavid = alloc(order[i]);

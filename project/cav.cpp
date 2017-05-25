@@ -20,6 +20,7 @@ void cav_init()
 	{
 		cavalier[i].status = INIT;
 		cavalier[i].pack_num = 0;
+		cavalier[i].id = i;
 		LIST_INIT(&cavalier[i].station_list);
 	}
 }
