@@ -50,6 +50,14 @@ void output()
 			}
 			if (temp->type == DISTRICT)
 			{
+				int l;
+				for (l = 0; l < size; l++)
+					if (order_id[l] == temp->oid)
+						break;
+				for (int j = l; j < size - 1; j++)
+				{
+					order_id[j] = order_id[j + 1];
+				}
 				size--;
 			}
 			cout << endl;
