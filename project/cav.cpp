@@ -51,7 +51,7 @@ void cav_setstatus(Cavalier *cav)
 	}
 }
 
-void cav_update(int time)
+void cav_update(float time)
 {
 	int i;
 	for(i=1; i<=cavalier_num; i++)
