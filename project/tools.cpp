@@ -67,13 +67,13 @@ void free_list(Station_list *head) {                  //free掉复制好的链表以释放
 	
 	while (fp != NULL) {
 		bp = LIST_NEXT(fp, station_link);
-		free(fp);
+		delete(fp);
 		fp = bp;
 	}
 
-	free(fp);
-	free(bp);
-	free(head);
+	delete(fp);
+	delete(bp);
+	delete(head);
 
 }
 

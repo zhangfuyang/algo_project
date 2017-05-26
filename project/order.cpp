@@ -37,9 +37,10 @@ void order_full_insert(int cavid, Order order)
 	float time;
 	temp2 = new Station[1];
 	LIST_INSERT_TAIL(&cavalier[cavid].station_list, temp2, temp1, station_link);
+	//temp1是最后一个小区   temp2是新的order
 	temp2->location = (rid2restaurant(order.rid)).location;
 	temp2->type = RESTAURANT;
-	DISTANCE((*temp2), rid2restaurant(order.rid), distance);
+	DISTANCE((*temp1), rid2restaurant(order.rid), distance);
 	TIME(distance, time);
 	if (time + temp1->arrivetime < order.time)
 	{
