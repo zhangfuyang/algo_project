@@ -20,10 +20,13 @@ void output()
 		temp = LIST_FIRST(&cavalier[i].station_list);
 		if (LIST_FIRST(&print[i]) == NULL)
 		{
-			LIST_INSERT_HEAD(&print[i], temp, station_link);
+			print[i].lh_first = temp;
 		}
 		else
-			LIST_INSERT_TAIL(&print[i], temp, temp1, station_link);
+		{
+			LIST_LAST(temp1, &print[i], station_link);
+			temp1->station_link.le_next = temp;
+		}
 	}
 	for (i = 1; i <= cavalier_num; i++)
 	{
