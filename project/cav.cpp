@@ -97,7 +97,7 @@ void cav_update(float time)
 		//将找的DISTRICT之前的路径移除，并插入print
 		if (temp != NULL)
 		{
-			printf("update cav %d: order %d type:%d	arrivetime: %f", i, temp->oid, temp->type, temp->arrivetime);
+			printf("update cav %d:	 order %d	type:%d		arrivetime: %f\n", i, temp->oid, temp->type, temp->arrivetime);
 			LIST_LAST(last, &print[i], station_link);
 			LIST_FOREACH(station, &cavalier[i].station_list, station_link)
 			{
