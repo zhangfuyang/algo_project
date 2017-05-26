@@ -10,11 +10,20 @@ void output()
 {
 	int i,num; //i是骑士的循环变量 num是骑士[i]有多少个关键路径
 	int *order_id;
-	int max_time = 0;
-	Station *temp;
+	float max_time = 0;
+	Station *temp, *temp1;
 	Station *judge; //判断temp后面的station还是不是相同的
 	int size; //骑士背包里还有多少order
 	order_id = new int[C];
+	for (i = 1; i <= cavalier_num; i++)
+	{
+		temp = LIST_FIRST(&cavalier[i].station_list);
+		while (temp != NULL)
+		{
+			LIST_INSERT_TAIL(&print[i], temp, temp1, station_link);
+			temp = LIST_NEXT(temp, station_link);
+		}
+	}
 	for (i = 1; i <= cavalier_num; i++)
 	{
 		for (int l = 0; l < C; l++)
@@ -71,4 +80,5 @@ void output()
 	cout << endl <<"**********************************************" << endl;
 	cout <<"the least bottlenecktime "<<max_time << endl;
 	cout << "the least costtime of all orders theoretically:" << theoretically_time();
+	cout << endl << "**********************************************" << endl;
 }
