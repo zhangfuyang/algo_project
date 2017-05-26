@@ -8,10 +8,9 @@ void output();
 //基本功能函数
 Location place2xy(Place);
 Location  place2xy(Place place);
-//District packid2district(Cavalier *cav, int packid);
-//Restaurant packid2restaurant(Cavalier *cav, int packid);
 District did2district(int did);
 Restaurant rid2restaurant(int rid);
+float theoretically_time();
 
 //特殊功能函数
 float cal_bottlenecktime(Station_list station_list);
@@ -26,6 +25,7 @@ void cav_init();
 void cav_update(float time);
 void print_init();
 void cav_setstatus(Cavalier *cav);
+
 //alloc
 int alloc(Order order);
 float cal_init_costtime(Cavalier cavalier, Order order);

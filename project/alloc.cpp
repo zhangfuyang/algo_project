@@ -76,7 +76,6 @@ float cal_available_costtime(Cavalier cav, Order order) {     //·µ»Ø½«order¸ø¸ÃÆ
 
 	return T;
 }
-
 int alloc(Order order)
 {
 	int i,cavid = 0;
