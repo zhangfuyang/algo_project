@@ -18,11 +18,12 @@ void output()
 	for (i = 1; i <= cavalier_num; i++)
 	{
 		temp = LIST_FIRST(&cavalier[i].station_list);
-		while (temp != NULL)
+		if (LIST_FIRST(&print[i]) == NULL)
 		{
-			LIST_INSERT_TAIL(&print[i], temp, temp1, station_link);
-			temp = LIST_NEXT(temp, station_link);
+			LIST_INSERT_HEAD(&print[i], temp, station_link);
 		}
+		else
+			LIST_INSERT_TAIL(&print[i], temp, temp1, station_link);
 	}
 	for (i = 1; i <= cavalier_num; i++)
 	{
