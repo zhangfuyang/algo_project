@@ -24,6 +24,7 @@ void cav_init()
 		LIST_INIT(&cavalier[i].station_list);
 	}
 }
+
 void print_init()
 {
 	for (int i = 1; i <= cavalier_num; i++)
@@ -31,11 +32,14 @@ void print_init()
 		LIST_INIT(&print[i]);
 	}
 }
+
 void cav_setstatus(Cavalier *cav)
 {
+	int status = cav->status;
+
 	if (cav->pack_num < 0)
 	{
-		printf("pack_num error! cavalier id : %d", cav->id);
+		printf("pack_num error! cavalier id : %d\n", cav->id);
 	}
 	else if(cav->pack_num == 0)
 	{
@@ -49,10 +53,13 @@ void cav_setstatus(Cavalier *cav)
 	{
 		cav->status = AVAILABLE;
 	}
+	printf("set cav %d status：%d -> %d\n", cav->id, status, cav->status);
 }
 
 void cav_update(float time)
 {
+	printf("cav_update! time = %f\n", time);
+
 	int i;
 	for(i=1; i<=cavalier_num; i++)
 	{
@@ -65,7 +72,7 @@ void cav_update(float time)
 			continue;
 		}
 		//寻找骑手在该时刻到达的DISTRICT
-		LIST_FOREACH2(station, &cavalier[i].station_list, station_link)
+		LIST_FOREACH(station, &cavalier[i].station_list, station_link)
 		{
 			if (station == LIST_FIRST(&cavalier[i].station_list))//第一个小区不进行判断
 				continue;

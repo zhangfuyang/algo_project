@@ -40,7 +40,10 @@ int main()
 	//	cout << order[i].time << " " << order[i].rid << " " << order[i].did << endl;
 	//}
 	print_init();
+
 	cav_init();
+
+	printf("init completed!\n");
 
 	for (int i = 1; i <= N; i++)
 	{
@@ -58,10 +61,13 @@ int main()
 				cout << "INIT" << "  ";
 		}*/
 		cav_update(order[i].time);
-		
+
 		cavid = alloc(order[i]);
 
+		printf("cav_alloc! cavid = %d\n", cavid);
+
 		order_insert(cavid, order[i]);
+
 	}
 
 	//cout << place2xy(restaurant[2]).x << " " << place2xy(restaurant[2]).y << endl;
