@@ -67,6 +67,8 @@ void cav_update(float time)
 		//寻找骑手在该时刻到达的DISTRICT
 		LIST_FOREACH(station, &cavalier[i].station_list, station_link)
 		{
+			if (station == LIST_FIRST(&cavalier[i].station_list))//第一个小区不进行判断
+				continue;
 			if (station->arrivetime <= time)
 			{
 				if (station->type == DISTRICT)
@@ -101,10 +103,12 @@ void cav_update(float time)
 					if (last != NULL)
 					{
 						LIST_INSERT_AFTER(last, print_insert, station_link);
+						last = print_insert;
 					}
 					else
 					{
 						LIST_INSERT_HEAD(&print[i], print_insert, station_link);
+						last = print_insert;
 					}
 					
 				}
