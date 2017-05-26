@@ -10,12 +10,12 @@ float cal_free_costtime(Cavalier cav, Order order)  //当Free列表不为空时，给Free
 	float distance;
 	float origintime;
 	float time_dst; //distance的距离
-	DISTANCE((*cav.station_list.lh_first), restaurant[order.rid], distance);
+	DISTANCE((*LIST_FIRST(&cav.station_list)), restaurant[order.rid], distance);
 	TIME(distance, time_dst);
-	if (time_dst + cav.station_list.lh_first->arrivetime > time)
+	if (time_dst + LIST_FIRST(&cav.station_list)->arrivetime > time)
 	{
 		printf("Free; 是订单等我的情况\n");
-		origintime = (time_dst + cav.station_list.lh_first->arrivetime) - time;
+		origintime = (time_dst + LIST_FIRST(&cav.station_list)->arrivetime) - time;
 		DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
 		TIME(distance, time);
 		return origintime + time;
@@ -45,13 +45,9 @@ float cal_full_costtime(Cavalier cav, Order order)
 	float distance;
 	float origintime;
 	Station *temp;
-	DISTANCE((*cav.station_list.lh_first), restaurant[order.rid], distance);
+	DISTANCE((*LIST_FIRST(&cav.station_list)), restaurant[order.rid], distance);
 	TIME(distance, time_dst);
-	temp = cav.station_list.lh_first;
-	while (LIST_NEXT(temp, station_link) != NULL)
-	{
-		temp = LIST_NEXT(temp, station_link);
-	}
+	LIST_LAST(temp, &cav.station_list, station_link);
 	if (time_dst + temp->arrivetime > time)
 	{
 		printf("full;我是full骑手\n");
@@ -62,7 +58,7 @@ float cal_full_costtime(Cavalier cav, Order order)
 	}
 	else
 	{
-		printf("full;但是不应该进这里的!!!!!!出错了，赶紧去看\n");
+		//printf("full;但是不应该进这里的!!!!!!出错了，赶紧去看\n");
 		DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
 		TIME(distance, time);
 		return time;
