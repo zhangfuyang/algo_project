@@ -45,6 +45,8 @@ float cal_bottlenecktime(Station_list station_list)	//¼ÆËãÒ»¸östationlistÖÐµÄÆ¿¾
 {
 	float bottlenecktime = 0, temp = 0;
 	Station *station;
+	if (LIST_FIRST(&station_list) == NULL)
+		return bottlenecktime;
 	LIST_FOREACH2(station, &station_list, station_link)
 	{
 		if (station->type == DISTRICT)

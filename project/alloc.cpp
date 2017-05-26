@@ -119,6 +119,10 @@ int alloc(Order order)
 				cavid = i;
 			}
 		}
+		if (cavalier[i].status == INIT)
+		{
+			break;
+		}
 	}
 	return cavid;
 }

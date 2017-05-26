@@ -22,7 +22,7 @@ void output()
 			order_id[l] = 0;
 		}
 		size = 0; //size¹é0
-		cout << "**********************************************" << endl;
+		cout << endl << "**********************************************" << endl;
 		LIST_SIZE(temp, &cavalier[i].station_list, station_link, num);
 		cout << i << " " << num << endl;
 		if (num == 0)
