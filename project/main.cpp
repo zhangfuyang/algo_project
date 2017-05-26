@@ -47,6 +47,7 @@ int main()
 
 	for (int i = 1; i <= N; i++)
 	{
+		cout << endl << "**********************************************" << endl;
 		int cavid;
 		/*for (j = 1; i <= cavalier_num; i++)
 		{
@@ -64,7 +65,7 @@ int main()
 
 		cavid = alloc(order[i]);
 
-		printf("cav_alloc! cavid = %d\n", cavid);
+		printf("cav_alloc! cavid = %d status: %d\n", cavid, cavalier[cavid].status);
 
 		order_insert(cavid, order[i]);
 

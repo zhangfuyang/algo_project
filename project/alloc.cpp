@@ -14,7 +14,7 @@ float cal_free_costtime(Cavalier cav, Order order)  //当Free列表不为空时，给Free
 	TIME(distance, time_dst);
 	if (time_dst + LIST_FIRST(&cav.station_list)->arrivetime > time)
 	{
-		printf("Free; 是订单等我的情况\n");
+		//printf("Free; 是订单等我的情况\n");
 		origintime = (time_dst + LIST_FIRST(&cav.station_list)->arrivetime) - time;
 		DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
 		TIME(distance, time);
@@ -22,7 +22,7 @@ float cal_free_costtime(Cavalier cav, Order order)  //当Free列表不为空时，给Free
 	}
 	else
 	{
-		printf("Free; 是我等订单的情况\n");
+		//printf("Free; 是我等订单的情况\n");
 		DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
 		TIME(distance, time);
 		return time;
@@ -35,7 +35,7 @@ float cal_init_costtime(Cavalier cav, Order order)
 
 	DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
 	TIME(distance, time);
-	printf("init;我是init骑手\n");
+	//printf("init;我是init骑手\n");
 	return time;
 }
 float cal_full_costtime(Cavalier cav, Order order)
@@ -50,7 +50,7 @@ float cal_full_costtime(Cavalier cav, Order order)
 	LIST_LAST(temp, &cav.station_list, station_link);
 	if (time_dst + temp->arrivetime > time)
 	{
-		printf("full;我是full骑手\n");
+		//printf("full;我是full骑手\n");
 		origintime = time_dst + temp->arrivetime - time;
 		DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
 		TIME(distance, time);
