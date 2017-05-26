@@ -89,7 +89,8 @@ void copy_station(Station *listfrom, Station *listto) {
 	listto->leavetime = listfrom->leavetime;
 	listto->location = listfrom->location;
 	listto->oid = listfrom->oid;
-	listto->station_link = listfrom->station_link;
+	listto->station_link.le_next = listfrom->station_link.le_next;
+	listto->station_link.le_prev = listfrom->station_link.le_prev;
 	listto->type = listfrom->type;
 }
 
@@ -99,6 +100,7 @@ float Insert_order(Order *order, Station_list *head) {
 	Station *choose = NULL;
 	Station *newstation = NULL;
 	Station *last = NULL;
+	Station *last1 = NULL;
 	Station *oldlast = new Station[1];
 	Station *newlast = new Station[1];
 	Station *newnewstation = new Station[1];
@@ -267,13 +269,19 @@ float Insert_order(Order *order, Station_list *head) {
 	T1 = cal_bottlenecktime(*head);                        
 
 	if ((LIST_NEXT(LIST_NEXT(newstation, station_link), station_link)) == NULL) {
-		copy_station(oldlast, last);
+		
 		LIST_REMOVE(newstation, station_link);
+		LIST_REMOVE(last, station_link);
+		
+		copy_station(oldlast, last);
+
+
 		DISTANCE(district[order->did], (*last), dist1);
 
 		newstation->arrivetime = last->leavetime + dist1;
 		newstation->leavetime = newstation->arrivetime;
 
+		LIST_INSERT_TAIL(head, last, last1, station_link);
 		LIST_INSERT_AFTER(last, newstation, station_link);
 
 		T2 = cal_bottlenecktime(*head);
@@ -285,9 +293,13 @@ float Insert_order(Order *order, Station_list *head) {
 		}
 		else {
 			LIST_REMOVE(newstation, station_link);
+			LIST_REMOVE(last, station_link);
+			
 			copy_station(newlast, last);
 			copy_station(newnewstation, newstation);
-			LIST_INSERT_BEFORE(last, newstation, station_link);
+			
+			LIST_INSERT_TAIL(head, newstation, last1, station_link);
+			LIST_INSERT_AFTER(newstation, last, station_link);
 			delete(oldlast);
 			delete(newlast);
 			delete(newnewstation);
