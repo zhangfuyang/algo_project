@@ -64,7 +64,7 @@ void cav_update(float time)
 			continue;
 		}
 		//寻找骑手在该时刻到达的DISTRICT
-		LIST_FOREACH(station, &cavalier[i].station_list, station_link)
+		LIST_FOREACH2(station, &cavalier[i].station_list, station_link)
 		{
 			if (station->arrivetime <= time)
 			{
