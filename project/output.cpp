@@ -23,11 +23,11 @@ void output()
 		}
 		size = 0; //size¹é0
 		cout << endl << "**********************************************" << endl;
-		LIST_SIZE(temp, &cavalier[i].station_list, station_link, num);
+		LIST_SIZE(temp, &print[i], station_link, num);
 		cout << i << " " << num << endl;
 		if (num == 0)
 			continue;
-		temp = LIST_FIRST(&cavalier[i].station_list);
+		temp = LIST_FIRST(&print[i]);
 		order_id[size] = temp->oid;
 		size++;
 		while (1)
