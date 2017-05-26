@@ -2,22 +2,26 @@
 #include "struct.h"
 #include "globalvar.h"
 
-Location  place2xy(Place place)
+//»ñÈ¡²ÍÌü»òĞ¡ÇøµÄÎ»ÖÃ
+Location  place2xy(Place place)                
 {
 	return place.location;
 }
 
-District did2district(int did)
+//ÓÉĞ¡Çøid»ñÈ¡Ğ¡ÇøµÄ½á¹¹Ìå
+District did2district(int did)                  
 {
 	return district[did];
 }
 
-Restaurant rid2restaurant(int rid)
+//ÓÉ²ÍÌüid»ñÈ¡²ÍÌüµÄ½á¹¹Ìå
+Restaurant rid2restaurant(int rid)              
 {
 	return restaurant[rid];
 }
 
-void station_list_copy(Station_list *from, Station_list *to)//½«ÒÔhead¿ªÍ·µÄÁ´±í¸´ÖÆ¸øÒÔhead1¿ªÍ·µÄÁ´±í
+//½«ÒÔfrom¿ªÍ·µÄStationÁ´±í¸´ÖÆ¸øÒÔto¿ªÍ·µÄStationÁ´±í
+void station_list_copy(Station_list *from, Station_list *to)
 {     
 	Station *var1, *var2=NULL, *last=NULL;
 	LIST_FOREACH(var1, from, station_link)
@@ -41,7 +45,8 @@ void station_list_copy(Station_list *from, Station_list *to)//½«ÒÔhead¿ªÍ·µÄÁ´±í
 	}
 }
 
-float cal_bottlenecktime(Station_list station_list)	//¼ÆËãÒ»¸östationlistÖĞµÄÆ¿¾±Öµ
+//¼ÆËãÒ»¸östationlistÖĞµÄÆ¿¾±Öµ
+float cal_bottlenecktime(Station_list station_list)	
 {
 	float bottlenecktime = 0, temp = 0;
 	Station *station;
@@ -59,7 +64,8 @@ float cal_bottlenecktime(Station_list station_list)	//¼ÆËãÒ»¸östationlistÖĞµÄÆ¿¾
 }
 
 
-void free_list(Station_list *head) {                  //freeµô¸´ÖÆºÃµÄÁ´±íÒÔÊÍ·Å¿Õ¼ä
+//freeµô¸´ÖÆºÃµÄÁ´±íÒÔÊÍ·Å¿Õ¼ä
+void free_list(Station_list *head) {                  
 	Station *fp = NULL;
 	Station *bp = NULL;
 
@@ -77,7 +83,8 @@ void free_list(Station_list *head) {                  //freeµô¸´ÖÆºÃµÄÁ´±íÒÔÊÍ·Å
 
 }
 
-void copy_station(Station *listfrom, Station *listto) {
+//½«listfromÕâ¸öStation½á¹¹ÌåÖĞµÄĞÅÏ¢È«²¿¸´ÖÆ¸ølistoÕâ¸öStation½á¹¹Ìå
+void copy_station(Station *listfrom, Station *listto) {          
 	listto->arrivetime = listfrom->arrivetime;
 	listto->leavetime = listfrom->leavetime;
 	listto->location = listfrom->location;
@@ -86,7 +93,8 @@ void copy_station(Station *listfrom, Station *listto) {
 	listto->type = listfrom->type;
 }
 
-float Insert_order(Order *order, Station_list *head) {      //³¢ÊÔ½«Ä³¸ö¶©µ¥²åÈëÆïÊ¿µÄStationÁĞ±í·µ»Ø²åÈëºóµÄ×î´óÊ±¼ä
+//³¢ÊÔ½«Ä³¸ö¶©µ¥²åÈëÆïÊ¿µÄStationÁĞ±í·µ»Ø²åÈëºóµÄ×î´óÊ±¼ä
+float Insert_order(Order *order, Station_list *head) {      
 	Station *var = NULL;
 	Station *choose = NULL;
 	Station *newstation = NULL;
@@ -94,21 +102,40 @@ float Insert_order(Order *order, Station_list *head) {      //³¢ÊÔ½«Ä³¸ö¶©µ¥²åÈë
 	Station *oldlast = new Station[1];
 	Station *newlast = new Station[1];
 	Station *newnewstation = new Station[1];
-	int x1 = restaurant[order->rid].location.x;         //¶©µ¥µÄ²ÍÌü×ø±ê            
+
+	//¶©µ¥µÄ²ÍÌü×ø±ê
+
+	int x1 = restaurant[order->rid].location.x;                     
 	int y1 = restaurant[order->rid].location.y;
-	int x2 = district[order->did].location.x;		    //¶©µ¥µÄĞ¡Çø×ø±ê
+
+	//¶©µ¥µÄĞ¡Çø×ø±ê
+
+	int x2 = district[order->did].location.x;		    
 	int y2 = district[order->did].location.y;
 	float distance;
 	float dist1;
 	float dist2;
-	float mindis = 10000;              //È¡×î¶Ì¾àÀë±äÁ¿
-	float delaytime;                   //²åÈëºóĞŞ¸ÄºóÃæµÄstationËùÓÃµÄÑÓ³ÙÊ±¼ä
-	float T;                           //·µ»ØµÄ²åÈëºóµÄÆ¿¾±Ê±¼ä
+
+	//È¡×î¶Ì¾àÀë±äÁ¿
+
+	float mindis = 10000;
+
+	//²åÈëºóĞŞ¸ÄºóÃæµÄstationËùÓÃµÄÑÓ³ÙÊ±¼ä
+
+	float delaytime;
+
+	//·µ»ØµÄ²åÈëºóµÄÆ¿¾±Ê±¼ä
+
+	float T;                           
 	float T1;
-	float T2;                          //ÓÃÓÚ±È½ÏÈç¹ûĞ¡Çø²åÔÚµ¹ÊıµÚ¶ş¸öÎ»ÖÃ£¬ÊÇ²åÔÚµ¹ÊıµÚ¶ş¸öÎ»ÖÃºÃ£¬»¹ÊÇ²åÔÚÎ²²¿ºÃ
 
+	//ÓÃÓÚ±È½ÏÈç¹ûĞ¡Çø²åÔÚµ¹ÊıµÚ¶ş¸öÎ»ÖÃ£¬ÊÇ²åÔÚµ¹ÊıµÚ¶ş¸öÎ»ÖÃºÃ£¬»¹ÊÇ²åÔÚÎ²²¿ºÃ
 
-	LIST_FOREACH(var, head, station_link)             //È¡µÃ²ÍÌü²åÈëÎ»ÖÃ         
+	float T2;                          
+
+	//È¡µÃ²ÍÌü²åÈëÎ»ÖÃ
+
+	LIST_FOREACH(var, head, station_link)                      
 	{
 		if ((LIST_NEXT(var, station_link)) != NULL) {
 			DISTANCE((*var), restaurant[order->rid], dist1);
@@ -127,7 +154,9 @@ float Insert_order(Order *order, Station_list *head) {      //³¢ÊÔ½«Ä³¸ö¶©µ¥²åÈë
 
 	DISTANCE((*choose), restaurant[order->rid], dist1);
 
-	newstation->arrivetime = choose->leavetime + dist1;         //¸üĞÂĞÂ²åÈë²ÍÌüµÄ¸÷ÏîĞÅÏ¢
+	//¸üĞÂĞÂ²åÈë²ÍÌüµÄ¸÷ÏîĞÅÏ¢
+
+	newstation->arrivetime = choose->leavetime + dist1;         
 	if (newstation->arrivetime < order->time) {
 		newstation->leavetime = order->time;
 	}
@@ -139,13 +168,17 @@ float Insert_order(Order *order, Station_list *head) {      //³¢ÊÔ½«Ä³¸ö¶©µ¥²åÈë
 	newstation->oid = order->oid;
 	newstation->type = RESTAURANT;
 
-	LIST_INSERT_AFTER(choose, newstation, station_link);       //²åÈë
+	//²åÈë
+
+	LIST_INSERT_AFTER(choose, newstation, station_link);       
 
 	var = LIST_NEXT(newstation, station_link);
 
 	DISTANCE((*var), restaurant[order->rid], dist2);
 
-	delaytime = newstation->leavetime + dist2 - var->arrivetime;      //ÑÓ³ÙÊ±¼ä
+	//ÑÓ³ÙÊ±¼ä
+
+	delaytime = newstation->leavetime + dist2 - var->arrivetime;      
 
 
 	LIST_FOREACH_FROM(var, head, station_link)
@@ -160,10 +193,14 @@ float Insert_order(Order *order, Station_list *head) {      //³¢ÊÔ½«Ä³¸ö¶©µ¥²åÈë
 		}
 	}
 
-	var = newstation;           //Îª²åÈëĞ¡Çø×ö×¼±¸
+	//Îª²åÈëĞ¡Çø×ö×¼±¸
+
+	var = newstation;           
 	mindis = 10000;
 
-	LIST_FOREACH_FROM(var, head, station_link)            //´ÓÒÑ¾­²åÈëµÄ²ÍÌüÖ®ºóÔÙ±éÀú
+	//´ÓÒÑ¾­²åÈëµÄ²ÍÌüÖ®ºóÔÙ±éÀú
+
+	LIST_FOREACH_FROM(var, head, station_link)            
 	{
 		if ((LIST_NEXT(var, station_link)) != NULL) {
 			DISTANCE((*var), district[order->did], dist1);
@@ -182,7 +219,9 @@ float Insert_order(Order *order, Station_list *head) {      //³¢ÊÔ½«Ä³¸ö¶©µ¥²åÈë
 
 	DISTANCE((*choose), district[order->did], dist1);
 
-	newstation->arrivetime = choose->leavetime + dist1;      //¸üĞÂĞÂ²åÈëĞ¡ÇøµÄ¸÷ÏîĞÅÏ¢
+	//¸üĞÂĞÂ²åÈëĞ¡ÇøµÄ¸÷ÏîĞÅÏ¢
+
+	newstation->arrivetime = choose->leavetime + dist1;     
 
 	newstation->leavetime = newstation->arrivetime;
 
@@ -191,7 +230,9 @@ float Insert_order(Order *order, Station_list *head) {      //³¢ÊÔ½«Ä³¸ö¶©µ¥²åÈë
 	newstation->oid = order->oid;
 	newstation->type = DISTRICT;
 
-	LIST_INSERT_AFTER(choose, newstation, station_link);     //²åÈëĞ¡Çø
+	//²åÈëĞ¡Çø
+
+	LIST_INSERT_AFTER(choose, newstation, station_link);     
 
 	copy_station(newstation, newnewstation);
 
@@ -205,8 +246,9 @@ float Insert_order(Order *order, Station_list *head) {      //³¢ÊÔ½«Ä³¸ö¶©µ¥²åÈë
 
 	copy_station(last, oldlast);
 
+	//¸üĞÂ²åÈëĞ¡ÇøÖ®ºóµÄ¸÷ÏîĞÅÏ¢
 
-	LIST_FOREACH_FROM(var, head, station_link)             //¸üĞÂ²åÈëĞ¡ÇøÖ®ºóµÄ¸÷ÏîĞÅÏ¢
+	LIST_FOREACH_FROM(var, head, station_link)             
 	{
 		var->arrivetime = var->arrivetime + delaytime;
 		if (var->leavetime >= var->arrivetime) {
@@ -220,7 +262,9 @@ float Insert_order(Order *order, Station_list *head) {      //³¢ÊÔ½«Ä³¸ö¶©µ¥²åÈë
 
 	copy_station(last, newlast);
 
-	T1 = cal_bottlenecktime(*head);
+	//Èç¹ûĞÂ²åĞ¡Çø²åÔÚÁ´±íµ¹ÊıµÚ¶ş¸öÎ»ÖÃ£¬ÔòÒÔÏÂ²¿·ÖÓÃÓÚ±È½ÏÊÇ²åÔÚµ¹ÊıµÚ¶ş¸öÎ»ÖÃºÃ»¹ÊÇ²åÔÚÁ´±íÎ²²¿ºÃ
+
+	T1 = cal_bottlenecktime(*head);                        
 
 	if ((LIST_NEXT(LIST_NEXT(newstation, station_link), station_link)) == NULL) {
 		copy_station(oldlast, last);
@@ -258,8 +302,8 @@ float Insert_order(Order *order, Station_list *head) {      //³¢ÊÔ½«Ä³¸ö¶©µ¥²åÈë
 	}
 }
 
-
-float theoretically_time()
+//¼ÆËã¸ø¶¨Êı¾İ¼¯ÖĞÀíÂÛÉÏµÄ×î¶ÌµÄ¡°×î³¤µÈ´ıÊ±¼ä¡±
+float theoretically_time()                   
 {
 	int i, maxid = 0;
 	float max = 0;
