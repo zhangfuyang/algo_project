@@ -257,3 +257,22 @@ float Insert_order(Order *order, Station_list *head) {      //尝试将某个订单插入
 		return T1;
 	}
 }
+
+
+float theoretically_time()
+{
+	int i, maxid = 0;
+	float max = 0;
+	float distance, time;
+	for (i = 1; i <= N; i++)
+	{
+		DISTANCE(did2district(order[i].did), rid2restaurant(order[i].rid), distance);
+		TIME(distance, time);
+		if (time > max)
+		{
+			max = time;
+			maxid = i;
+		}
+	}
+	return max;
+}

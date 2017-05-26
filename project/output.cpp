@@ -65,8 +65,10 @@ void output()
 	}
 	for (i = 1; i <= cavalier_num; i++)
 	{
-		if (cal_bottlenecktime(cavalier[i].station_list) > max_time)
-			max_time = cal_bottlenecktime(cavalier[i].station_list);
+		if (cal_bottlenecktime(print[i]) > max_time)
+			max_time = cal_bottlenecktime(print[i]);
 	}
-	cout << endl<<max_time;
+	cout << endl <<"**********************************************" << endl;
+	cout <<"the least bottlenecktime "<<max_time << endl;
+	cout << "the least costtime of all orders theoretically:" << theoretically_time();
 }
