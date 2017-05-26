@@ -86,3 +86,48 @@ void output()
 	cout << "the least costtime of all orders theoretically:" << theoretically_time();
 	cout << endl << "**********************************************" << endl;
 }
+
+void update_after_insert_restaurant(Station *rst, Order* order, Station_list *head)
+{
+	float delaytime;
+	float distance;
+	Station *var;
+	var = LIST_NEXT(rst, station_link);
+	DISTANCE((*var), restaurant[order->rid], distance);
+	delaytime = rst->leavetime + distance - var->arrivetime;
+
+	LIST_FOREACH_FROM(var, head, station_link)
+	{
+		var->arrivetime = var->arrivetime + delaytime;
+		if (var->leavetime >= var->arrivetime)
+			break;
+		else
+		{
+			delaytime = var->arrivetime - var->leavetime;
+			var->leavetime = var->arrivetime;
+		}
+	}
+}
+
+void update_after_insert_district(Station *dst, Order* order, Station_list *head)
+{
+	Station *var, *last;
+	float distance, delaytime, T1, T2;
+	var = LIST_NEXT(dst, station_link);
+	DISTANCE((*var), district[order->did], distance);
+	delaytime = dst->leavetime + distance - var->arrivetime;
+	LIST_LAST(last, head, station_link);
+	LIST_FOREACH_FROM(var, head, station_link)
+	{
+		var->arrivetime = var->arrivetime + delaytime;
+		if (var->leavetime >= var->arrivetime)
+		{
+			break;
+		}
+		else
+		{
+			delaytime = var->arrivetime - var->leavetime;
+			var->leavetime = var->arrivetime;
+		}
+	}
+}

@@ -18,7 +18,8 @@ void station_list_copy(Station_list *from, Station_list *to);
 void copy_station(Station *listfrom, Station *listto);
 float Insert_order(Order *order, Station_list *head);
 void free_list(Station_list *head);
-
+void update_after_insert_restaurant(Station *rst, Order* order, Station_list *head);
+void update_after_insert_district(Station *dst, Order* order, Station_list *head);
 //ºËÐÄº¯Êý
 //cav
 void cav_init();

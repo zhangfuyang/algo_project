@@ -44,25 +44,52 @@ float cal_full_costtime(Cavalier cav, Order order)
 	float time_dst;
 	float distance;
 	float origintime;
+	int oid_temp;
 	Station *temp;
-	DISTANCE((*LIST_FIRST(&cav.station_list)), restaurant[order.rid], distance);
-	TIME(distance, time_dst);
-	LIST_LAST(temp, &cav.station_list, station_link);
-	if (time_dst + temp->arrivetime > time)
+	Station_list *copy_list2 = new Station_list[1];
+	LIST_INIT(copy_list2);
+	station_list_copy(&cav.station_list, copy_list2);
+	LIST_FOREACH(temp, copy_list2, station_link)
 	{
-		//printf("full;我是full骑手\n");
-		origintime = time_dst + temp->arrivetime - time;
-		DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
-		TIME(distance, time);
-		return origintime + time;
+		if (temp->type == DISTRICT)
+		{
+			break;
+		}
 	}
-	else
+	LIST_REMOVE(temp, station_link);
+	oid_temp = temp->oid;
+	delete(temp);
+	LIST_FOREACH(temp, copy_list2, station_link)
 	{
-		//printf("full;但是不应该进这里的!!!!!!出错了，赶紧去看\n");
-		DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
-		TIME(distance, time);
-		return time;
+		if (temp->oid == oid_temp)
+		{
+			break;
+		}
 	}
+	LIST_REMOVE(temp, station_link);
+	oid_temp = temp->oid;
+	delete(temp);
+	Insert_order(&order, copy_list2);
+	free_list(copy_list2);
+	return time;
+	//DISTANCE((*LIST_FIRST(&cav.station_list)), restaurant[order.rid], distance);
+	//TIME(distance, time_dst);
+	//LIST_LAST(temp, &cav.station_list, station_link);
+	//if (time_dst + temp->arrivetime > time)
+	//{
+	//	//printf("full;我是full骑手\n");
+	//	origintime = time_dst + temp->arrivetime - time;
+	//	DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
+	//	TIME(distance, time);
+	//	return origintime + time;
+	//}
+	//else
+	//{
+	//	//printf("full;但是不应该进这里的!!!!!!出错了，赶紧去看\n");
+	//	DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
+	//	TIME(distance, time);
+	//	return time;
+	//}
 }
 float cal_available_costtime(Cavalier cav, Order order) {     //返回将order给该骑士后的瓶颈时间
 	float T;
