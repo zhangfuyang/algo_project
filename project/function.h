@@ -16,10 +16,9 @@ float theoretically_time();
 float cal_bottlenecktime(Station_list station_list);
 void station_list_copy(Station_list *from, Station_list *to);
 void copy_station(Station *listfrom, Station *listto);
-float Insert_order(Order *order, Station_list *head);
+float Insert_order(Order *order, Station_list *head, int status, Cavalier cav);
 void free_list(Station_list *head);
-void update_after_insert_restaurant(Station *rst, Order* order, Station_list *head);
-void update_after_insert_district(Station *dst, Order* order, Station_list *head);
+void update_and_insert(Station *station, Order* order, Station_list *head, int station_status, int cav_status, int cavid);
 //ºËÐÄº¯Êý
 //cav
 void cav_init();

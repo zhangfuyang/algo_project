@@ -41,35 +41,37 @@ float cal_init_costtime(Cavalier cav, Order order)
 float cal_full_costtime(Cavalier cav, Order order)
 {
 	float time = order.time;
-	float time_dst;
-	float distance;
-	float origintime;
-	int oid_temp;
+//	float time_dst;
+//	float distance;
+//	float origintime;
 	Station *temp;
+	Station_list *copy_list1 = new Station_list[1];
 	Station_list *copy_list2 = new Station_list[1];
+	LIST_INIT(copy_list1);
 	LIST_INIT(copy_list2);
-	station_list_copy(&cav.station_list, copy_list2);
-	LIST_FOREACH(temp, copy_list2, station_link)
+
+//	station_list_copy(&cav.station_list, copy_list2);
+	int size = 0, count= 0;
+	LIST_FOREACH(temp, &cav.station_list, station_link)
+	{
+		if (temp->type == DISTRICT)
+			size++;
+	}
+	size -= C;
+	size += 1;
+	LIST_FOREACH(temp, &cav.station_list, station_link)
 	{
 		if (temp->type == DISTRICT)
 		{
-			break;
+			count++;
 		}
-	}
-	LIST_REMOVE(temp, station_link);
-	oid_temp = temp->oid;
-	delete(temp);
-	LIST_FOREACH(temp, copy_list2, station_link)
-	{
-		if (temp->oid == oid_temp)
-		{
+		if (count == size)
 			break;
-		}
 	}
-	LIST_REMOVE(temp, station_link);
-	oid_temp = temp->oid;
-	delete(temp);
-	Insert_order(&order, copy_list2);
+	copy_list1->lh_first = LIST_NEXT(temp, station_link);
+	station_list_copy(copy_list1, copy_list2);
+	delete(copy_list1);
+	Insert_order(&order, copy_list2, FULL, cav);
 	free_list(copy_list2);
 	return time;
 	//DISTANCE((*LIST_FIRST(&cav.station_list)), restaurant[order.rid], distance);
@@ -98,7 +100,7 @@ float cal_available_costtime(Cavalier cav, Order order) {     //·µ»Ø½«order¸ø¸ÃÆ
 	LIST_INIT(head_copy);
 
 	station_list_copy(&(cav.station_list), head_copy);
-	T = Insert_order(&order, head_copy);
+	T = Insert_order(&order, head_copy, AVAILABLE, cav);
 	free_list(head_copy);
 
 	return T;

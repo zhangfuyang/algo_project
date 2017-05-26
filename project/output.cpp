@@ -12,7 +12,7 @@ void output()
 	int *order_id;
 	float max_time = 0;
 	Station *temp, *temp1;
-	Station *judge; //判断temp后面的station还是不是相同的
+//	Station *judge; //判断temp后面的station还是不是相同的
 	int size; //骑士背包里还有多少order
 	order_id = new int[C];
 	for (i = 1; i <= cavalier_num; i++)
@@ -76,58 +76,19 @@ void output()
 			cout << endl;
 		}
 	}
+	int zzzz;
 	for (i = 1; i <= cavalier_num; i++)
 	{
 		if (cal_bottlenecktime(print[i]) > max_time)
+		{
 			max_time = cal_bottlenecktime(print[i]);
+			zzzz = i;
+		}
+
 	}
 	cout << endl <<"**********************************************" << endl;
-	cout <<"the least bottlenecktime "<<max_time << endl;
+	cout <<"the least bottlenecktime "<<max_time << "-----------------"<<zzzz<<endl;
 	cout << "the least costtime of all orders theoretically:" << theoretically_time();
 	cout << endl << "**********************************************" << endl;
 }
 
-void update_after_insert_restaurant(Station *rst, Order* order, Station_list *head)
-{
-	float delaytime;
-	float distance;
-	Station *var;
-	var = LIST_NEXT(rst, station_link);
-	DISTANCE((*var), restaurant[order->rid], distance);
-	delaytime = rst->leavetime + distance - var->arrivetime;
-
-	LIST_FOREACH_FROM(var, head, station_link)
-	{
-		var->arrivetime = var->arrivetime + delaytime;
-		if (var->leavetime >= var->arrivetime)
-			break;
-		else
-		{
-			delaytime = var->arrivetime - var->leavetime;
-			var->leavetime = var->arrivetime;
-		}
-	}
-}
-
-void update_after_insert_district(Station *dst, Order* order, Station_list *head)
-{
-	Station *var, *last;
-	float distance, delaytime, T1, T2;
-	var = LIST_NEXT(dst, station_link);
-	DISTANCE((*var), district[order->did], distance);
-	delaytime = dst->leavetime + distance - var->arrivetime;
-	LIST_LAST(last, head, station_link);
-	LIST_FOREACH_FROM(var, head, station_link)
-	{
-		var->arrivetime = var->arrivetime + delaytime;
-		if (var->leavetime >= var->arrivetime)
-		{
-			break;
-		}
-		else
-		{
-			delaytime = var->arrivetime - var->leavetime;
-			var->leavetime = var->arrivetime;
-		}
-	}
-}

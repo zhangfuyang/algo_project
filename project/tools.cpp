@@ -95,7 +95,7 @@ void copy_station(Station *listfrom, Station *listto) {
 }
 
 //尝试将某个订单插入骑士的Station列表返回插入后的最大时间
-float Insert_order(Order *order, Station_list *head) {      
+float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {      
 	Station *var = NULL;
 	Station *choose = NULL;
 	Station *newstation = NULL;
@@ -128,7 +128,7 @@ float Insert_order(Order *order, Station_list *head) {
 
 	//返回的插入后的瓶颈时间
 
-	float T;                           
+//	float T;                           
 	float T1;
 
 	//用于比较如果小区插在倒数第二个位置，是插在倒数第二个位置好，还是插在尾部好
@@ -136,7 +136,201 @@ float Insert_order(Order *order, Station_list *head) {
 	float T2;                          
 
 	//取得餐厅插入位置
+	if (head->lh_first == NULL) //说明只可能C = 1, 并且是full的情况
+	{
+		Station *ttemp;
+		float time;
+		float time2;
+		newstation = new Station[1];
+		ttemp = LIST_FIRST(&cav.station_list);
+		ttemp = LIST_NEXT(ttemp, station_link);
+		flag_first_full[cav.id] = ttemp;
+		flag_second_full[cav.id] = ttemp;
+		DISTANCE((*ttemp), restaurant[order->rid], distance);
+		TIME(distance, time);
+		if (time + ttemp->arrivetime > order->time)
+		{
+			time2 = time + ttemp->arrivetime - order->time;
+			DISTANCE(district[order->did], restaurant[order->rid], distance);
+			TIME(distance, time);
+			return time + time2;
+		}
+		else
+		{
+			DISTANCE(district[order->did], restaurant[order->rid], distance);
+			TIME(distance, time);
+			return time;
+		}
+	}
+	if (head->lh_first->station_link.le_next == NULL) //只有一个小区
+	{
+		Station *ttemp;
+		Station_list *cop = new Station_list[1];
+		LIST_INIT(cop);
+		float time, TT1, TT2, TT3;
+		//全插在小区前面
+		station_list_copy(head, cop);
+		newstation = new Station[1];
+		newstation->location = restaurant[order->rid].location;
+		newstation->oid = order->oid;
+		newstation->type = RESTAURANT;
+		LIST_INSERT_HEAD(cop, newstation, station_link);
+		ttemp = LIST_FIRST(cop);
+		DISTANCE((*ttemp), (*newstation), distance);
+		TIME(distance, time);
+		newstation->arrivetime = ttemp->leavetime + time;
+		if (ttemp->leavetime + time > order->time) //订单等我
+		{
+			newstation->leavetime = newstation->arrivetime;
+		}
+		else //我等订单
+		{
+			newstation->leavetime = order->time;
+		}
+		newstation = new Station[1];
+		newstation->location = district[order->did].location;
+		newstation->oid = order->oid;
+		newstation->type = DISTRICT;
+		LIST_INSERT_AFTER(cop->lh_first, newstation, station_link);
+		ttemp = cop->lh_first;
+		DISTANCE((*ttemp), (*newstation), distance);
+		TIME(distance, time);
+		newstation->arrivetime = ttemp->leavetime + time;
+		newstation->leavetime = newstation->arrivetime;
+		ttemp = LIST_NEXT(newstation, station_link);
+		DISTANCE((*ttemp), (*newstation), distance);
+		TIME(distance, time);
+		ttemp->arrivetime = newstation->leavetime + time;
+		ttemp->leavetime = ttemp->arrivetime;
+		TT1 = cal_bottlenecktime(*cop);
+		free_list(cop);
+		//finished
 
+		//插在小区两侧
+		cop = new Station_list[1];
+		LIST_INIT(cop);
+		newstation = new Station[1];
+		station_list_copy(head, cop);
+		newstation->location = restaurant[order->rid].location;
+		newstation->oid = order->oid;
+		newstation->type = RESTAURANT;
+		LIST_INSERT_HEAD(cop, newstation, station_link);
+		ttemp = LIST_FIRST(cop);
+		DISTANCE((*ttemp), (*newstation), distance);
+		TIME(distance, time);
+		newstation->arrivetime = ttemp->leavetime + time;
+		if (ttemp->leavetime + time > order->time) //订单等我
+		{
+			newstation->leavetime = newstation->arrivetime;
+		}
+		else //我等订单
+		{
+			newstation->leavetime = order->time;
+		}
+		ttemp = LIST_NEXT(newstation, station_link);
+		DISTANCE((*ttemp), (*newstation), distance);
+		TIME(distance, time);
+		ttemp->arrivetime = newstation->leavetime + time;
+		ttemp->leavetime = ttemp->arrivetime;
+		newstation = new Station[1];
+		newstation->location = district[order->did].location;
+		newstation->oid = order->oid;
+		newstation->type = DISTRICT;
+		LIST_INSERT_AFTER(ttemp, newstation, station_link);
+		DISTANCE((*ttemp), (*newstation), distance);
+		TIME(distance, time);
+		newstation->arrivetime = ttemp->leavetime + time;
+		newstation->leavetime = newstation->arrivetime;
+		TT2 = cal_bottlenecktime(*cop);
+		free_list(cop);
+		//finished
+
+		//都插在小区后面
+		cop = new Station_list[1];
+		LIST_INIT(cop);
+		newstation = new Station[1];
+		station_list_copy(head, cop);
+		ttemp = LIST_FIRST(cop);
+		newstation->location = restaurant[order->rid].location;
+		newstation->oid = order->oid;
+		newstation->type = RESTAURANT;
+		LIST_INSERT_AFTER(ttemp, newstation, station_link);
+		DISTANCE((*ttemp), (*newstation), distance);
+		TIME(distance, time);
+		newstation->arrivetime = ttemp->leavetime + time;
+		if (ttemp->leavetime + time > order->time) //订单等我
+		{
+			newstation->leavetime = newstation->arrivetime;
+		}
+		else //我等订单
+		{
+			newstation->leavetime = order->time;
+		}
+		ttemp = newstation;
+		newstation = new Station[1];
+		newstation->location = district[order->did].location;
+		newstation->oid = order->oid;
+		newstation->type = DISTRICT;
+		LIST_INSERT_AFTER(ttemp, newstation, station_link);
+		DISTANCE((*ttemp), (*newstation), distance);
+		TIME(distance, time);
+		newstation->arrivetime = ttemp->leavetime + time;
+		newstation->leavetime = newstation->arrivetime;
+		TT3 = cal_bottlenecktime(*cop);
+		free_list(cop);
+		//finish
+
+		if (TT1 < TT2)
+		{
+			if (TT1 < TT3)
+			{
+				LIST_FOREACH(var, &cav.station_list, station_link)
+				{
+					if (LIST_NEXT(var, station_link)->oid == LIST_FIRST(head)->oid && LIST_NEXT(var, station_link)->type == LIST_FIRST(head)->type)
+						break;
+				}
+				flag_first_full[cav.id] = var;
+				flag_second_full[cav.id] = flag_first_full[cav.id];
+				return TT1;
+			}
+			else
+			{
+				LIST_FOREACH(var, &cav.station_list, station_link)
+				{
+					if (LIST_NEXT(var, station_link)->oid == LIST_FIRST(head)->oid && LIST_NEXT(var, station_link)->type == LIST_FIRST(head)->type)
+						break;
+				}
+				flag_second_full[cav.id] = LIST_NEXT(var, station_link);
+				flag_first_full[cav.id] = flag_second_full[cav.id];
+				return TT3;
+			}
+		}
+		else
+		{
+			if (TT2 < TT3)
+			{
+				LIST_FOREACH(var, &cav.station_list, station_link)
+				{
+					if (LIST_NEXT(var, station_link)->oid == LIST_FIRST(head)->oid && LIST_NEXT(var, station_link)->type == LIST_FIRST(head)->type)
+						break;
+				}
+				flag_first_full[cav.id] = var;
+				flag_second_full[cav.id] = LIST_NEXT(var, station_link);
+				return TT2;
+			}
+			else
+			{
+				LIST_FOREACH(var, &cav.station_list, station_link)
+				{
+					if (LIST_NEXT(var, station_link)->oid == LIST_FIRST(head)->oid && LIST_NEXT(var, station_link)->type == LIST_FIRST(head)->type)
+						break;
+				}
+				flag_second_full[cav.id] = LIST_NEXT(var, station_link);
+				flag_first_full[cav.id] = flag_second_full[cav.id];
+				return TT3;
+			}
+		}
+	}
 	LIST_FOREACH(var, head, station_link)                      
 	{
 		if ((LIST_NEXT(var, station_link)) != NULL) {
@@ -157,7 +351,18 @@ float Insert_order(Order *order, Station_list *head) {
 	DISTANCE((*choose), restaurant[order->rid], dist1);
 
 	//更新新插入餐厅的各项信息
-
+	LIST_FOREACH(var, &cav.station_list, station_link)
+	{
+		if (var->oid == choose->oid && var->type == choose->type)
+		{
+		//	printf("1111111111111111111\n");
+			break;
+		}
+	}
+	if (status == AVAILABLE)
+		flag_first_available[cav.id] = var;
+	if (status == FULL)
+		flag_first_full[cav.id] = var;
 	newstation->arrivetime = choose->leavetime + dist1;         
 	if (newstation->arrivetime < order->time) {
 		newstation->leavetime = order->time;
@@ -218,9 +423,33 @@ float Insert_order(Order *order, Station_list *head) {
 	newstation = new Station[1];
 	newstation->station_link.le_next = NULL;
 	newstation->station_link.le_prev = NULL;
-
+	int ttt = 0;
 	DISTANCE((*choose), district[order->did], dist1);
-
+	LIST_FOREACH(var, &cav.station_list, station_link)
+	{
+		if (var->oid == choose->oid && var->type == choose->type)
+		{
+		//	printf("222222222222222222222222222\n");
+			ttt = 1;
+			break;
+		}
+	}
+	if (ttt == 1)
+	{
+		if (status == AVAILABLE)
+			flag_second_available[cav.id] = var;
+		if (status == FULL)
+			flag_second_full[cav.id] = var;
+	}
+	else
+	{
+		if (status == AVAILABLE)
+			flag_second_available[cav.id] = flag_first_available[cav.id];
+		if (status == FULL)
+		{
+			flag_second_full[cav.id] = flag_first_full[cav.id];
+		}
+	}
 	//更新新插入小区的各项信息
 
 	newstation->arrivetime = choose->leavetime + dist1;     
@@ -331,4 +560,77 @@ float theoretically_time()
 		}
 	}
 	return max;
+}
+
+void update_and_insert(Station *station, Order* order, Station_list *head, int station_status, int cav_status, int cavid)
+{
+	float delaytime;
+	float distance;
+	float time;
+	Station *var;
+	station->location = restaurant[order->rid].location;
+	station->oid = order->oid;
+	if (station_status == RESTAURANT)
+	{
+		station->type = RESTAURANT;
+		if (cav_status == FULL)
+		{
+			DISTANCE((*flag_first_full[cavid]), restaurant[order->rid], distance);
+			TIME(distance, time);
+			LIST_INSERT_AFTER(flag_first_full[cavid], station, station_link);
+			station->arrivetime = flag_first_full[cavid]->leavetime + time;
+		}
+		if (cav_status == AVAILABLE)
+		{
+			DISTANCE((*flag_first_available[cavid]), restaurant[order->rid], distance);
+			TIME(distance, time);
+			LIST_INSERT_AFTER(flag_first_available[cavid], station, station_link);
+			station->arrivetime = flag_first_available[cavid]->leavetime + time;
+		}
+		if (station->arrivetime < order->time)
+		{
+			station->leavetime = order->time;
+		}
+		else
+		{
+			station->leavetime = station->arrivetime;
+		}
+	}
+	if (station_status == DISTRICT)
+	{
+		station->type = DISTRICT;
+		if (cav_status == FULL)
+		{
+			DISTANCE((*flag_second_full[cavid]), district[order->did], distance);
+			TIME(distance, time);
+			LIST_INSERT_AFTER(flag_second_full[cavid], station, station_link);
+			station->arrivetime = flag_second_full[cavid]->leavetime + time;
+			station->leavetime = station->arrivetime;
+		}
+		if (cav_status == AVAILABLE)
+		{
+			DISTANCE((*flag_second_available[cavid]), district[order->did], distance);
+			TIME(distance, time);
+			LIST_INSERT_AFTER(flag_second_available[cavid], station, station_link);
+			station->arrivetime = flag_second_available[cavid]->leavetime + time;
+			station->leavetime = station->arrivetime;
+		}
+	}
+	var = LIST_NEXT(station, station_link);
+	if (var == NULL)
+		return;
+	DISTANCE((*station), restaurant[order->rid], distance);
+	delaytime = station->leavetime + distance - var->arrivetime;
+
+	LIST_FOREACH_FROM(var, head, station_link)
+	{
+		var->arrivetime = var->arrivetime + delaytime;
+		if (var->leavetime >= var->arrivetime)
+			break;
+		else
+		{
+			delaytime = var->arrivetime - var->leavetime;
+			var->leavetime = var->arrivetime;
+		}
+	}
 }

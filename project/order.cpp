@@ -69,59 +69,31 @@ void order_free_insert(int cavid, Order order)
 void order_available_insert(int cavid, Order order)
 {
 	float time;
-	time = Insert_order(&order, &(cavalier[cavid].station_list));
+	time = Insert_order(&order, &(cavalier[cavid].station_list), FULL, cavalier[cavid]);
 	cavalier[cavid].pack_num++;
 	cavalier[cavid].bottlenecktime = cal_bottlenecktime(cavalier[cavid].station_list);
 	cav_setstatus(&cavalier[cavid]);
 }
-Station *flag_first, *flag_second;
 void order_full_insert(int cavid, Order order)
 {
-	Station *temp1, *temp2, *new_station;
+	Station *temp2, *new_station;
 	float distance;
 	float time;
 	Location location;
-	temp1 = cavalier[cavid].station_list.lh_first;
-	while(1)
+	if (flag_first_full == flag_second_full)//插在同一个节点后
 	{
-		if (temp1 == flag_first)
-		{
-			//插入餐厅并更新
-			location = rid2restaurant(order.rid).location;
-			new_station = new Station[1];
-			new_station->location = location;
-			new_station->oid = order.oid;
-			new_station->type = RESTAURANT;
-			DISTANCE((*temp1), restaurant[order.rid], distance);
-			TIME(distance, time);
-			new_station->arrivetime = temp1->leavetime + time;
-			if (new_station->arrivetime < order.time)
-			{
-				new_station->leavetime = order.time;
-			}
-			else
-			{
-				new_station->leavetime = new_station->arrivetime;
-			}
-			LIST_INSERT_AFTER(temp1, new_station, station_link);
-			update_after_insert_restaurant(new_station, &order, &(cavalier[cavid].station_list));
-		}
-		if (temp1 == flag_second)
-		{ 
-			//插入小区并更新
-			location = did2district(order.did).location;
-			new_station = new Station[1];
-			new_station->location = location;
-			new_station->oid = order.oid;
-			new_station->type = DISTRICT;
-			DISTANCE((*temp1), district[order.did], distance);
-			TIME(distance, time);
-			new_station->arrivetime = temp1->leavetime + time;
-			new_station->arrivetime = new_station->leavetime;
-			LIST_INSERT_AFTER(temp1, new_station, station_link);
-			update_after_insert_district(new_station, &order, &(cavalier[cavid].station_list));
-		}
-		temp1 = temp1->station_link.le_next;
+		new_station = new Station[1];
+		update_and_insert(new_station, &order, &cavalier[cavid].station_list, RESTAURANT, FULL, cavid);
+		flag_second_full[cavid] = LIST_NEXT(flag_second_full[cavid], station_link);
+		new_station = new Station[1];
+		update_and_insert(new_station, &order, &cavalier[cavid].station_list, DISTRICT, FULL, cavid);
+	}
+	else //不同结点后
+	{
+		new_station = new Station[1];
+		update_and_insert(new_station, &order, &cavalier[cavid].station_list, RESTAURANT, FULL, cavid);
+		new_station = new Station[1];
+		update_and_insert(new_station, &order, &cavalier[cavid].station_list, DISTRICT, FULL, cavid);
 	}
 	//LIST_INSERT_TAIL(&cavalier[cavid].station_list, temp2, temp1, station_link);
 	////temp1是最后一个小区   temp2是新的order
@@ -173,6 +145,6 @@ void order_insert(int cavid, Order order)
 		printf("invalid cavalier! id : %d", cavid);
 		break;
 	}
-	printf("order %d -> cavalier %d", order.oid, cavid);
+	//printf("order %d -> cavalier %d", order.oid, cavid);
 }
 

@@ -49,12 +49,12 @@ void cav_setstatus(Cavalier *cav)
 	{
 		cav->status = AVAILABLE;
 	}
-	printf("set cav %d status：%d -> %d\n", cav->id, status, cav->status);
+//	printf("set cav %d status：%d -> %d\n", cav->id, status, cav->status);
 }
 
 void cav_update(float time)
 {
-	printf("cav_update! time = %f\n", time);
+//	printf("cav_update! time = %f\n", time);
 
 	int i;
 	for(i=1; i<=cavalier_num; i++)
@@ -93,7 +93,7 @@ void cav_update(float time)
 		//将找的DISTRICT之前的路径移除，并插入print
 		if (temp != NULL)
 		{
-			printf("update cav %d:	 order %d	type:%d		arrivetime: %f\n", i, temp->oid, temp->type, temp->arrivetime);
+		//	printf("update cav %d:	 order %d	type:%d		arrivetime: %f\n", i, temp->oid, temp->type, temp->arrivetime);
 			LIST_LAST(last, &print[i], station_link);
 			LIST_FOREACH(station, &cavalier[i].station_list, station_link)
 			{
