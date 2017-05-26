@@ -56,7 +56,8 @@ void cav_update(float time)
 	int i;
 	for(i=1; i<=cavalier_num; i++)
 	{
-		Station *station, *temp = NULL, *last;
+		Station *station, *temp = NULL, *last, *print_insert;
+		Station *temp2;
 		int pack_release_num = 0;
 		//不必更新状态为FREE或INIT的骑手
 		if (cavalier[i].status == FREE | cavalier[i].status == INIT)
@@ -95,18 +96,26 @@ void cav_update(float time)
 				}
 				else
 				{
+					print_insert = new Station[1];
+					copy_station(station, print_insert);
 					if (last != NULL)
 					{
-						LIST_REMOVE(station, station_link);
-						LIST_INSERT_AFTER(last, station, station_link);
+						LIST_INSERT_AFTER(last, print_insert, station_link);
 					}
 					else
 					{
-						LIST_REMOVE(station, station_link);
-						LIST_INSERT_HEAD(&print[i], station, station_link);
+						LIST_INSERT_HEAD(&print[i], print_insert, station_link);
 					}
 					
 				}
+			}
+			station = LIST_FIRST(&cavalier[i].station_list);
+			while(station != temp)
+			{
+				temp2 = station->station_link.le_next;
+				LIST_REMOVE(station, station_link);
+				delete(station);
+				station = temp2;
 			}
 		}
 		//更新该骑手状态
@@ -267,9 +276,9 @@ float Insert_order(Order *order, Station_list *head) {      //尝试将某个订单插入
 		
 		T2 = cal_bottlenecktime(*head);
 		if (T2 <= T1) {
-			free(oldlast);
-			free(newlast);
-			free(newnewstation);
+			delete(oldlast);
+			delete(newlast);
+			delete(newnewstation);
 			return T2;
 		}
 		else {
@@ -277,9 +286,9 @@ float Insert_order(Order *order, Station_list *head) {      //尝试将某个订单插入
 			copy_station(newlast, last);
 			copy_station(newnewstation, newstation);
 			LIST_INSERT_BEFORE(last, newstation, station_link);
-			free(oldlast);
-			free(newlast);
-			free(newnewstation);
+			delete(oldlast);
+			delete(newlast);
+			delete(newnewstation);
 			return T1;
 		}
 	
@@ -288,9 +297,9 @@ float Insert_order(Order *order, Station_list *head) {      //尝试将某个订单插入
 	
 	}
 	else {
-		free(oldlast);
-		free(newlast);
-		free(newnewstation);
+		delete(oldlast);
+		delete(newlast);
+		delete(newnewstation);
 		return T1;
 	}
 
