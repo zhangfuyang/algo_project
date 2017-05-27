@@ -3,12 +3,11 @@
 #include"struct.h"
 #include"globalvar.h"
 #include"function.h"
-#define TEST "data08.txt"
+#define TEST "data19.txt"
 using namespace std;
 
 int restaurant_num, district_num, cavalier_num;
 int C, N;
-#define TEXT "data11.txt"
 Restaurant *restaurant;
 District *district;
 Order *order;
