@@ -40,7 +40,7 @@ float cal_init_costtime(Cavalier cav, Order order)
 }
 float cal_full_costtime(Cavalier cav, Order order)
 {
-	float time = order.time;
+	float time;
 //	float time_dst;
 //	float distance;
 //	float origintime;
@@ -59,6 +59,7 @@ float cal_full_costtime(Cavalier cav, Order order)
 	}
 	size -= C;
 	size += 1;
+	//size表示过多少个小区变成available
 	LIST_FOREACH(temp, &cav.station_list, station_link)
 	{
 		if (temp->type == DISTRICT)
@@ -68,10 +69,10 @@ float cal_full_costtime(Cavalier cav, Order order)
 		if (count == size)
 			break;
 	}
-	copy_list1->lh_first = LIST_NEXT(temp, station_link);
+	copy_list1->lh_first = temp;
 	station_list_copy(copy_list1, copy_list2);
 	delete(copy_list1);
-	Insert_order(&order, copy_list2, FULL, cav);
+	time = Insert_order(&order, copy_list2, FULL, cav);
 	free_list(copy_list2);
 	return time;
 	//DISTANCE((*LIST_FIRST(&cav.station_list)), restaurant[order.rid], distance);

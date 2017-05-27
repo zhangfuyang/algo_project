@@ -76,25 +76,49 @@ void order_available_insert(int cavid, Order order)
 }
 void order_full_insert(int cavid, Order order)
 {
-	Station *temp2, *new_station;
+	Station *temp2, *temp, *new_station;
+	Station_list *copy_list = new Station_list[1];
 	float distance;
 	float time;
 	Location location;
-	if (flag_first_full == flag_second_full)//插在同一个节点后
+	Cavalier cav = cavalier[cavid];
+	int size = 0, count = 0;
+	LIST_FOREACH(temp, &cav.station_list, station_link)
 	{
-		new_station = new Station[1];
-		update_and_insert(new_station, &order, &cavalier[cavid].station_list, RESTAURANT, FULL, cavid);
-		flag_second_full[cavid] = LIST_NEXT(flag_second_full[cavid], station_link);
-		new_station = new Station[1];
-		update_and_insert(new_station, &order, &cavalier[cavid].station_list, DISTRICT, FULL, cavid);
+		if (temp->type == DISTRICT)
+			size++;
 	}
-	else //不同结点后
+	size -= C;
+	size += 1;
+	//size表示过多少个小区变成available
+	LIST_FOREACH(temp, &cav.station_list, station_link)
 	{
-		new_station = new Station[1];
-		update_and_insert(new_station, &order, &cavalier[cavid].station_list, RESTAURANT, FULL, cavid);
-		new_station = new Station[1];
-		update_and_insert(new_station, &order, &cavalier[cavid].station_list, DISTRICT, FULL, cavid);
+		if (temp->type == DISTRICT)
+		{
+			count++;
+		}
+		if (count == size)
+			break;
 	}
+	copy_list->lh_first = temp;
+	time = Insert_order(&order, copy_list, FULL, cav);
+	delete(copy_list);
+	//////if (flag_first_full[cavid].type == flag_second_full[cavid].type && flag_first_full[cavid].oid == flag_second_full[cavid].oid)//插在同一个节点后
+	//////{
+	//////	new_station = new Station[1];
+	//////	update_and_insert(new_station, &order, &cavalier[cavid].station_list, RESTAURANT, FULL, cavid);
+	//////	flag_second_full[cavid].oid = order.oid;
+	//////	flag_second_full[cavid].type = DISTRICT;
+	//////	new_station = new Station[1];
+	//////	update_and_insert(new_station, &order, &cavalier[cavid].station_list, DISTRICT, FULL, cavid);
+	//////}
+	//////else //不同结点后
+	//////{
+	//////	new_station = new Station[1];
+	//////	update_and_insert(new_station, &order, &cavalier[cavid].station_list, RESTAURANT, FULL, cavid);
+	//////	new_station = new Station[1];
+	//////	update_and_insert(new_station, &order, &cavalier[cavid].station_list, DISTRICT, FULL, cavid);
+	//////}
 	//LIST_INSERT_TAIL(&cavalier[cavid].station_list, temp2, temp1, station_link);
 	////temp1是最后一个小区   temp2是新的order
 	//temp2->location = (rid2restaurant(order.rid)).location;

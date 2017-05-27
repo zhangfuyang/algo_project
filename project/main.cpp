@@ -12,13 +12,13 @@ District *district;
 Order *order;
 Cavalier *cavalier;
 Station_list *print;
-Station **flag_first_available;
-Station **flag_second_available;
-Station **flag_first_full;
-Station **flag_second_full;
+Station *flag_first_available;
+Station *flag_second_available;
+Station *flag_first_full;
+Station *flag_second_full;
 int main()
 {
-	input_size(restaurant_num, district_num, cavalier_num, C, N, "fulltest.txt");
+	input_size(restaurant_num, district_num, cavalier_num, C, N, "data00.txt");
 
 	restaurant = new Restaurant[restaurant_num+1];
 	district = new District[district_num+1];
@@ -26,10 +26,41 @@ int main()
 	cavalier = new  Cavalier[cavalier_num+1];
 	print = new Station_list[N+1];
 	
-	flag_first_full = new Station* [cavalier_num + 1];
-	flag_second_full = new Station* [cavalier_num+ 1];
-	flag_first_available = new Station* [cavalier_num + 1];
-	flag_second_available = new Station* [cavalier_num + 1];
+	flag_first_full = new Station[cavalier_num + 1];
+	flag_second_full = new Station[cavalier_num+ 1];
+	flag_first_available = new Station[cavalier_num + 1];
+	flag_second_available = new Station[cavalier_num + 1];
+
+	for (int i = 0; i < cavalier_num + 1; i++)
+	{
+		flag_first_full[i].arrivetime = -1;
+		flag_first_full[i].leavetime = -1;
+		flag_first_full[i].location.x = -1;
+		flag_first_full[i].location.y = -1;
+		flag_first_full[i].oid = -1;
+		flag_first_full[i].type = -1;
+
+		flag_second_full[i].arrivetime = -1;
+		flag_second_full[i].leavetime = -1;
+		flag_second_full[i].location.x = -1;
+		flag_second_full[i].location.y = -1;
+		flag_second_full[i].oid = -1;
+		flag_second_full[i].type = -1;
+
+		flag_first_available[i].arrivetime = -1;
+		flag_first_available[i].leavetime = -1;
+		flag_first_available[i].location.x = -1;
+		flag_first_available[i].location.y = -1;
+		flag_first_available[i].oid = -1;
+		flag_first_available[i].type = -1;
+
+		flag_second_available[i].arrivetime = -1;
+		flag_second_available[i].leavetime = -1;
+		flag_second_available[i].location.x = -1;
+		flag_second_available[i].location.y = -1;
+		flag_second_available[i].oid = -1;
+		flag_second_available[i].type = -1;
+	}
 
 	/*for (int i = 0; i <= cavalier_num; i++)
 	{
@@ -38,7 +69,7 @@ int main()
 		flag_first_available[i] = new Station[1];
 		flag_second_available[i] = new Station[1];
 	}*/
-	input_array(restaurant, district, order, restaurant_num, district_num, cavalier_num, C, N, "fulltest.txt");
+	input_array(restaurant, district, order, restaurant_num, district_num, cavalier_num, C, N, "data00.txt");
 	
 	cout << restaurant_num<<" "<<district_num<<" "<<cavalier_num<<" "<<C << " " << N << endl;
 
