@@ -67,6 +67,7 @@ int main()
 	output();
 
 	system("pause");
+
 }
 
 
