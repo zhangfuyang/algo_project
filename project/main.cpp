@@ -3,6 +3,7 @@
 #include"struct.h"
 #include"globalvar.h"
 #include"function.h"
+#define TEST "data08.txt"
 using namespace std;
 
 int restaurant_num, district_num, cavalier_num;
@@ -19,7 +20,7 @@ Station *flag_first_full;
 Station *flag_second_full;
 int main()
 {
-	input_size(restaurant_num, district_num, cavalier_num, C, N, TEXT);
+	input_size(restaurant_num, district_num, cavalier_num, C, N, TEST);
 
 	restaurant = new Restaurant[restaurant_num+1];
 	district = new District[district_num+1];
@@ -70,7 +71,7 @@ int main()
 		flag_first_available[i] = new Station[1];
 		flag_second_available[i] = new Station[1];
 	}*/
-	input_array(restaurant, district, order, restaurant_num, district_num, cavalier_num, C, N, TEXT);
+	input_array(restaurant, district, order, restaurant_num, district_num, cavalier_num, C, N, TEST);
 	
 	cout << restaurant_num<<" "<<district_num<<" "<<cavalier_num<<" "<<C << " " << N << endl;
 
