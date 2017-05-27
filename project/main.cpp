@@ -7,6 +7,7 @@ using namespace std;
 
 int restaurant_num, district_num, cavalier_num;
 int C, N;
+#define TEXT "data11.txt"
 Restaurant *restaurant;
 District *district;
 Order *order;
@@ -18,7 +19,7 @@ Station *flag_first_full;
 Station *flag_second_full;
 int main()
 {
-	input_size(restaurant_num, district_num, cavalier_num, C, N, "data00.txt");
+	input_size(restaurant_num, district_num, cavalier_num, C, N, TEXT);
 
 	restaurant = new Restaurant[restaurant_num+1];
 	district = new District[district_num+1];
@@ -69,7 +70,7 @@ int main()
 		flag_first_available[i] = new Station[1];
 		flag_second_available[i] = new Station[1];
 	}*/
-	input_array(restaurant, district, order, restaurant_num, district_num, cavalier_num, C, N, "data00.txt");
+	input_array(restaurant, district, order, restaurant_num, district_num, cavalier_num, C, N, TEXT);
 	
 	cout << restaurant_num<<" "<<district_num<<" "<<cavalier_num<<" "<<C << " " << N << endl;
 

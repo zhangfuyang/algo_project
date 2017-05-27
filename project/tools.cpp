@@ -136,11 +136,19 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 	float T2;                          
 
 	//取得餐厅插入位置
-	if (LIST_NEXT(head->lh_first, station_link) == NULL) //只有一个元素
+	var = LIST_FIRST(head);
+	while (LIST_NEXT(var, station_link) != NULL && var->location.x == LIST_NEXT(var, station_link)->location.x && 
+			var->location.y == LIST_NEXT(var, station_link)->location.y)
+		//order[var->oid].oid != order[LIST_NEXT(var, station_link)->oid].oid)
+	{
+		var = LIST_NEXT(var, station_link);
+	}
+	if (LIST_NEXT(var, station_link) == NULL) //只有一个元素
 	{
 		Station *ttemp;
 		float time;
 		float time2;
+		float Time;
 		newstation = new Station[1];
 		ttemp = LIST_FIRST(head);
 		flag_first_full[cav.id].oid = ttemp->oid;
@@ -149,26 +157,48 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 		flag_second_full[cav.id].oid = ttemp->oid;
 		DISTANCE((*ttemp), restaurant[order->rid], distance);
 		TIME(distance, time);
-		if (time + ttemp->leavetime > order->time)
+		LIST_INSERT_AFTER(var, newstation, station_link);
+		newstation->location = restaurant[order->rid].location;
+		newstation->oid = order->oid;
+		newstation->type = RESTAURANT;
+		if (time + ttemp->leavetime > order->time) //订单等我
 		{
 			time2 = time + ttemp->arrivetime - order->time;
 			DISTANCE(district[order->did], restaurant[order->rid], distance);
 			TIME(distance, time);
-			delete(newstation);
-			return time + time2;
+			newstation->arrivetime = time + time2;
+			newstation->leavetime = newstation->arrivetime;
+			Time = time + time2;
 		}
 		else
 		{
+			newstation->arrivetime = time + ttemp->leavetime;
+			newstation->leavetime = order->time;
 			DISTANCE(district[order->did], restaurant[order->rid], distance);
 			TIME(distance, time);
-			delete(newstation);
-			return time;
+			Time = time;
 		}
+		var = LIST_NEXT(var, station_link);
+		newstation = new Station[1];
+		LIST_INSERT_AFTER(var, newstation, station_link);
+		newstation->location = restaurant[order->rid].location;
+		newstation->oid = order->oid;
+		newstation->type = DISTRICT;
+		DISTANCE(district[order->did], restaurant[order->rid], distance);
+		TIME(distance, time);
+		newstation->arrivetime = var->arrivetime + time;
+		newstation->leavetime = var->arrivetime;
+		return Time;
 	}
 
-	LIST_FOREACH(var, head, station_link)                      
+	LIST_FOREACH_FROM(var, head, station_link)                      
 	{
 		if ((LIST_NEXT(var, station_link)) != NULL) {
+			if (var->location.x == LIST_NEXT(var, station_link)->location.x &&
+				var->location.y == LIST_NEXT(var, station_link)->location.y)
+			{
+				continue;
+			}
 			DISTANCE((*var), restaurant[order->rid], dist1);
 			DISTANCE((*(LIST_NEXT(var, station_link))), restaurant[order->rid], dist2);
 			distance = dist1 + dist2;
@@ -243,6 +273,11 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 	LIST_FOREACH_FROM(var, head, station_link)            
 	{
 		if ((LIST_NEXT(var, station_link)) != NULL) {
+			if (var->location.x == LIST_NEXT(var, station_link)->location.x &&
+				var->location.y == LIST_NEXT(var, station_link)->location.y)
+			{
+				continue;
+			}
 			DISTANCE((*var), district[order->did], dist1);
 			DISTANCE((*(LIST_NEXT(var, station_link))), district[order->did], dist2);
 			distance = dist1 + dist2;
