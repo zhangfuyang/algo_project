@@ -40,7 +40,7 @@ void order_free_insert(int cavid, Order order)
 	LIST_INSERT_TAIL(&cavalier[cavid].station_list, temp2, temp1, station_link);
 	temp2->location = (rid2restaurant(order.rid)).location;
 	temp2->type = RESTAURANT;
-	DISTANCE((*temp2), rid2restaurant(order.rid), distance);
+	DISTANCE((*temp1), rid2restaurant(order.rid), distance);
 	TIME(distance, time);
 	if (time + temp1->arrivetime < order.time)
 	{

@@ -163,10 +163,10 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 		newstation->type = RESTAURANT;
 		if (time + ttemp->leavetime > order->time) //¶©µ¥µÈÎÒ
 		{
-			time2 = time + ttemp->arrivetime - order->time;
+			time2 = time + ttemp->leavetime;
 			DISTANCE(district[order->did], restaurant[order->rid], distance);
 			TIME(distance, time);
-			newstation->arrivetime = time + time2;
+			newstation->arrivetime = time2;
 			newstation->leavetime = newstation->arrivetime;
 			Time = time + time2;
 		}
@@ -181,13 +181,13 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 		var = LIST_NEXT(var, station_link);
 		newstation = new Station[1];
 		LIST_INSERT_AFTER(var, newstation, station_link);
-		newstation->location = restaurant[order->rid].location;
+		newstation->location = district[order->did].location;
 		newstation->oid = order->oid;
 		newstation->type = DISTRICT;
 		DISTANCE(district[order->did], restaurant[order->rid], distance);
 		TIME(distance, time);
 		newstation->arrivetime = var->arrivetime + time;
-		newstation->leavetime = var->arrivetime;
+		newstation->leavetime = newstation->arrivetime;
 		return Time;
 	}
 
@@ -274,7 +274,7 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 	{
 		if ((LIST_NEXT(var, station_link)) != NULL) {
 			if (var->location.x == LIST_NEXT(var, station_link)->location.x &&
-				var->location.y == LIST_NEXT(var, station_link)->location.y)
+				var->location.y == LIST_NEXT(var, station_link)->location.y && LIST_NEXT(LIST_NEXT(var, station_link), station_link) != NULL)
 			{
 				continue;
 			}
