@@ -151,10 +151,6 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 		float Time;
 		newstation = new Station[1];
 		ttemp = LIST_FIRST(head);
-		flag_first_full[cav.id].oid = ttemp->oid;
-		flag_first_full[cav.id].type = ttemp->type;
-		flag_second_full[cav.id].type = ttemp->type;
-		flag_second_full[cav.id].oid = ttemp->oid;
 		DISTANCE((*ttemp), restaurant[order->rid], distance);
 		TIME(distance, time);
 		LIST_INSERT_AFTER(var, newstation, station_link);
@@ -216,16 +212,7 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 	DISTANCE((*choose), restaurant[order->rid], dist1);
 
 	//更新新插入餐厅的各项信息
-	if (status == AVAILABLE)
-	{
-		flag_first_available[cav.id].oid = choose->oid;
-		flag_first_available[cav.id].type = choose->type;
-	}
-	if (status == FULL)
-	{
-		flag_first_full[cav.id].oid = choose->oid;
-		flag_first_full[cav.id].type = choose->type;
-	}
+
 	newstation->arrivetime = choose->leavetime + dist1;         
 	if (newstation->arrivetime < order->time) {
 		newstation->leavetime = order->time;
@@ -293,16 +280,6 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 	newstation->station_link.le_prev = NULL;
 	DISTANCE((*choose), district[order->did], dist1);
 		
-	if (status == AVAILABLE)
-	{
-		flag_second_available[cav.id].oid = choose->oid;
-		flag_second_available[cav.id].type = choose->type;
-	}
-	if (status == FULL)
-	{
-		flag_second_full[cav.id].oid = choose->oid;
-		flag_second_full[cav.id].type = choose->type;
-	}
 	//更新新插入小区的各项信息
 
 	newstation->arrivetime = choose->leavetime + dist1;     
@@ -415,102 +392,33 @@ float theoretically_time()
 	return max;
 }
 
-void update_and_insert(Station *station, Order* order, Station_list *head, int station_status, int cav_status, int cavid)
+int find_near_center(int cavid)
 {
-	float delaytime;
+	float max = 1000000;
+	int i;
+	int rst_center_num;
 	float distance;
-	float time;
-	Station *var = NULL;
-	station->location = restaurant[order->rid].location;
-	station->oid = order->oid;
-	if (station_status == RESTAURANT)
+	for (i = 1; i <= cavalier_num; i++)
 	{
-		station->type = RESTAURANT;
-		if (cav_status == FULL)
+		DISTANCE(rst_center[i], cavalier[cavid], distance);
+		if (distance < max)
 		{
-			LIST_FOREACH(var, &cavalier[cavid].station_list, station_link)
-			{
-				if (var->type == flag_first_full[cavid].type && var->oid == flag_first_full[cavid].oid)
-				{
-					DISTANCE((*var), restaurant[order->rid], distance);
-					TIME(distance, time);
-					LIST_INSERT_AFTER(var, station, station_link);
-					break;
-				}
-			}
-		}
-		if (cav_status == AVAILABLE)
-		{
-			LIST_FOREACH(var, &cavalier[cavid].station_list, station_link)
-			{
-				if (var->type == flag_first_available[cavid].type && var->oid == flag_first_available[cavid].oid)
-				{
-					DISTANCE((*var), restaurant[order->rid], distance);
-					TIME(distance, time);
-					LIST_INSERT_AFTER(var, station, station_link);
-					break;
-				}
-			}
-		}
-		station->arrivetime = var->leavetime + time;
-		if (station->arrivetime < order->time)
-		{
-			station->leavetime = order->time;
-		}
-		else
-		{
-			station->leavetime = station->arrivetime;
+			max = distance;
+			rst_center_num = i;
 		}
 	}
-	if (station_status == DISTRICT)
-	{
-		station->type = DISTRICT;
-		if (cav_status == FULL)
-		{
-			LIST_FOREACH(var, &cavalier[cavid].station_list, station_link)
-			{
-				if (var->type == flag_second_full[cavid].type && var->oid == flag_second_full[cavid].oid)
-				{
-					DISTANCE((*var), restaurant[order->rid], distance);
-					TIME(distance, time);
-					LIST_INSERT_AFTER(var, station, station_link);
-					break;
-				}
-			}
-			station->arrivetime = var->leavetime + time;
-			station->leavetime = station->arrivetime;
-		}
-		if (cav_status == AVAILABLE)
-		{
-			LIST_FOREACH(var, &cavalier[cavid].station_list, station_link)
-			{
-				if (var->type == flag_second_available[cavid].type && var->oid == flag_second_available[cavid].oid)
-				{
-					DISTANCE((*var), restaurant[order->rid], distance);
-					TIME(distance, time);
-					LIST_INSERT_AFTER(var, station, station_link);
-					break;
-				}
-			}
-			station->arrivetime = var->leavetime + time;
-			station->leavetime = station->arrivetime;
-		}
-	}
-	var = LIST_NEXT(station, station_link);
-	if (var == NULL)
-		return;
-	DISTANCE((*station), restaurant[order->rid], distance);
-	delaytime = station->leavetime + distance - var->arrivetime;
+	return rst_center_num;
+}
 
-	LIST_FOREACH_FROM(var, head, station_link)
-	{
-		var->arrivetime = var->arrivetime + delaytime;
-		if (var->leavetime >= var->arrivetime)
-			break;
-		else
-		{
-			delaytime = var->arrivetime - var->leavetime;
-			var->leavetime = var->arrivetime;
-		}
-	}
+Location unit_vector(Location a, Location b)
+{
+	Location temp;
+	float x, y;
+	float length;
+	x = b.x - a.x;
+	y = b.y - a.y;
+	length = sqrt(x*x + y*y);
+	temp.x = x / length;
+	temp.y = y / length;
+	return temp;
 }

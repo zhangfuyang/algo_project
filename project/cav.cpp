@@ -11,13 +11,22 @@ void cav_init()
 	//LIST_INIT(&cav_free_list);
 	//LIST_INIT(&cav_available_list);
 	//LIST_INIT(&cav_full_list);
-
+	Station *temp;
 	for (int i = 1; i <= cavalier_num; i++)
 	{
 		cavalier[i].status = INIT;
 		cavalier[i].pack_num = 0;
 		cavalier[i].id = i;
+		cavalier[i].now = 0;
+		cavalier[i].location = rst_center[i].location;
 		LIST_INIT(&cavalier[i].station_list);
+		/*temp = new Station[1];
+		LIST_INSERT_HEAD(&cavalier[i].station_list, temp, station_link);
+		temp->arrivetime = -1;
+		temp->leavetime = -1;
+		temp->location = cavalier[i].location;
+		temp->oid = -1;
+		temp->type = LOCATIONNOW;*/
 	}
 }
 
@@ -62,10 +71,25 @@ void cav_update(float time)
 		Station *station, *temp = NULL, *last, *print_insert;
 		Station *temp2;
 		int pack_release_num = 0;
-		//不必更新状态为FREE或INIT的骑手
+		//更新状态为FREE或INIT的骑手！！！！！！！！！
+		int center_num;//找最近的聚点
+		Location unit;//单位向量
+		float distance;
 		if (cavalier[i].status == FREE | cavalier[i].status == INIT)
 		{
-			continue;
+			center_num = find_near_center(i);
+			unit = unit_vector(cavalier[i].location, rst_center[center_num].location);
+			DISTANCE(cavalier[i], rst_center[center_num], distance);
+			if (time - cavalier[i].now > distance)//跑到了聚点
+			{
+				cavalier[i].location = rst_center[center_num].location;
+			}
+			else//没跑到聚点
+			{
+				cavalier[i].location.x = cavalier[i].location.x + unit.x * (time - cavalier[i].now);
+				cavalier[i].location.y = cavalier[i].location.y + unit.y * (time - cavalier[i].now);
+			}
+			cavalier[i].now = time;
 		}
 		//寻找骑手在该时刻到达的DISTRICT
 		LIST_FOREACH(station, &cavalier[i].station_list, station_link)
