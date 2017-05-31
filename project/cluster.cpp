@@ -160,8 +160,8 @@ void main_cluster() {
 	for (int i = 0; i < cavalier_num; i++)
 	{
 		cout << getMeans(clusters[i]).attr1 << "            " << getMeans(clusters[i]).attr2;
-		rst_center[i + 1].x = getMeans(clusters[i]).attr1;
-		rst_center[i + 1].y = getMeans(clusters[i]).attr2;
+		rst_center[i + 1].location.x = getMeans(clusters[i]).attr1;
+		rst_center[i + 1].location.y = getMeans(clusters[i]).attr2;
 		cout << endl;
 	}
 	return;

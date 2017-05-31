@@ -392,15 +392,17 @@ float theoretically_time()
 	return max;
 }
 
-int find_near_center(int cavid)
+int find_near_center(int cavid, Location cav)
 {
 	float max = 1000000;
+	Place temp;
 	int i;
 	int rst_center_num;
 	float distance;
+	temp.location = cav;
 	for (i = 1; i <= cavalier_num; i++)
 	{
-		DISTANCE(rst_center[i], cavalier[cavid], distance);
+		DISTANCE(rst_center[i], temp, distance);
 		if (distance < max)
 		{
 			max = distance;

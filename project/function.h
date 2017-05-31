@@ -13,7 +13,7 @@ Location  place2xy(Place place);
 District did2district(int did);
 Restaurant rid2restaurant(int rid);
 float theoretically_time();
-int find_near_center(int cavid);
+int find_near_center(int cavid, Location cav);
 Location unit_vector(Location a, Location b);
 
 //特殊功能函数
