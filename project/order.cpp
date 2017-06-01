@@ -17,7 +17,9 @@ void order_init_insert(int cavid, Order order)
 	temp1->location = restaurant[order.rid].location;
 	temp1->oid = order.oid;
 	temp1->type = RESTAURANT;
-	LIST_INSERT_HEAD(&cavalier[cavid].station_list, temp1, station_link);
+	temp_head = cavalier[cavid].station_list.lh_first;
+	LIST_INSERT_AFTER(temp_head, temp1, station_link);
+	//LIST_INSERT_HEAD(&cavalier[cavid].station_list, temp1, station_link);
 	//LIST_INSERT_AFTER(temp_head, temp1, station_link);
 	temp2 = new Station[1];
 	DISTANCE(restaurant[order.rid], district[order.did], distance);
@@ -97,31 +99,33 @@ void order_available_insert(int cavid, Order order)
 }
 void order_full_insert(int cavid, Order order)
 {
-	Station *last, *temp1, *temp2;
+	Station *temp2, *temp, *new_station;
+	Station_list *copy_list = new Station_list[1];
 	float distance;
 	float time;
-	LIST_LAST(last, &cavalier[cavid].station_list, station_link);
-	temp1 = new Station[1];
-	DISTANCE((*last), restaurant[order.rid], distance);
-	TIME(distance, time);
-	temp1->arrivetime = last->leavetime + time;
-	temp1->leavetime = temp1->arrivetime;
-	temp1->location = restaurant[order.rid].location;
-	temp1->oid = order.oid;
-	temp1->type = RESTAURANT;
-	LIST_INSERT_AFTER(last, temp1, station_link);
-	temp2 = new Station[1];
-	temp2->location = district[order.did].location;
-	temp2->oid = order.oid;
-	temp2->type = DISTRICT;
-	DISTANCE(restaurant[order.rid], district[order.did], distance);
-	TIME(distance, time);
-	temp2->arrivetime = temp1->leavetime + time;
-	temp2->leavetime = temp2->arrivetime;
-	LIST_INSERT_AFTER(temp1, temp2, station_link);
-	cavalier[cavid].pack_num++;
-	cavalier[cavid].bottlenecktime = cal_bottlenecktime(cavalier[cavid].station_list);
-	cav_setstatus(&cavalier[cavid]);
+	Location location;
+	Cavalier cav = cavalier[cavid];
+	int size = 0, count = 0;
+	LIST_FOREACH(temp, &cav.station_list, station_link)
+	{
+		if (temp->type == DISTRICT)
+			size++;
+	}
+	size -= C;
+	size += 1;
+	//size表示过多少个小区变成available
+	LIST_FOREACH(temp, &cav.station_list, station_link)
+	{
+		if (temp->type == DISTRICT)
+		{
+			count++;
+		}
+		if (count == size)
+			break;
+	}
+	copy_list->lh_first = temp;
+	time = Insert_order(&order, copy_list, FULL, cav);
+	delete(copy_list);
 }
 void order_insert(int cavid, Order order)
 {

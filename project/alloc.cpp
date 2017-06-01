@@ -30,7 +30,43 @@ float cal_init_costtime(Cavalier cav, Order order)
 }
 float cal_full_costtime(Cavalier cav, Order order)
 {
+	float time;
+	//	float time_dst;
+	//	float distance;
+	//	float origintime;
 	Station *temp;
+	Station_list *copy_list1 = new Station_list[1];
+	Station_list *copy_list2 = new Station_list[1];
+	LIST_INIT(copy_list1);
+	LIST_INIT(copy_list2);
+
+	//	station_list_copy(&cav.station_list, copy_list2);
+	int size = 0, count = 0;
+	LIST_FOREACH(temp, &cav.station_list, station_link)
+	{
+		if (temp->type == DISTRICT)
+			size++;
+	}
+	size -= C;
+	size += 1;
+	//size表示过多少个小区变成available
+	LIST_FOREACH(temp, &cav.station_list, station_link)
+	{
+		if (temp->type == DISTRICT)
+		{
+			count++;
+		}
+		if (count == size)
+			break;
+	}
+	copy_list1->lh_first = temp;
+	station_list_copy(copy_list1, copy_list2);
+	delete(copy_list1);
+	time = Insert_order(&order, copy_list2, FULL, cav);
+	free_list(copy_list2);
+	return time;
+
+	/*Station *temp;
 	float distance1, distance2;
 	float time1, time2;
 	LIST_LAST(temp, &cav.station_list, station_link);
@@ -38,7 +74,7 @@ float cal_full_costtime(Cavalier cav, Order order)
 	TIME(distance1, time1);
 	DISTANCE(restaurant[order.rid], district[order.did], distance2);
 	TIME(distance2, time2);
-	return time1 + time2 + temp->leavetime - order.time;
+	return time1 + time2 + temp->leavetime - order.time;*/
 }
 float cal_available_costtime(Cavalier cav, Order order) {     //返回将order给该骑士后的瓶颈时间
 	float T;

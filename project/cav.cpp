@@ -22,12 +22,13 @@ void cav_init()
 		LIST_INIT(&cavalier[i].station_list);
 		cavalier[i].location = rst_center[i].location;
 		temp = new Station[1];
-		LIST_INSERT_HEAD(&print[i], temp, station_link);
+		LIST_INSERT_HEAD(&cavalier[i].station_list, temp, station_link);
 		temp->arrivetime = 0;
 		temp->leavetime = 0;
 		temp->location = cavalier[i].location;
 		temp->oid = -1;
-		temp->type = LOCATIONNOW;
+		//temp->type = LOCATIONNOW;
+		temp->type = DISTRICT;
 	}
 }
 
