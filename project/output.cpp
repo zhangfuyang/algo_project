@@ -12,7 +12,6 @@ void output()
 	int *order_id;
 	float max_time = 0;
 	Station *temp, *temp1;
-//	Station *judge; //判断temp后面的station还是不是相同的
 	int size; //骑士背包里还有多少order
 	order_id = new int[C];
 	for (i = 1; i <= cavalier_num; i++)
@@ -41,8 +40,8 @@ void output()
 		if (num == 0)
 			continue;
 		temp = LIST_FIRST(&print[i]);
-		order_id[size] = temp->oid;
-		size++;
+		//order_id[size] = temp->oid;
+		//size++;
 		while (1)
 		{
 			cout << temp->location.x << " " << temp->location.y << " "

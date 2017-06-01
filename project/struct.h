@@ -11,6 +11,7 @@
 //Î»ÖÃÊôĞÔ
 #define RESTAURANT 0
 #define DISTRICT 1
+#define LOCATIONNOW 2
 //ËÙ¶È
 #define SPEED 1
 
@@ -37,8 +38,8 @@
 
 
 struct Location {            //×ø±ê½á¹¹Ìå
-	int x;
-	int y;
+	float x;
+	float y;
 };
 
 struct Place {				//²ÍÌü»òĞ¡ÇøÎ»ÖÃ½á¹¹Ìå
@@ -55,11 +56,11 @@ struct Order {               //¶©µ¥¾ßÌåĞÅÏ¢£ºÏÂµ¥Ê±¼ä¡¢²ÍÌüid¡¢Ğ¡Çøid¡¢¶©µ¥»¨·ÑÊ
 	int did;
 };
 
-//struct Pack {                      //Ò»¸öÆïÊÖµÄ¶©µ¥ĞÅÏ¢£ºÈ¡µÃÊ±¼ä¡¢Íê³ÉÊ±¼ä
-//	Order *order = NULL;
-//	float fetchtime;
-//	float completetime;
-//};
+//´æ·ÅÔª×éµÄÊôĞÔĞÅÏ¢
+struct Tuple {
+	float attr1;
+	float attr2;
+};
 
 struct Station {                   //Ã¿¸öÆïÊÖÂ·¾¶µÄ¹Ø¼üµãĞÅÏ¢
 	Location location;
@@ -75,18 +76,14 @@ struct Station {                   //Ã¿¸öÆïÊÖÂ·¾¶µÄ¹Ø¼üµãĞÅÏ¢
 LIST_HEAD(Station_list,Station);
 
 struct Cavalier {            //ÆïÊÖ¾ßÌåĞÅÏ¢£ºµ±Ç°Î»ÖÃµÄ×ø±êĞÅÏ¢¡¢µ±Ç°µÄÊ±¿Ì¡¢µ±Ç°µÄ×´Ì¬£¨Èı¸öÁĞ±íÖĞ´¦ÓÚÄÄ¸öÁĞ±í£©¡¢ÉíÉÏµÄ¶©µ¥ĞÅÏ¢¡¢Á´½Ó½á¹¹Ìå
-	//Location location;
-	//float now;				//ÆïÊ¿µ±Ç°Ê±¼ä
-	//float end;				//ÆïÊ¿Íê³ÉËùÓĞÈÎÎñµÄÊ±¼ä
-	////¶ÔÓÚFREEÆïÊ¿£ºnow = end
+	Location location;
+	float now;				//ÆïÊ¿µ±Ç°Ê±¼ä
 	int id;					//ÆïÊÖid
 	int status;				//FREE or FULL or AVAILABLE
 	int pack_num;
 	float bottlenecktime;	//ÆïÊÖµ±Ç°¶©µ¥ÖĞ×î´óµÈ´ıÊ±¼ä
 	Station_list station_list;
-//	LIST_ENTRY(Cavalier) cav_link;
-};
 
-//LIST_HEAD(Cav_list, Cavalier);
+};
 
 #endif /*_STRUCT_H_*/
