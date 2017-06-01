@@ -127,8 +127,7 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 	float delaytime;
 
 	//返回的插入后的瓶颈时间
-
-//	float T;                           
+                        
 	float T1;
 
 	//用于比较如果小区插在倒数第二个位置，是插在倒数第二个位置好，还是插在尾部好

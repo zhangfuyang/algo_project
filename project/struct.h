@@ -61,11 +61,6 @@ struct Tuple {
 	float attr1;
 	float attr2;
 };
-//struct Pack {                      //一个骑手的订单信息：取得时间、完成时间
-//	Order *order = NULL;
-//	float fetchtime;
-//	float completetime;
-//};
 
 struct Station {                   //每个骑手路径的关键点信息
 	Location location;
@@ -83,16 +78,12 @@ LIST_HEAD(Station_list,Station);
 struct Cavalier {            //骑手具体信息：当前位置的坐标信息、当前的时刻、当前的状态（三个列表中处于哪个列表）、身上的订单信息、链接结构体
 	Location location;
 	float now;				//骑士当前时间
-	//float end;				//骑士完成所有任务的时间
-	////对于FREE骑士：now = end
 	int id;					//骑手id
 	int status;				//FREE or FULL or AVAILABLE
 	int pack_num;
 	float bottlenecktime;	//骑手当前订单中最大等待时间
 	Station_list station_list;
-//	LIST_ENTRY(Cavalier) cav_link;
-};
 
-//LIST_HEAD(Cav_list, Cavalier);
+};
 
 #endif /*_STRUCT_H_*/
