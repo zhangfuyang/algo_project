@@ -3,7 +3,7 @@
 #include"struct.h"
 #include"globalvar.h"
 #include"function.h"
-#define TEST "fulltest1.txt"
+#define TEST "large.txt"
 using namespace std;
 
 int restaurant_num, district_num, cavalier_num;
