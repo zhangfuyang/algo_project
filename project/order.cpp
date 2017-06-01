@@ -103,48 +103,6 @@ void order_full_insert(int cavid, Order order)
 	copy_list->lh_first = temp;
 	time = Insert_order(&order, copy_list, FULL, cav);
 	delete(copy_list);
-	//////if (flag_first_full[cavid].type == flag_second_full[cavid].type && flag_first_full[cavid].oid == flag_second_full[cavid].oid)//插在同一个节点后
-	//////{
-	//////	new_station = new Station[1];
-	//////	update_and_insert(new_station, &order, &cavalier[cavid].station_list, RESTAURANT, FULL, cavid);
-	//////	flag_second_full[cavid].oid = order.oid;
-	//////	flag_second_full[cavid].type = DISTRICT;
-	//////	new_station = new Station[1];
-	//////	update_and_insert(new_station, &order, &cavalier[cavid].station_list, DISTRICT, FULL, cavid);
-	//////}
-	//////else //不同结点后
-	//////{
-	//////	new_station = new Station[1];
-	//////	update_and_insert(new_station, &order, &cavalier[cavid].station_list, RESTAURANT, FULL, cavid);
-	//////	new_station = new Station[1];
-	//////	update_and_insert(new_station, &order, &cavalier[cavid].station_list, DISTRICT, FULL, cavid);
-	//////}
-	//LIST_INSERT_TAIL(&cavalier[cavid].station_list, temp2, temp1, station_link);
-	////temp1是最后一个小区   temp2是新的order
-	//temp2->location = (rid2restaurant(order.rid)).location;
-	//temp2->type = RESTAURANT;
-	//DISTANCE((*temp1), rid2restaurant(order.rid), distance);
-	//TIME(distance, time);
-	//if (time + temp1->arrivetime < order.time)
-	//{
-	//	temp2->arrivetime = temp1->leavetime + time;
-	//	temp2->leavetime = order.time;
-	//}
-	//else
-	//{
-	//	temp2->arrivetime = temp1->leavetime + time;
-	//	temp2->leavetime = temp1->leavetime + time;
-	//}
-	//temp2->oid = order.oid;
-	//temp_dst = new Station[1];
-	//LIST_INSERT_TAIL(&cavalier[cavid].station_list, temp_dst, temp1, station_link);
-	//temp_dst->location = did2district(order.did).location;
-	//temp_dst->oid = order.oid;
-	//temp_dst->type = DISTRICT;
-	//DISTANCE((*temp_dst), (*temp2), distance);
-	//TIME(distance, time);
-	//temp_dst->arrivetime = temp2->leavetime + time;
-	//temp_dst->leavetime = temp2->leavetime + time;
 	cavalier[cavid].pack_num++;
 	cavalier[cavid].bottlenecktime = cal_bottlenecktime(cavalier[cavid].station_list);
 	cav_setstatus(&cavalier[cavid]);

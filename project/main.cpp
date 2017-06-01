@@ -32,44 +32,6 @@ int main()
 	flag_first_available = new Station[cavalier_num + 1];
 	flag_second_available = new Station[cavalier_num + 1];
 
-	for (int i = 0; i < cavalier_num + 1; i++)
-	{
-		flag_first_full[i].arrivetime = -1;
-		flag_first_full[i].leavetime = -1;
-		flag_first_full[i].location.x = -1;
-		flag_first_full[i].location.y = -1;
-		flag_first_full[i].oid = -1;
-		flag_first_full[i].type = -1;
-
-		flag_second_full[i].arrivetime = -1;
-		flag_second_full[i].leavetime = -1;
-		flag_second_full[i].location.x = -1;
-		flag_second_full[i].location.y = -1;
-		flag_second_full[i].oid = -1;
-		flag_second_full[i].type = -1;
-
-		flag_first_available[i].arrivetime = -1;
-		flag_first_available[i].leavetime = -1;
-		flag_first_available[i].location.x = -1;
-		flag_first_available[i].location.y = -1;
-		flag_first_available[i].oid = -1;
-		flag_first_available[i].type = -1;
-
-		flag_second_available[i].arrivetime = -1;
-		flag_second_available[i].leavetime = -1;
-		flag_second_available[i].location.x = -1;
-		flag_second_available[i].location.y = -1;
-		flag_second_available[i].oid = -1;
-		flag_second_available[i].type = -1;
-	}
-
-	/*for (int i = 0; i <= cavalier_num; i++)
-	{
-		flag_first_full[i] = new Station[1];
-		flag_second_full[i] = new Station[1];
-		flag_first_available[i] = new Station[1];
-		flag_second_available[i] = new Station[1];
-	}*/
 	input_array(restaurant, district, order, restaurant_num, district_num, cavalier_num, C, N, TEST);
 	
 	cout << restaurant_num<<" "<<district_num<<" "<<cavalier_num<<" "<<C << " " << N << endl;

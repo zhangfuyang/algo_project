@@ -55,12 +55,6 @@ struct Order {               //¶©µ¥¾ßÌåĞÅÏ¢£ºÏÂµ¥Ê±¼ä¡¢²ÍÌüid¡¢Ğ¡Çøid¡¢¶©µ¥»¨·ÑÊ
 	int did;
 };
 
-//struct Pack {                      //Ò»¸öÆïÊÖµÄ¶©µ¥ĞÅÏ¢£ºÈ¡µÃÊ±¼ä¡¢Íê³ÉÊ±¼ä
-//	Order *order = NULL;
-//	float fetchtime;
-//	float completetime;
-//};
-
 struct Station {                   //Ã¿¸öÆïÊÖÂ·¾¶µÄ¹Ø¼üµãĞÅÏ¢
 	Location location;
 	int type;					// District or Restaurant
@@ -75,18 +69,11 @@ struct Station {                   //Ã¿¸öÆïÊÖÂ·¾¶µÄ¹Ø¼üµãĞÅÏ¢
 LIST_HEAD(Station_list,Station);
 
 struct Cavalier {            //ÆïÊÖ¾ßÌåĞÅÏ¢£ºµ±Ç°Î»ÖÃµÄ×ø±êĞÅÏ¢¡¢µ±Ç°µÄÊ±¿Ì¡¢µ±Ç°µÄ×´Ì¬£¨Èı¸öÁĞ±íÖĞ´¦ÓÚÄÄ¸öÁĞ±í£©¡¢ÉíÉÏµÄ¶©µ¥ĞÅÏ¢¡¢Á´½Ó½á¹¹Ìå
-	//Location location;
-	//float now;				//ÆïÊ¿µ±Ç°Ê±¼ä
-	//float end;				//ÆïÊ¿Íê³ÉËùÓĞÈÎÎñµÄÊ±¼ä
-	////¶ÔÓÚFREEÆïÊ¿£ºnow = end
 	int id;					//ÆïÊÖid
 	int status;				//FREE or FULL or AVAILABLE
 	int pack_num;
 	float bottlenecktime;	//ÆïÊÖµ±Ç°¶©µ¥ÖĞ×î´óµÈ´ıÊ±¼ä
 	Station_list station_list;
-//	LIST_ENTRY(Cavalier) cav_link;
 };
-
-//LIST_HEAD(Cav_list, Cavalier);
 
 #endif /*_STRUCT_H_*/

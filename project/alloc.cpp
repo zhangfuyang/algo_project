@@ -14,7 +14,6 @@ float cal_free_costtime(Cavalier cav, Order order)  //当Free列表不为空时，给Free
 	TIME(distance, time_dst);
 	if (time_dst + LIST_FIRST(&cav.station_list)->arrivetime > time)
 	{
-		//printf("Free; 是订单等我的情况\n");
 		origintime = (time_dst + LIST_FIRST(&cav.station_list)->arrivetime) - time;
 		DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
 		TIME(distance, time);
@@ -22,7 +21,6 @@ float cal_free_costtime(Cavalier cav, Order order)  //当Free列表不为空时，给Free
 	}
 	else
 	{
-		//printf("Free; 是我等订单的情况\n");
 		DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
 		TIME(distance, time);
 		return time;
@@ -35,22 +33,16 @@ float cal_init_costtime(Cavalier cav, Order order)
 
 	DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
 	TIME(distance, time);
-	//printf("init;我是init骑手\n");
 	return time;
 }
 float cal_full_costtime(Cavalier cav, Order order)
 {
 	float time;
-//	float time_dst;
-//	float distance;
-//	float origintime;
 	Station *temp;
 	Station_list *copy_list1 = new Station_list[1];
 	Station_list *copy_list2 = new Station_list[1];
 	LIST_INIT(copy_list1);
 	LIST_INIT(copy_list2);
-
-//	station_list_copy(&cav.station_list, copy_list2);
 	int size = 0, count= 0;
 	LIST_FOREACH(temp, &cav.station_list, station_link)
 	{
@@ -75,24 +67,7 @@ float cal_full_costtime(Cavalier cav, Order order)
 	time = Insert_order(&order, copy_list2, FULL, cav);
 	free_list(copy_list2);
 	return time;
-	//DISTANCE((*LIST_FIRST(&cav.station_list)), restaurant[order.rid], distance);
-	//TIME(distance, time_dst);
-	//LIST_LAST(temp, &cav.station_list, station_link);
-	//if (time_dst + temp->arrivetime > time)
-	//{
-	//	//printf("full;我是full骑手\n");
-	//	origintime = time_dst + temp->arrivetime - time;
-	//	DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
-	//	TIME(distance, time);
-	//	return origintime + time;
-	//}
-	//else
-	//{
-	//	//printf("full;但是不应该进这里的!!!!!!出错了，赶紧去看\n");
-	//	DISTANCE(did2district(order.did), rid2restaurant(order.rid), distance);
-	//	TIME(distance, time);
-	//	return time;
-	//}
+
 }
 float cal_available_costtime(Cavalier cav, Order order) {     //返回将order给该骑士后的瓶颈时间
 	float T;

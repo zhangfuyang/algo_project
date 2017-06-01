@@ -8,10 +8,6 @@ using namespace std;
 
 void cav_init()
 {
-	//LIST_INIT(&cav_free_list);
-	//LIST_INIT(&cav_available_list);
-	//LIST_INIT(&cav_full_list);
-
 	for (int i = 1; i <= cavalier_num; i++)
 	{
 		cavalier[i].status = INIT;
