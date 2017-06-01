@@ -117,6 +117,7 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 	float distance;
 	float dist1;
 	float dist2;
+	float dist3;
 
 	//取最短距离变量
 
@@ -201,7 +202,8 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 			}
 			DISTANCE((*var), restaurant[order->rid], dist1);
 			DISTANCE((*(LIST_NEXT(var, station_link))), restaurant[order->rid], dist2);
-			distance = dist1 + dist2;
+			DISTANCE((*var), (*(LIST_NEXT(var, station_link))), dist3);
+			distance = dist1 + dist2 - dist3;
 		}
 		if (distance < mindis) {
 			mindis = distance;
@@ -280,7 +282,8 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 			}
 			DISTANCE((*var), district[order->did], dist1);
 			DISTANCE((*(LIST_NEXT(var, station_link))), district[order->did], dist2);
-			distance = dist1 + dist2;
+			DISTANCE((*var), (*(LIST_NEXT(var, station_link))), dist3);
+			distance = dist1 + dist2 - dist3;
 		}
 		if (distance < mindis) {
 			mindis = distance;
