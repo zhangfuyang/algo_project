@@ -8,9 +8,6 @@ using namespace std;
 
 void cav_init()
 {
-	//LIST_INIT(&cav_free_list);
-	//LIST_INIT(&cav_available_list);
-	//LIST_INIT(&cav_full_list);
 	Station *temp;
 	for (int i = 1; i <= cavalier_num; i++)
 	{
@@ -27,7 +24,6 @@ void cav_init()
 		temp->leavetime = 0;
 		temp->location = cavalier[i].location;
 		temp->oid = -1;
-		//temp->type = LOCATIONNOW;
 		temp->type = DISTRICT;
 	}
 }
@@ -171,15 +167,10 @@ void cav_update(float time)
 				rst = station->station_link.le_next;
 				if (rst->leavetime <= time) //说明过了餐厅
 				{
-					//rst_print = new Station[1];
-					//copy_station(rst, rst_print);
-					//LIST_INSERT_AFTER(last, rst_print, station_link);
 					unit = unit_vector(rst->location, rst->station_link.le_next->location);
 					cavalier[i].location.x = (time - rst->leavetime) * unit.x + rst->location.x;
 					cavalier[i].location.y = (time - rst->leavetime) * unit.y + rst->location.y;
 					cavalier[i].now = time;
-					//LIST_REMOVE(rst, station_link);
-					//delete(rst);
 				}
 				else //还没过餐厅
 				{

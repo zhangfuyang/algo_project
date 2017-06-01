@@ -31,9 +31,6 @@ float cal_init_costtime(Cavalier cav, Order order)
 float cal_full_costtime(Cavalier cav, Order order)
 {
 	float time;
-	//	float time_dst;
-	//	float distance;
-	//	float origintime;
 	Station *temp;
 	Station_list *copy_list1 = new Station_list[1];
 	Station_list *copy_list2 = new Station_list[1];
@@ -65,16 +62,6 @@ float cal_full_costtime(Cavalier cav, Order order)
 	time = Insert_order(&order, copy_list2, FULL, cav);
 	free_list(copy_list2);
 	return time;
-
-	/*Station *temp;
-	float distance1, distance2;
-	float time1, time2;
-	LIST_LAST(temp, &cav.station_list, station_link);
-	DISTANCE((*temp), restaurant[order.rid], distance1);
-	TIME(distance1, time1);
-	DISTANCE(restaurant[order.rid], district[order.did], distance2);
-	TIME(distance2, time2);
-	return time1 + time2 + temp->leavetime - order.time;*/
 }
 float cal_available_costtime(Cavalier cav, Order order) {     //返回将order给该骑士后的瓶颈时间
 	float T;

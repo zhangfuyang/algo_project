@@ -19,8 +19,6 @@ void order_init_insert(int cavid, Order order)
 	temp1->type = RESTAURANT;
 	temp_head = cavalier[cavid].station_list.lh_first;
 	LIST_INSERT_AFTER(temp_head, temp1, station_link);
-	//LIST_INSERT_HEAD(&cavalier[cavid].station_list, temp1, station_link);
-	//LIST_INSERT_AFTER(temp_head, temp1, station_link);
 	temp2 = new Station[1];
 	DISTANCE(restaurant[order.rid], district[order.did], distance);
 	TIME(distance, time);
