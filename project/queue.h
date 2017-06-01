@@ -73,13 +73,23 @@
 			k++;			\
 	} while (0)
 
-#define LIST_ELM2NO(var, head, field, k) do{		\
+#define LIST_ELM2NO(var, head, field, elm, k) do{		\
 		k = 0;							\
 		LIST_FOREACH(var, head, field)		\
-			{k++;			\
+		{	k++;			\
+			if(*elm == *var)	\
+				break;			\
+		}					\
 	} while (0)
 
-
+#define LIST_NO2ELM2(var, head, field, i, k) do{		\
+		i = 0;							\
+		LIST_FOREACH(var, head, field)		\
+		{	i++;			\
+			if(k == i)	\
+				break;			\
+		}					\
+	} while (0)
 
 #define LIST_INSERT_TAIL(head, elm, elm1, field) do{		\
 	LIST_LAST(elm1, head, field);		\

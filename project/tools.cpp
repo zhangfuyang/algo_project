@@ -151,10 +151,6 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 		float Time;
 		newstation = new Station[1];
 		ttemp = LIST_FIRST(head);
-		flag_first_full[cav.id].oid = ttemp->oid;
-		flag_first_full[cav.id].type = ttemp->type;
-		flag_second_full[cav.id].type = ttemp->type;
-		flag_second_full[cav.id].oid = ttemp->oid;
 		DISTANCE((*ttemp), restaurant[order->rid], distance);
 		TIME(distance, time);
 		LIST_INSERT_AFTER(var, newstation, station_link);
@@ -216,16 +212,7 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 	DISTANCE((*choose), restaurant[order->rid], dist1);
 
 	//更新新插入餐厅的各项信息
-	if (status == AVAILABLE)
-	{
-		flag_first_available[cav.id].oid = choose->oid;
-		flag_first_available[cav.id].type = choose->type;
-	}
-	if (status == FULL)
-	{
-		flag_first_full[cav.id].oid = choose->oid;
-		flag_first_full[cav.id].type = choose->type;
-	}
+
 	newstation->arrivetime = choose->leavetime + dist1;         
 	if (newstation->arrivetime < order->time) {
 		newstation->leavetime = order->time;
