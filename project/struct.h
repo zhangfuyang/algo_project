@@ -61,8 +61,6 @@ struct Station {                   //Ã¿¸öÆïÊÖÂ·¾¶µÄ¹Ø¼üµãĞÅÏ¢
 	int oid;					//Order id
 	float arrivetime;
 	float leavetime;
-	//int pack_num;
-	//int *packid = new int[C + 1];
 	LIST_ENTRY(Station) station_link;
 };
 
@@ -74,7 +72,6 @@ struct Cavalier {            //ÆïÊÖ¾ßÌåĞÅÏ¢£ºµ±Ç°Î»ÖÃµÄ×ø±êĞÅÏ¢¡¢µ±Ç°µÄÊ±¿Ì¡¢µ±Ç
 	int pack_num;
 	float bottlenecktime;	//ÆïÊÖµ±Ç°¶©µ¥ÖĞ×î´óµÈ´ıÊ±¼ä
 	Station_list station_list;
-
 	int *firstplace;
 	int *secondplace; // ĞÂ¶©µ¥²ÍÌü¡¢Ğ¡Çø²åÈëÎ»µã£¬×¢ÒâsecondplaceÊÇÔÚfirstplaceÒÑ¾­²åÈëµÄ»ù´¡ÉÏÍê³ÉµÄ£¬¾ùÓ¦ÓÃInsert_after
 };

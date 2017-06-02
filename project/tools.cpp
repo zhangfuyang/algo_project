@@ -517,8 +517,11 @@ float Insert_order2(Order *order, Station_list *head, Cavalier cav, int *firstpl
 }
 
 //真插，且start为被插链表的第一个节点，在第rn个节点后插入餐馆，第dn个节点后插入小区，此时dn为餐馆已经插入后的位置
-void really_insert(Station *start, Order *order, int rn, int dn)
+void really_insert(Station_list *head, Order *order, Cavalier cav)
 {
+	int rn = *(cav.firstplace);
+	int dn = *(cav.secondplace);
+	
 	Station *newres = new Station[1];
 	newres->location = restaurant[order->rid].location;
 	newres->oid = order->oid;
@@ -530,6 +533,8 @@ void really_insert(Station *start, Order *order, int rn, int dn)
 	newdis->type = DISTRICT;
 
 	int i = 0;
+	Station *start = LIST_FIRST(head);
+
 	float dist1, dist2;
 	float delaytime;
 	Station *var;
@@ -601,4 +606,6 @@ void really_insert(Station *start, Order *order, int rn, int dn)
 		printf("真插错误！");
 		system("pause");
 	}
+	delete(newres);
+	delete(newdis);
 }

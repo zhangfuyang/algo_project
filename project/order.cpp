@@ -68,8 +68,7 @@ void order_free_insert(int cavid, Order order)
 }
 void order_available_insert(int cavid, Order order)
 {
-	float time;
-	time = Insert_order(&order, &(cavalier[cavid].station_list), FULL, cavalier[cavid]);
+	really_insert(&(cavalier[cavid].station_list), &order, cavalier[cavid]);
 	cavalier[cavid].pack_num++;
 	cavalier[cavid].bottlenecktime = cal_bottlenecktime(cavalier[cavid].station_list);
 	cav_setstatus(&cavalier[cavid]);
@@ -99,7 +98,7 @@ void order_full_insert(int cavid, Order order)
 			break;
 	}
 	copy_list->lh_first = temp;
-	time = Insert_order(&order, copy_list, FULL, cav);
+	really_insert(copy_list, &order, cav);
 	delete(copy_list);
 	cavalier[cavid].pack_num++;
 	cavalier[cavid].bottlenecktime = cal_bottlenecktime(cavalier[cavid].station_list);
