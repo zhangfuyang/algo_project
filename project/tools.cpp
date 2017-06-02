@@ -421,6 +421,7 @@ float Insert_order2(Order *order, Station_list *head, Cavalier cav) {
 
 	for (i = 1; i <= len; i++) {
 		firstlayer = new Station_list[1];
+		LIST_INIT(firstlayer);
 		station_list_copy(head, firstlayer);
 		LIST_NO2ELM(var, firstlayer, station_link, p, i);
 		newstation = new Station[1];
@@ -443,24 +444,32 @@ float Insert_order2(Order *order, Station_list *head, Cavalier cav) {
 		LIST_INSERT_AFTER(var, newstation, station_link);
 
 		var = LIST_NEXT(newstation, station_link);
-		DISTANCE((*var), restaurant[order->rid], dist2);
-		delaytime = newstation->leavetime + dist2 - var->arrivetime;
 
-		LIST_FOREACH_FROM(var, firstlayer, station_link)
-		{
-			var->arrivetime = var->arrivetime + delaytime;
-			if (var->leavetime >= var->arrivetime) {
-				break;
-			}
-			else {
-				delaytime = var->arrivetime - var->leavetime;      //更新delaytime
-				var->leavetime = var->arrivetime;
+		if (var != NULL) {
+			DISTANCE((*var), restaurant[order->rid], dist2);
+			delaytime = newstation->leavetime + dist2 - var->arrivetime;
+
+			LIST_FOREACH_FROM(var, firstlayer, station_link)
+			{
+				var->arrivetime = var->arrivetime + delaytime;
+				if (var->leavetime >= var->arrivetime) {
+					break;
+				}
+				else {
+					delaytime = var->arrivetime - var->leavetime;      //更新delaytime
+					var->leavetime = var->arrivetime;
+				}
 			}
 		}
+		else {
+			;
+		}
+		
 
 		for (j = i + 1; j <= len + 1; j++) {
 
 			secondlayer = new Station_list[1];
+			LIST_INIT(secondlayer);
 			station_list_copy(firstlayer, secondlayer);
 			LIST_NO2ELM(var, secondlayer, station_link, p, j);
 			newstation = new Station[1];
@@ -480,39 +489,36 @@ float Insert_order2(Order *order, Station_list *head, Cavalier cav) {
 			LIST_INSERT_AFTER(var, newstation, station_link);
 
 			var = LIST_NEXT(newstation, station_link);
-			DISTANCE((*var), district[order->did], dist2);
-			delaytime = newstation->leavetime + dist2 - var->arrivetime;
 
-			LIST_FOREACH_FROM(var, secondlayer, station_link)
-			{
-				var->arrivetime = var->arrivetime + delaytime;
-				if (var->leavetime >= var->arrivetime) {
-					break;
-				}
-				else {
-					delaytime = var->arrivetime - var->leavetime;      //更新delaytime
-					var->leavetime = var->arrivetime;
+			if (var != NULL) {
+				DISTANCE((*var), district[order->did], dist2);
+				delaytime = newstation->leavetime + dist2 - var->arrivetime;
+
+				LIST_FOREACH_FROM(var, secondlayer, station_link)
+				{
+					var->arrivetime = var->arrivetime + delaytime;
+					if (var->leavetime >= var->arrivetime) {
+						break;
+					}
+					else {
+						delaytime = var->arrivetime - var->leavetime;      //更新delaytime
+						var->leavetime = var->arrivetime;
+					}
 				}
 			}
 
 			T = cal_bottlenecktime(*secondlayer);
 			if (T < Tmin) {
 				Tmin = T;
-				*cav.firstplace = i;
-				*cav.secondplace = j;
+				*(cav.firstplace) = i;
+				*(cav.secondplace) = j;
 
 			}
 			free_list(secondlayer);
 
 		}
-
 		free_list(firstlayer);
-
-
-
-
 	}
-
 	return T;
 }
 
@@ -558,18 +564,20 @@ void really_insert(Station_list *head, Order *order, Cavalier cav)
 			}
 			//更新新插入餐厅之后各节点的各项信息
 			var = LIST_NEXT(newres, station_link);
-			DISTANCE((*var), restaurant[order->rid], dist2);
-			//延迟时间
-			delaytime = newres->leavetime + dist2 - var->arrivetime;
-			LIST_FOREACH_FROM2(var, station_link)
-			{
-				var->arrivetime = var->arrivetime + delaytime;
-				if (var->leavetime >= var->arrivetime) {
-					break;
-				}
-				else {
-					delaytime = var->arrivetime - var->leavetime;      //更新delaytime
-					var->leavetime = var->arrivetime;
+			if (var != NULL) {
+				DISTANCE((*var), restaurant[order->rid], dist2);
+				//延迟时间
+				delaytime = newres->leavetime + dist2 - var->arrivetime;
+				LIST_FOREACH_FROM2(var, station_link)
+				{
+					var->arrivetime = var->arrivetime + delaytime;
+					if (var->leavetime >= var->arrivetime) {
+						break;
+					}
+					else {
+						delaytime = var->arrivetime - var->leavetime;      //更新delaytime
+						var->leavetime = var->arrivetime;
+					}
 				}
 			}
 			flag1++;
@@ -584,28 +592,28 @@ void really_insert(Station_list *head, Order *order, Cavalier cav)
 			//插入小区
 			LIST_INSERT_AFTER(start, newdis, station_link);
 			var = LIST_NEXT(newdis, station_link);
-			DISTANCE((*var), district[order->did], dist2);
-			delaytime = newdis->leavetime + dist2 - var->arrivetime;
+			if (var != NULL) {
+				DISTANCE((*var), district[order->did], dist2);
+				delaytime = newdis->leavetime + dist2 - var->arrivetime;
 
-			//更新插入小区之后的各项信息
-			LIST_FOREACH_FROM(var, head, station_link)
-			{
-				var->arrivetime = var->arrivetime + delaytime;
-				if (var->leavetime >= var->arrivetime) {
-					break;
-				}
-				else {
-					delaytime = var->arrivetime - var->leavetime;
-					var->leavetime = var->arrivetime;
+				//更新插入小区之后的各项信息
+				LIST_FOREACH_FROM(var, head, station_link)
+				{
+					var->arrivetime = var->arrivetime + delaytime;
+					if (var->leavetime >= var->arrivetime) {
+						break;
+					}
+					else {
+						delaytime = var->arrivetime - var->leavetime;
+						var->leavetime = var->arrivetime;
+					}
 				}
 			}
 			flag2++;
 		}
 	}
-	if (flag1 != 1 | flag2 != 1) {
+	if ((flag1 != 1 )|( flag2 != 1)) {
 		printf("真插错误！");
 		system("pause");
 	}
-	delete(newres);
-	delete(newdis);
 }

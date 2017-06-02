@@ -13,8 +13,8 @@ void cav_init()
 		cavalier[i].status = INIT;
 		cavalier[i].pack_num = 0;
 		cavalier[i].id = i;
-		cavalier[i].firstplace = NULL;
-		cavalier[i].secondplace = NULL;
+		cavalier[i].firstplace = new int[1];
+		cavalier[i].secondplace = new int[1];
 		LIST_INIT(&cavalier[i].station_list);
 	}
 }
