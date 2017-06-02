@@ -514,6 +514,91 @@ float Insert_order2(Order *order, Station_list *head, Cavalier cav, int *firstpl
 	}
 
 	return T;
+}
 
+//真插，且start为被插链表的第一个节点，在第rn个节点后插入餐馆，第dn个节点后插入小区，此时dn为餐馆已经插入后的位置
+void really_insert(Station *start, Order *order, int rn, int dn)
+{
+	Station *newres = new Station[1];
+	newres->location = restaurant[order->rid].location;
+	newres->oid = order->oid;
+	newres->type = RESTAURANT;
 
+	Station *newdis = new Station[1];
+	newdis->location = district[order->did].location;
+	newdis->oid = order->oid;
+	newdis->type = DISTRICT;
+
+	int i = 0;
+	float dist1, dist2;
+	float delaytime;
+	Station *var;
+
+	int flag1 = 0, flag2 = 0;
+
+	LIST_FOREACH_FROM2(start, station_link)
+	{
+		i++;
+		if (i == rn) {
+			//插入餐馆
+			LIST_INSERT_AFTER(start, newres, station_link);
+			//更新新插入餐厅的各项信息
+			DISTANCE((*start), restaurant[order->rid], dist1);
+			newres->arrivetime = start->leavetime + dist1;
+			if (newres->arrivetime < order->time) {
+				newres->leavetime = order->time;
+			}
+			else {
+				newres->leavetime = newres->arrivetime;
+			}
+			//更新新插入餐厅之后各节点的各项信息
+			var = LIST_NEXT(newres, station_link);
+			DISTANCE((*var), restaurant[order->rid], dist2);
+			//延迟时间
+			delaytime = newres->leavetime + dist2 - var->arrivetime;
+			LIST_FOREACH_FROM2(var, station_link)
+			{
+				var->arrivetime = var->arrivetime + delaytime;
+				if (var->leavetime >= var->arrivetime) {
+					break;
+				}
+				else {
+					delaytime = var->arrivetime - var->leavetime;      //更新delaytime
+					var->leavetime = var->arrivetime;
+				}
+			}
+			flag1++;
+		}
+		if (i == dn)
+		{
+			//更新新插入小区的各项信息
+			DISTANCE((*start), district[order->did], dist1);
+			newdis->arrivetime = start->leavetime + dist1;
+			newdis->leavetime = newdis->arrivetime;
+
+			//插入小区
+			LIST_INSERT_AFTER(start, newdis, station_link);
+			var = LIST_NEXT(newdis, station_link);
+			DISTANCE((*var), district[order->did], dist2);
+			delaytime = newdis->leavetime + dist2 - var->arrivetime;
+
+			//更新插入小区之后的各项信息
+			LIST_FOREACH_FROM(var, head, station_link)
+			{
+				var->arrivetime = var->arrivetime + delaytime;
+				if (var->leavetime >= var->arrivetime) {
+					break;
+				}
+				else {
+					delaytime = var->arrivetime - var->leavetime;
+					var->leavetime = var->arrivetime;
+				}
+			}
+			flag2++;
+		}
+	}
+	if (flag1 != 1 | flag2 != 1) {
+		printf("真插错误！");
+		system("pause");
+	}
 }
