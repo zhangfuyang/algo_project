@@ -21,6 +21,7 @@ float cal_bottlenecktime(Station_list station_list);
 void station_list_copy(Station_list *from, Station_list *to);
 void copy_station(Station *listfrom, Station *listto);
 float Insert_order(Order *order, Station_list *head, int status, Cavalier cav);
+float Insert_order2(Order *order, Station_list *head, Cavalier cav, int *firstplace, int *secondplace);
 void free_list(Station_list *head);
 
 //ºËÐÄº¯Êý

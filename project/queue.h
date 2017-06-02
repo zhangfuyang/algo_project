@@ -82,7 +82,7 @@
 		}					\
 	} while (0)
 
-#define LIST_NO2ELM2(var, head, field, i, k) do{		\
+#define LIST_NO2ELM(var, head, field, i, k) do{		\
 		i = 0;							\
 		LIST_FOREACH(var, head, field)		\
 		{	i++;			\
