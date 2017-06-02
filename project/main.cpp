@@ -3,7 +3,7 @@
 #include"struct.h"
 #include"globalvar.h"
 #include"function.h"
-#define TEST "data00.txt"
+#define TEST "large.txt"
 using namespace std;
 
 int restaurant_num, district_num, cavalier_num;
@@ -40,7 +40,6 @@ int main()
 		
 		int cavid;
 
-		cav_update(order[i].time);
 
 		cavid = alloc(order[i]);
 
@@ -49,7 +48,10 @@ int main()
 		order_insert(cavid, order[i]);
 
 	}
-
+	for (int i = 1; i <= cavalier_num; i++)
+	{
+		station_list_copy(&cavalier[i].station_list, &print[i]);
+	}
 	output();
 
 	system("pause");

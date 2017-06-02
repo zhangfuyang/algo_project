@@ -376,6 +376,23 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 		return T1;
 	}
 }
+int can_insert(Station_list *list)
+{
+	Station *temp;
+	int pack = 0;
+	LIST_FOREACH(temp, list, station_link)
+	{
+		if (temp->type == DISTRICT)
+			pack--;
+		if (temp->type == RESTAURANT)
+			pack++;
+		if (pack > C)
+		{
+			return -1;
+		}
+	}
+	return 1;
+}
 
 //计算给定数据集中理论上的最短的“最长等待时间”
 float theoretically_time()                   
@@ -413,6 +430,13 @@ float Insert_order2(Order *order, Station_list *head, Cavalier cav) {
 	float dist1, dist2;
 	float delaytime;
 	float T, Tmin = 10000;
+
+
+	if (head->lh_first == NULL)
+	{
+		DISTANCE(restaurant[order->rid], district[order->did], dist1);
+		return dist1;
+	}
 
 	LIST_FOREACH(var, head, station_link)
 	{
@@ -508,11 +532,14 @@ float Insert_order2(Order *order, Station_list *head, Cavalier cav) {
 			}
 
 			T = cal_bottlenecktime(*secondlayer);
-			if (T < Tmin) {
-				Tmin = T;
-				*(cav.firstplace) = i;
-				*(cav.secondplace) = j;
+			if (can_insert(secondlayer) == 1)
+			{
+				if (T < Tmin) {
+					Tmin = T;
+					*(cav.firstplace) = i;
+					*(cav.secondplace) = j;
 
+				}
 			}
 			free_list(secondlayer);
 
@@ -546,7 +573,26 @@ void really_insert(Station_list *head, Order *order, Cavalier cav)
 	Station *var;
 
 	int flag1 = 0, flag2 = 0;
-
+	if (head->lh_first == NULL)
+	{
+		Station *newstation1, *newstation;
+		newstation = new Station[1];
+		newstation->arrivetime = order->time;
+		newstation->leavetime = newstation->arrivetime;
+		newstation->location = restaurant[order->rid].location;
+		newstation->oid = order->oid;
+		newstation->type = RESTAURANT;
+		LIST_INSERT_HEAD(head, newstation, station_link);
+		newstation1 = new Station[1];
+		DISTANCE(restaurant[order->rid], district[order->did], dist1);
+		newstation1->arrivetime = order->time + dist1;
+		newstation1->leavetime = newstation1->arrivetime;
+		newstation1->oid = order->oid;
+		newstation1->location = district[order->did].location;
+		newstation1->type = DISTRICT;
+		LIST_INSERT_AFTER(newstation, newstation1, station_link);
+		return;
+	}
 	LIST_FOREACH_FROM2(start, station_link)
 	{
 		i++;
@@ -617,3 +663,4 @@ void really_insert(Station_list *head, Order *order, Cavalier cav)
 		system("pause");
 	}
 }
+

@@ -11,6 +11,9 @@ Location  place2xy(Place place);
 District did2district(int did);
 Restaurant rid2restaurant(int rid);
 float theoretically_time();
+int can_insert(Station_list *list);
+void order_insert(int cavid, Order order);
+int alloc(Order order);
 
 //特殊功能函数
 float cal_bottlenecktime(Station_list station_list);
