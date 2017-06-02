@@ -33,6 +33,9 @@
 #define LIST_FOREACH_FROM(var, head, field) 	\
 	for(; (var); (var) = LIST_NEXT((var), field))
 
+#define LIST_FOREACH_FROM2(var, field) 	\
+	for(; (var); (var) = LIST_NEXT((var), field))
+
 #define LIST_INSERT_HEAD(head, elm, field)	do{	\
 	if ((LIST_NEXT((elm), field) = LIST_FIRST((head))) != NULL)	\
 		LIST_FIRST((head))->field.le_prev = &LIST_NEXT((elm), field);\
@@ -82,7 +85,7 @@
 		}					\
 	} while (0)
 
-#define LIST_NO2ELM2(var, head, field, i, k) do{		\
+#define LIST_NO2ELM(var, head, field, i, k) do{		\
 		i = 0;							\
 		LIST_FOREACH(var, head, field)		\
 		{	i++;			\

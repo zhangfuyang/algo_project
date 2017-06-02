@@ -152,6 +152,7 @@
     <ClCompile Include="order.cpp" />
     <ClCompile Include="output.cpp" />
     <ClCompile Include="cav.cpp" />
+    <ClCompile Include="realinsert.cpp" />
     <ClCompile Include="tools.cpp" />
   </ItemGroup>
   <ItemGroup>
