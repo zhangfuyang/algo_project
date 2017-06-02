@@ -398,7 +398,7 @@ float theoretically_time()
 
 
 //遍历整个链表，查找最合适的两个插入位置，餐厅记录在firstplace，小区记录在secondplace
-float Insert_order2(Order *order, Station_list *head, Cavalier cav, int *firstplace, int *secondplace) {
+float Insert_order2(Order *order, Station_list *head, Cavalier cav) {
 	Station *var = NULL;
 	Station *newstation = NULL;
 	Station_list *firstlayer, *secondlayer;
@@ -498,8 +498,8 @@ float Insert_order2(Order *order, Station_list *head, Cavalier cav, int *firstpl
 			T = cal_bottlenecktime(*secondlayer);
 			if (T < Tmin) {
 				Tmin = T;
-				*firstplace = i;
-				*secondplace = j;
+				*cav.firstplace = i;
+				*cav.secondplace = j;
 
 			}
 			free_list(secondlayer);
