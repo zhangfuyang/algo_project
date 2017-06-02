@@ -12,7 +12,6 @@
 #include"struct.h"
 #include"globalvar.h"
 #include"function.h"
-#define TEST "data19.txt"
 using namespace std;
 vector<Tuple> *clusters;
 //计算两个元组间的欧几里距离
