@@ -68,8 +68,6 @@ struct Station {                   //Ã¿¸öÆïÊÖÂ·¾¶µÄ¹Ø¼üµãĞÅÏ¢
 	int oid;					//Order id
 	float arrivetime;
 	float leavetime;
-	//int pack_num;
-	//int *packid = new int[C + 1];
 	LIST_ENTRY(Station) station_link;
 };
 
@@ -86,4 +84,4 @@ struct Cavalier {            //ÆïÊÖ¾ßÌåĞÅÏ¢£ºµ±Ç°Î»ÖÃµÄ×ø±êĞÅÏ¢¡¢µ±Ç°µÄÊ±¿Ì¡¢µ±Ç
 
 };
 
-#endif /*_STRUCT_H_*/
+#endif/*_STRUCT_H_*/

@@ -40,8 +40,6 @@ void output()
 		if (num == 0)
 			continue;
 		temp = LIST_FIRST(&print[i]);
-		//order_id[size] = temp->oid;
-		//size++;
 		while (1)
 		{
 			cout << temp->location.x << " " << temp->location.y << " "

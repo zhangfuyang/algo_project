@@ -120,7 +120,6 @@ void cav_update(float time)
 				break;
 			}
 		}
-		
 		//将找的DISTRICT之前的路径移除，并插入print
 		if (temp != NULL)
 		{
@@ -145,8 +144,7 @@ void cav_update(float time)
 					{
 						LIST_INSERT_HEAD(&print[i], print_insert, station_link);
 						last = print_insert;
-					}
-					
+					}		
 				}
 			}
 			station = LIST_FIRST(&cavalier[i].station_list);
