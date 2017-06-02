@@ -64,7 +64,7 @@ float cal_full_costtime(Cavalier cav, Order order)
 	copy_list1->lh_first = temp;
 	station_list_copy(copy_list1, copy_list2);
 	delete(copy_list1);
-	time = Insert_order(&order, copy_list2, FULL, cav);
+	time = Insert_order2(&order, copy_list2, cav);
 	free_list(copy_list2);
 	return time;
 
@@ -76,7 +76,7 @@ float cal_available_costtime(Cavalier cav, Order order) {     //·µ»Ø½«order¸ø¸ÃÆ
 	LIST_INIT(head_copy);
 
 	station_list_copy(&(cav.station_list), head_copy);
-	T = Insert_order(&order, head_copy, AVAILABLE, cav);
+	T = Insert_order2(&order, head_copy, cav);
 	free_list(head_copy);
 
 	return T;
