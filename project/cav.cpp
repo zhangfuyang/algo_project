@@ -157,7 +157,7 @@ void cav_update(float time)
 			}
 			if (station->station_link.le_next != NULL)//还有没送完的订单
 			{
-				Station *rst, *rst_copy, *rst_print;
+				Station *rst;
 				rst = station->station_link.le_next;
 				if (rst->leavetime <= time) //说明过了餐厅
 				{

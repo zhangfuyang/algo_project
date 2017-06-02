@@ -97,11 +97,9 @@ void order_available_insert(int cavid, Order order)
 }
 void order_full_insert(int cavid, Order order)
 {
-	Station *temp2, *temp, *new_station;
+	Station  *temp;
 	Station_list *copy_list = new Station_list[1];
-	float distance;
 	float time;
-	Location location;
 	Cavalier cav = cavalier[cavid];
 	int size = 0, count = 0;
 	LIST_FOREACH(temp, &cav.station_list, station_link)

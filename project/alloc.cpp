@@ -8,8 +8,6 @@ float cal_free_costtime(Cavalier cav, Order order)  //当Free列表不为空时，给Free
 {
 	float time1, time2;
 	float distance1, distance2;
-	float origintime;
-	float time_dst; //distance的距离
 	DISTANCE(cav, restaurant[order.rid], distance1);
 	TIME(distance1, time1);
 			//printf("Free; 是订单等我的情况\n");
