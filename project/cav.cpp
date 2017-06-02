@@ -114,10 +114,6 @@ void cav_update(float time)
 					temp = station;
 					pack_release_num++;
 				}
-				else if (station->type == RESTAURANT)
-				{
-					continue;
-				}
 			}
 			else
 			{
@@ -207,7 +203,17 @@ void cav_update(float time)
 		//更新该骑手状态
 		if (pack_release_num != 0)
 		{
-			cavalier[i].pack_num -= pack_release_num;
+		//	cavalier[i].pack_num -= pack_release_num;
+			temp = cavalier[i].station_list.lh_first;
+			temp = LIST_NEXT(temp, station_link);
+			int count = 0;
+			while (temp != NULL)
+			{
+				if (temp->type == DISTRICT)
+					count++;
+				temp = LIST_NEXT(temp, station_link);
+			}
+			cavalier[i].pack_num = count;
 			cav_setstatus(&cavalier[i]);
 			cavalier[i].bottlenecktime = cal_bottlenecktime(cavalier[i].station_list);
 		}

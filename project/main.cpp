@@ -3,7 +3,7 @@
 #include"struct.h"
 #include"globalvar.h"
 #include"function.h"
-#define TEST "data00.txt"
+#define TEST "data19.txt"
 using namespace std;
 
 int restaurant_num, district_num, cavalier_num;
@@ -36,14 +36,34 @@ int main()
 	cav_init();
 	
 	//printf("init completed!\n");
-
+	
 	for (int i = 1; i <= N; i++)
 	{
 		//cout << endl << "**********************************************" << endl;
 		
 		int cavid;
-
 		cav_update(order[i].time);
+		/*for (int j = 1; j <= cavalier_num; j++)
+		{
+			if (cavalier[j].station_list.lh_first->type != DISTRICT && cavalier[j].station_list.lh_first->type != LOCATIONNOW)
+			{
+				system("pause");
+			}
+			Station *temp;
+			int count = 0;
+			temp = LIST_FIRST(&cavalier[j].station_list);
+			temp = LIST_NEXT(temp, station_link);
+			while (temp != NULL)
+			{
+				if (temp->type == DISTRICT)
+					count++;
+				temp = temp->station_link.le_next;
+			}
+			if (count != cavalier[j].pack_num)
+			{
+				system("pause");
+			}
+		}*/
 
 		cavid = alloc(order[i]);
 

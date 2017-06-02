@@ -199,6 +199,7 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 			DISTANCE((*(LIST_NEXT(var, station_link))), restaurant[order->rid], dist2);
 			DISTANCE((*var), (*(LIST_NEXT(var, station_link))), dist3);
 			distance = dist1 + dist2 - dist3;
+			//distance = dist1 + dist2;
 		}
 		if (distance < mindis) {
 			mindis = distance;
@@ -270,6 +271,7 @@ float Insert_order(Order *order, Station_list *head, int status, Cavalier cav) {
 			DISTANCE((*(LIST_NEXT(var, station_link))), district[order->did], dist2);
 			DISTANCE((*var), (*(LIST_NEXT(var, station_link))), dist3);
 			distance = dist1 + dist2 - dist3;
+			//distance = dist1 + dist2;
 		}
 		if (distance < mindis) {
 			mindis = distance;
