@@ -9,6 +9,8 @@ void input_size(int &restaurant_num, int &district_num, int &cavalier_num, int &
 	if (fp.fail())
 	{
 		cout << "文件名输入错误！\n";
+		system("pause");
+		exit(0);
 		return;
 	}
 	string str;
