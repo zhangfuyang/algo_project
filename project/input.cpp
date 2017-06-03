@@ -6,6 +6,11 @@ using namespace std;
 void input_size(int &restaurant_num, int &district_num, int &cavalier_num, int &c, int &N, const char * file)
 {
 	ifstream fp(file);
+	if (fp.fail())
+	{
+		cout << "文件名输入错误！\n";
+		return;
+	}
 	string str;
 	getline(fp, str);
 	int i = 0;
