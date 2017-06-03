@@ -6,6 +6,13 @@ using namespace std;
 void input_size(int &restaurant_num, int &district_num, int &cavalier_num, int &c, int &N, const char * file)
 {
 	ifstream fp(file);
+	if (fp.fail())
+	{
+		cout << "ÎÄ¼şÊäÈë´íÎó£¡\n";
+		system("pause");
+		exit(0);
+		return;
+	}
 	string str;
 	getline(fp, str);
 	int i = 0;
@@ -96,7 +103,7 @@ void input_array(Restaurant* restaurant, District* district, Order* order, int &
 	j = 0;
 	while (i <= N && getline(fp, str))
 	{
-		j = 0;
+		j = 1;
 		order[i].time = 0;
 		order[i].rid = 0;
 		order[i].did = 0;

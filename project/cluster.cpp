@@ -1,9 +1,3 @@
-/*kmeans算法实现（此处只考虑元组只有两个属性的情况）
-*@File:k_means.cpp
-*@Author:Cai0538
-*@Create:2011-12-10
-*@Last Modified:2011-12-10
-*/
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -80,16 +74,6 @@ void KMeans(vector<Tuple> tuples) {
 		lable = clusterOfTuple(means, tuples[i]);
 		clusters[lable].push_back(tuples[i]);
 	}
-	//输出刚开始的簇
-	for (lable = 0; lable<cavalier_num; lable++) {
-		cout << "第" << lable + 1 << "个簇：" << endl;
-		vector<Tuple> t = clusters[lable];
-		for (i = 0; i< t.size(); i++)
-		{
-			cout << "(" << t[i].attr1 << "," << t[i].attr2 << ")" << "   ";
-		}
-		cout << endl;
-	}
 	float oldVar = -1;
 	float newVar = getVar(clusters, means);
 	while (abs(newVar - oldVar) >= 1) //当新旧函数值相差不到1即准则函数值不发生明显变化时，算法终止
@@ -128,9 +112,8 @@ void KMeans(vector<Tuple> tuples) {
 }
 
 void main_cluster() {
-
 	ifstream infile;
-	infile.open(TEST, ios::in);
+	infile.open(file, ios::in);
 	int count = 0;
 	vector<Tuple> tuples;
 	Tuple tuple;
@@ -155,13 +138,13 @@ void main_cluster() {
 	cout << endl;
 	*/
 	KMeans(tuples);
-	cout << endl << endl << endl;
+	//cout << endl << endl << endl;
 	for (int i = 0; i < cavalier_num; i++)
 	{
-		cout << getMeans(clusters[i]).attr1 << "            " << getMeans(clusters[i]).attr2;
+		//cout << getMeans(clusters[i]).attr1 << "            " << getMeans(clusters[i]).attr2;
 		rst_center[i + 1].location.x = getMeans(clusters[i]).attr1;
 		rst_center[i + 1].location.y = getMeans(clusters[i]).attr2;
-		cout << endl;
+	//	cout << endl;
 	}
 	return;
 }

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "struct.h"
 #include "queue.h"
 #include "globalvar.h"
@@ -10,10 +11,22 @@ void output()
 {
 	int i,num; //i是骑士的循环变量 num是骑士[i]有多少个关键路径
 	int *order_id;
+	int io;
 	float max_time = 0;
+	char file[20];
 	Station *temp, *temp1;
 	int size; //骑士背包里还有多少order
+	ofstream out;
 	order_id = new int[C];
+	cout << "控制台输出结果请按1.\n";
+	cout << "输出结果到文件请按2.\n";
+	cin >> io;
+	if (io == 2)
+	{
+		cout << "请输入输出的文件名:";
+		cin >> file;
+		out.open(file, ios::out);
+	}
 	for (i = 1; i <= cavalier_num; i++)
 	{
 		temp = LIST_FIRST(&cavalier[i].station_list);
@@ -34,20 +47,50 @@ void output()
 			order_id[l] = 0;
 		}
 		size = 0; //size归0
-		cout << endl << "**********************************************" << endl;
+		if (io == 2)
+		{
+			out << endl << "**********************************************" << endl;
+		}
+		else
+		{
+			cout << endl << "**********************************************" << endl;
+		}
 		LIST_SIZE(temp, &print[i], station_link, num);
-		cout << i << " " << num << endl;
+		if (io == 2)
+		{
+			out << i << " " << num << endl;
+		}
+		else
+		{
+			cout << i << " " << num << endl;
+		}
 		if (num == 0)
 			continue;
 		temp = LIST_FIRST(&print[i]);
 		while (1)
 		{
-			cout << temp->location.x << " " << temp->location.y << " "
-				<< temp->arrivetime << " " << temp->leavetime<<" ";
-			cout << size;
+			if (io == 2)
+			{
+				out << temp->location.x << " " << temp->location.y << " "
+					<< temp->arrivetime << " " << temp->leavetime << " ";
+				out << size;
+			}
+			else
+			{
+				cout << temp->location.x << " " << temp->location.y << " "
+					<< temp->arrivetime << " " << temp->leavetime << " ";
+				cout << size;
+			}
 			for (int l = 0; l < size; l++)
 			{
-				cout << " " << order_id[l];
+				if (io == 2)
+				{
+					out << " " << order_id[l];
+				}
+				else
+				{
+					cout << " " << order_id[l];
+				}
 			}
 			temp = LIST_NEXT(temp, station_link);
 			if (temp == NULL)
@@ -70,7 +113,14 @@ void output()
 				}
 				size--;
 			}
-			cout << endl;
+			if (io == 2)
+			{
+				out << endl;
+			}
+			else
+			{
+				cout << endl;
+			}
 		}
 	}
 	for (i = 1; i <= cavalier_num; i++)
@@ -81,9 +131,19 @@ void output()
 		}
 
 	}
-	cout << endl <<"**********************************************" << endl;
-	cout <<"the least bottlenecktime "<<max_time << endl;
-	cout << "the least costtime of all orders theoretically:" << theoretically_time();
-	cout << endl << "**********************************************" << endl;
+	if (io == 2)
+	{
+		out << endl << "**********************************************" << endl;
+		out << "the least bottlenecktime " << max_time << endl;
+		out << "the least costtime of all orders theoretically:" << theoretically_time();
+		out << endl << "**********************************************" << endl;
+	}
+	else
+	{
+		cout << endl << "**********************************************" << endl;
+		cout << "the least bottlenecktime " << max_time << endl;
+		cout << "the least costtime of all orders theoretically:" << theoretically_time();
+		cout << endl << "**********************************************" << endl;
+	}
 }
 

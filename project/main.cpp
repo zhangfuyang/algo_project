@@ -14,9 +14,12 @@ Order *order;
 Cavalier *cavalier;
 Station_list *print;
 Place *rst_center;
+char file[20];
 int main()
 {
-	input_size(restaurant_num, district_num, cavalier_num, C, N, TEST);
+	cout << "请输入想要测试的文件名:";
+	cin >> file;
+	input_size(restaurant_num, district_num, cavalier_num, C, N, file);
 
 	restaurant = new Restaurant[restaurant_num+1];
 	district = new District[district_num+1];
@@ -25,9 +28,9 @@ int main()
 	print = new Station_list[N+1];
 	rst_center = new Place[cavalier_num + 1];
 
-	input_array(restaurant, district, order, restaurant_num, district_num, cavalier_num, C, N, TEST);
+	input_array(restaurant, district, order, restaurant_num, district_num, cavalier_num, C, N, file);
 	
-	cout << restaurant_num<<" "<<district_num<<" "<<cavalier_num<<" "<<C << " " << N << endl;
+	//cout << restaurant_num<<" "<<district_num<<" "<<cavalier_num<<" "<<C << " " << N << endl;
 
 	print_init();
 
