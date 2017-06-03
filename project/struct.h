@@ -2,7 +2,7 @@
 #include <math.h>
 #include "queue.h"
 #define _STRUCT_H_
-#define TEST "data01.txt"
+#define TEST "data19.txt"
 //ÆïÊÖ×´Ì¬
 #define INIT 0
 #define FREE 1

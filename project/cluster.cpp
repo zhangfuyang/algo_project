@@ -1,9 +1,3 @@
-/*kmeans算法实现（此处只考虑元组只有两个属性的情况）
-*@File:k_means.cpp
-*@Author:Cai0538
-*@Create:2011-12-10
-*@Last Modified:2011-12-10
-*/
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -80,16 +74,7 @@ void KMeans(vector<Tuple> tuples) {
 		lable = clusterOfTuple(means, tuples[i]);
 		clusters[lable].push_back(tuples[i]);
 	}
-	//输出刚开始的簇
-	for (lable = 0; lable<cavalier_num; lable++) {
-		cout << "第" << lable + 1 << "个簇：" << endl;
-		vector<Tuple> t = clusters[lable];
-		for (i = 0; i< t.size(); i++)
-		{
-			cout << "(" << t[i].attr1 << "," << t[i].attr2 << ")" << "   ";
-		}
-		cout << endl;
-	}
+
 	float oldVar = -1;
 	float newVar = getVar(clusters, means);
 	while (abs(newVar - oldVar) >= 1) //当新旧函数值相差不到1即准则函数值不发生明显变化时，算法终止
@@ -111,18 +96,7 @@ void KMeans(vector<Tuple> tuples) {
 			lable = clusterOfTuple(means, tuples[i]);
 			clusters[lable].push_back(tuples[i]);
 		}
-		//输出当前的簇
-		/*
-		for (lable = 0; lable<cavalier_num; lable++) {
-			cout << "第" << lable + 1 << "个簇：" << endl;
-			vector<Tuple> t = clusters[lable];
-			for (i = 0; i< t.size(); i++)
-			{
-				cout << "(" << t[i].attr1 << "," << t[i].attr2 << ")" << "   ";
-			}
-			cout << endl;
-		}
-		*/
+
 	}
 
 }
@@ -144,24 +118,12 @@ void main_cluster() {
 	}
 
 	clusters = new vector<Tuple>[cavalier_num];
-	//int k;
-	//cout<<"请输入期望的簇的个数："
-	//cin>>k;
-	//cout<<endl;
-
-	//输出文件中的元组信息
-	/*for (vector<Tuple>::size_type ix = 0; ix != tuples.size(); ++ix)
-		cout << "(" << tuples[ix].attr1 << "," << tuples[ix].attr2 << ")" << "    ";
-	cout << endl;
-	*/
+	
 	KMeans(tuples);
-	cout << endl << endl << endl;
 	for (int i = 0; i < cavalier_num; i++)
 	{
-		cout << getMeans(clusters[i]).attr1 << "            " << getMeans(clusters[i]).attr2;
 		rst_center[i + 1].location.x = getMeans(clusters[i]).attr1;
 		rst_center[i + 1].location.y = getMeans(clusters[i]).attr2;
-		cout << endl;
 	}
 	return;
 }
