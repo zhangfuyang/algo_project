@@ -102,9 +102,8 @@ void KMeans(vector<Tuple> tuples) {
 }
 
 void main_cluster() {
-
 	ifstream infile;
-	infile.open(TEST, ios::in);
+	infile.open(file, ios::in);
 	int count = 0;
 	vector<Tuple> tuples;
 	Tuple tuple;

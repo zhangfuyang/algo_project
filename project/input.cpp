@@ -102,7 +102,7 @@ void input_array(Restaurant* restaurant, District* district, Order* order, int &
 	j = 0;
 	while (i <= N && getline(fp, str))
 	{
-		j = 0;
+		j = 1;
 		order[i].time = 0;
 		order[i].rid = 0;
 		order[i].did = 0;
